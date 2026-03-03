@@ -43,33 +43,32 @@
     <div id="editModal" class="modal">
         <div class="modal-content">
             <span class="close-edit close">&times;</span>
-            <h2>Gestion complète</h2>
+            <h2 id="editModalTitle">Gestion complète</h2>
             <form id="editForm">
                 <input type="hidden" id="editId">
+                <input type="hidden" id="isUserEdit" value="false">
                 <div class="form-group">
                     <label>Titre</label>
-                    <input type="text" id="editTitle" required>
+                    <div class="input-icon"><i class="fa-solid fa-pen"></i><input type="text" id="editTitle" required></div>
                 </div>
                 <div class="form-group">
                     <label>Marque</label>
-                    <input type="text" id="editBrand" placeholder="Ex: Apple, Nike...">
+                    <div class="input-icon"><i class="fa-solid fa-tag"></i><input type="text" id="editBrand" placeholder="Ex: Apple, Nike..."></div>
                 </div>
                 <div class="form-group">
                     <label>Prix (€)</label>
-                    <input type="number" id="editPrice" step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label>Quantité</label>
-                    <input type="number" id="editQty" required>
+                    <div class="input-icon"><i class="fa-solid fa-euro-sign"></i><input type="number" id="editPrice" step="0.01" required></div>
                 </div>
                 <div class="form-group">
                     <label>État</label>
-                    <select id="editCondition" required style="width:100%; padding: 0.7rem; border: 1px solid #E5E7EB; border-radius: 12px;">
-                        <option value="Neuf">Neuf</option>
-                        <option value="Très bon état">Très bon état</option>
-                        <option value="Bon état">Bon état</option>
-                        <option value="Reconditionné">Reconditionné</option>
-                    </select>
+                    <div class="input-icon"><i class="fa-solid fa-star"></i>
+                        <select id="editCondition" required>
+                            <option value="Neuf">Neuf</option>
+                            <option value="Très bon état">Très bon état</option>
+                            <option value="Bon état">Bon état</option>
+                            <option value="Reconditionné">Reconditionné</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
@@ -86,6 +85,35 @@
             <span class="close-detail close">&times;</span>
             <div id="detail-content"></div>
             <div id="detail-actions" style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end; border-top: 1px solid #eee; padding-top: 1rem;"></div>
+        </div>
+    </div>
+
+    <!-- Modal Promo -->
+    <div id="promoModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-promo close">&times;</span>
+            <h2>Définir une promotion</h2>
+            <form id="promoForm">
+                <input type="hidden" id="promoAdId">
+                <div class="form-group">
+                    <label>Pourcentage de réduction (%)</label>
+                    <div class="input-icon"><i class="fa-solid fa-percent"></i><input type="number" id="promoPercentage" min="0" max="99" required></div>
+                </div>
+                <button type="submit" class="btn-primary full-width">Appliquer la promotion</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Confirmation -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <span class="close-confirm close">&times;</span>
+            <h2 id="confirmModalTitle" style="font-size: 1.4rem; text-align: center;">Confirmation</h2>
+            <p id="confirmModalText" style="margin: 1rem 0; text-align: center;"></p>
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+                <button id="confirmModalCancelBtn" class="btn-secondary">Annuler</button>
+                <button id="confirmModalConfirmBtn" class="btn-danger">Confirmer</button>
+            </div>
         </div>
     </div>
 

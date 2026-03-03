@@ -19,65 +19,122 @@
     </nav>
 
     <main class="container">
-        <h2>Publier une nouvelle annonce</h2>
-        <div class="card" style="padding: 2rem; max-width: 800px; margin: 0 auto; opacity: 1; animation: none;">
-            <form id="adForm">
-                <div class="form-group">
-                    <label>Titre du produit</label>
-                    <div class="input-icon"><i class="fa-solid fa-tag"></i><input type="text" id="title" required placeholder="Ex: Lot de 50 T-shirts"></div>
+        <div class="wizard-container">
+            <!-- Step 1: Informations de base -->
+            <div class="wizard-step active" id="step-1">
+                <div class="step-header">
+                    <div class="step-title">Commençons par l'essentiel</div>
+                    <div class="step-subtitle">Quel type d'objet souhaitez-vous vendre ?</div>
                 </div>
-                <div class="form-group">
-                    <label>Marque</label>
-                    <div class="input-icon"><i class="fa-solid fa-tag"></i><input type="text" id="brand" placeholder="Ex: Nike, Apple, Sony..."></div>
-                </div>
-                <div class="form-group">
-                    <label>Prix unitaire (€)</label>
-                    <div class="input-icon"><i class="fa-solid fa-euro-sign"></i><input type="number" id="price" step="0.01" required placeholder="Ex: 5.50"></div>
-                </div>
-                <div class="form-group">
-                    <label>Catégorie</label>
-                    <div class="input-icon"><i class="fa-solid fa-list"></i>
-                        <select id="category" required style="width:100%; padding: 0.7rem; padding-left: 2.5rem; border: 1px solid #E5E7EB; border-radius: var(--radius); background: white;">
-                            <option value="Électronique">Électronique</option>
-                            <option value="Vêtements">Vêtements</option>
-                            <option value="Maison">Maison</option>
-                            <option value="Autre">Autre</option>
-                        </select>
+                <form id="form-step-1">
+                    <div class="form-group">
+                        <label>Titre de l'annonce</label>
+                        <div class="input-icon"><i class="fa-solid fa-pen"></i><input type="text" id="title" required placeholder="Ex: iPhone 12 Pro Max - Lot de 5"></div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label>État de l'objet</label>
-                    <div class="input-icon"><i class="fa-solid fa-star"></i>
-                        <select id="condition" required style="width:100%; padding: 0.7rem; padding-left: 2.5rem; border: 1px solid #E5E7EB; border-radius: var(--radius); background: white;">
-                            <option value="Neuf">Neuf</option>
-                            <option value="Très bon état">Très bon état</option>
-                            <option value="Bon état">Bon état</option>
-                            <option value="Reconditionné">Reconditionné</option>
-                        </select>
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        <div class="input-icon"><i class="fa-solid fa-list"></i>
+                            <select id="category" required style="width:100%; padding: 0.7rem; padding-left: 2.5rem; border: 1px solid #E5E7EB; border-radius: var(--radius); background: white;">
+                                <option value="">Choisir une catégorie</option>
+                                <option value="Électronique">Électronique</option>
+                                <option value="Vêtements">Vêtements</option>
+                                <option value="Maison">Maison</option>
+                                <option value="Autre">Autre</option>
+                            </select>
+                        </div>
                     </div>
+                    <div class="form-group">
+                        <label>Marque</label>
+                        <div class="input-icon"><i class="fa-solid fa-tag"></i><input type="text" id="brand" placeholder="Ex: Apple, Nike..."></div>
+                    </div>
+                </form>
+                <div class="wizard-actions">
+                    <div></div> <!-- Spacer -->
+                    <button type="button" class="btn-primary" onclick="nextStep(1)">Suivant <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
-                <div class="form-group">
-                    <label>Quantité disponible</label>
-                    <div class="input-icon"><i class="fa-solid fa-layer-group"></i><input type="number" id="quantity" required placeholder="50"></div>
+            </div>
+
+            <!-- Step 2: Détails -->
+            <div class="wizard-step" id="step-2">
+                <div class="step-header">
+                    <div class="step-title">Dites-nous en plus</div>
+                    <div class="step-subtitle">Décrivez votre produit en détail</div>
                 </div>
-                <div class="form-group">
-                    <label>URL de l'image</label>
-                    <div class="input-icon"><i class="fa-solid fa-image"></i><input type="url" id="image" required placeholder="https://..."></div>
+                <form id="form-step-2">
+                    <div class="form-group">
+                        <label>Prix (€)</label>
+                        <div class="input-icon"><i class="fa-solid fa-euro-sign"></i><input type="number" id="price" step="0.01" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>État</label>
+                        <div class="input-icon"><i class="fa-solid fa-star"></i>
+                            <select id="condition" required style="width:100%; padding: 0.7rem; padding-left: 2.5rem; border: 1px solid #E5E7EB; border-radius: var(--radius); background: white;">
+                                <option value="Neuf">Neuf</option>
+                                <option value="Très bon état">Très bon état</option>
+                                <option value="Bon état">Bon état</option>
+                                <option value="Reconditionné">Reconditionné</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="description" rows="5" required placeholder="Origine, raison de la vente, détails spécifiques..."></textarea>
+                    </div>
+                </form>
+                <div class="wizard-actions">
+                    <button type="button" class="btn-secondary" onclick="prevStep(2)"><i class="fa-solid fa-arrow-left"></i> Retour</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(2)">Suivant <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
-                <div class="form-group">
-                    <label>Description détaillée</label>
-                    <textarea id="description" rows="5" required placeholder="Détails du produit, état, origine..."></textarea>
+            </div>
+
+            <!-- Step 3: Photos -->
+            <div class="wizard-step" id="step-3">
+                <div class="step-header">
+                    <div class="step-title">Ajoutez vos photos</div>
+                    <div class="step-subtitle">Min. 2 photos, Max. 5 photos</div>
+                </div>
+                
+                <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
+                    <p>Cliquez pour ajouter des photos</p>
+                    <input type="file" id="photoInput" multiple accept="image/*" style="display: none;">
+                </div>
+                <div id="photo-preview-container" class="photo-preview-grid"></div>
+                <p id="photo-error" style="color: var(--danger); font-size: 0.9rem; margin-top: 10px; display: none;"></p>
+
+                <div class="wizard-actions">
+                    <button type="button" class="btn-secondary" onclick="prevStep(3)"><i class="fa-solid fa-arrow-left"></i> Retour</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(3)">Suivant <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Step 4: Authenticité -->
+            <div class="wizard-step" id="step-4">
+                <div class="step-header">
+                    <div class="step-title">Vérification d'authenticité</div>
+                    <div class="step-subtitle">Rassurez vos acheteurs en certifiant votre produit</div>
                 </div>
 
-                <div class="verification-section" id="auth-section-wrapper">
-                    <h3><i class="fa-solid fa-shield-halved"></i> Vérification authenticité</h3>
-                    <p>Les champs ci-dessous sont adaptés à la catégorie sélectionnée.</p>
-                    
-                    <!-- Champs communs -->
+                <div class="auth-choice-container">
+                    <div class="choice-card" id="choice-no-verify" onclick="selectAuthOption(false)">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                        <h4>Ne pas vérifier</h4>
+                        <p>L'annonce sera publiée sans badge "Authentifié".</p>
+                    </div>
+                    <div class="choice-card" id="choice-verify" onclick="selectAuthOption(true)">
+                        <i class="fa-solid fa-certificate"></i>
+                        <h4>Vérifier mon objet</h4>
+                        <p>Badge "Authentifié" après validation de nos experts.</p>
+                    </div>
+                </div>
+
+                <!-- Formulaire dynamique d'authenticité -->
+                <div id="auth-form-container" style="display: none; border-top: 1px solid #eee; padding-top: 1.5rem;">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Preuves d'achat</h3>
                     <div class="grid-2">
                         <div class="form-group">
                             <label>Magasin d'achat</label>
-                            <div class="input-icon"><i class="fa-solid fa-store"></i><input type="text" id="store" placeholder="Ex: Apple Store, Nike Store..."></div>
+                            <div class="input-icon"><i class="fa-solid fa-store"></i><input type="text" id="store"></div>
                         </div>
                         <div class="form-group">
                             <label>Date d'achat</label>
@@ -85,41 +142,24 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Facture d'achat (URL)</label>
-                        <div class="input-icon"><i class="fa-solid fa-file-invoice"></i><input type="url" id="invoiceUrl" placeholder="https://..."></div>
+                        <label>Facture (Photo/PDF)</label>
+                        <input type="file" id="invoiceFile" accept="image/*,.pdf">
                     </div>
 
-                    <!-- Champs pour Vêtements / Par défaut -->
-                    <div id="auth-clothing-fields">
-                        <label style="display:block; margin-bottom:0.5rem; font-weight:500;">Photos de l'objet (URL)</label>
-                        <div class="grid-2">
-                            <div class="input-icon"><i class="fa-solid fa-camera"></i><input type="url" id="angleFront" placeholder="Vue de face"></div>
-                            <div class="input-icon"><i class="fa-solid fa-camera"></i><input type="url" id="angleSide" placeholder="Vue de profil"></div>
-                            <div class="input-icon"><i class="fa-solid fa-shoe-prints"></i><input type="url" id="angleSole" placeholder="Semelle (si applicable)"></div>
-                            <div class="input-icon"><i class="fa-solid fa-tag"></i><input type="url" id="angleLabel" placeholder="Étiquette (si applicable)"></div>
-                        </div>
-                    </div>
-
-                    <!-- Champs pour Électronique -->
-                    <div id="auth-electronics-fields" style="display: none;">
-                        <div class="form-group">
-                            <label>Numéro de série</label>
-                            <div class="input-icon"><i class="fa-solid fa-barcode"></i><input type="text" id="serialNumber" placeholder="S/N sur la boîte ou l'appareil"></div>
-                        </div>
-                        <div class="form-group">
-                            <label>Vidéo de fonctionnement (URL)</label>
-                            <div class="input-icon"><i class="fa-solid fa-video"></i><input type="url" id="videoProofUrl" placeholder="Lien vers une vidéo YouTube, Drive..."></div>
-                        </div>
-                    </div>
+                    <!-- Champs spécifiques dynamiques -->
+                    <div id="dynamic-auth-fields"></div>
                 </div>
 
-                <button type="submit" class="btn-primary full-width">Envoyer pour validation</button>
-            </form>
+                <div class="wizard-actions">
+                    <button type="button" class="btn-secondary" onclick="prevStep(4)"><i class="fa-solid fa-arrow-left"></i> Retour</button>
+                    <button type="button" class="btn-success" onclick="submitWizardAd()">Publier l'annonce <i class="fa-solid fa-check"></i></button>
+                </div>
+            </div>
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2023 LeBonPlan. La plateforme de référence pour l'achat en gros entre particuliers.</p>
+        <p>&copy; 2026 LeBonPlan | Acheter moins cher.</p>
     </footer>
 
     <!-- Modal Compte (Connexion / Inscription) -->

@@ -14,11 +14,11 @@
     <nav class="navbar">
         <div class="logo">
             <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
-                <img src="logo.svg" alt="Logo LeBonPlan" style="height: 30px; margin-right: 5px;"> LeBonPlan <span class="slogan">Acheter moins cher</span>
+                <img src="logo.svg" alt="Logo LeBonPlan" style="height: 30px; margin-right: 5px;"> LeBonPlan <span class="slogan">Acheter moins cher.</span>
             </a>
         </div>
         <div class="nav-links">
-            <a href="publish.html" class="btn-primary">Vendre</a>
+            <a href="publish.html" class="btn-primary">Publier une annonce</a>
             <div id="user-account-links">
                 <!-- Injecté par JS -->
             </div>
@@ -35,8 +35,108 @@
     </main>
 
     <footer style="margin-top: 4rem;">
-        <p>&copy; 2023 LeBonPlan. La plateforme de référence pour l'achat en gros entre particuliers.</p>
+        <p>&copy; 2026 LeBonPlan | Acheter moins cher..</p>
     </footer>
+
+    <!-- Modal Modification (nécessaire pour la fonction "Modifier") -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-edit close">&times;</span>
+            <h2 id="editModalTitle">Modifier mon annonce</h2>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <input type="hidden" id="isUserEdit" value="false">
+                <div class="form-group">
+                    <label>Titre</label>
+                    <div class="input-icon"><i class="fa-solid fa-pen"></i><input type="text" id="editTitle" required></div>
+                </div>
+                <div class="form-group">
+                    <label>Marque</label>
+                    <div class="input-icon"><i class="fa-solid fa-tag"></i><input type="text" id="editBrand" placeholder="Ex: Apple, Nike..."></div>
+                </div>
+                <div class="form-group">
+                    <label>Prix (€)</label>
+                    <div class="input-icon"><i class="fa-solid fa-euro-sign"></i><input type="number" id="editPrice" step="0.01" required></div>
+                </div>
+                <div class="form-group">
+                    <label>État</label>
+                    <div class="input-icon"><i class="fa-solid fa-star"></i>
+                        <select id="editCondition" required>
+                            <option value="Neuf">Neuf</option>
+                            <option value="Très bon état">Très bon état</option>
+                            <option value="Bon état">Bon état</option>
+                            <option value="Reconditionné">Reconditionné</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="editDesc" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary full-width">Sauvegarder</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Promo -->
+    <div id="promoModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-promo close">&times;</span>
+            <h2>Définir une promotion</h2>
+            <form id="promoForm">
+                <input type="hidden" id="promoAdId">
+                <div class="form-group">
+                    <label>Pourcentage de réduction (%)</label>
+                    <div class="input-icon"><i class="fa-solid fa-percent"></i><input type="number" id="promoPercentage" min="0" max="99" required></div>
+                </div>
+                <button type="submit" class="btn-primary full-width">Appliquer la promotion</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Modification Profil -->
+    <div id="profileEditModal" class="modal">
+        <div class="modal-content">
+            <span class="close-profile-edit close">&times;</span>
+            <h2>Modifier mon profil</h2>
+            <form id="profileEditForm">
+                <div class="form-group">
+                    <label>Photo de profil (URL)</label>
+                    <div class="input-icon"><i class="fa-solid fa-image"></i><input type="text" id="editPdpUrl" placeholder="Lien vers votre image"></div>
+                </div>
+                <div class="form-group">
+                    <label>Prénom</label>
+                    <div class="input-icon"><i class="fa-solid fa-user"></i><input type="text" id="editFirstName" required></div>
+                </div>
+                <div class="form-group">
+                    <label>Nom</label>
+                    <div class="input-icon"><i class="fa-solid fa-user"></i><input type="text" id="editLastName" required></div>
+                </div>
+                <div class="form-group">
+                    <label>Ville</label>
+                    <div class="input-icon"><i class="fa-solid fa-city"></i><input type="text" id="editCity" required></div>
+                </div>
+                <div class="form-group">
+                    <label>Code Postal</label>
+                    <div class="input-icon"><i class="fa-solid fa-map-pin"></i><input type="text" id="editPostalCode" required></div>
+                </div>
+                <button type="submit" class="btn-primary full-width">Sauvegarder</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Confirmation -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <span class="close-confirm close">&times;</span>
+            <h2 id="confirmModalTitle" style="font-size: 1.4rem; text-align: center;">Confirmation</h2>
+            <p id="confirmModalText" style="margin: 1rem 0; text-align: center;"></p>
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+                <button id="confirmModalCancelBtn" class="btn-secondary">Annuler</button>
+                <button id="confirmModalConfirmBtn" class="btn-danger">Confirmer</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
