@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - LeBonPlan</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <img src="logo.svg" alt="Logo LeBonPlan" style="height: 30px; margin-right: 5px;"> LeBonPlan <span class="slogan">Acheter moins cher</span>
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="publish.html" class="btn-primary">Vendre</a>
+            <div id="user-account-links">
+                <!-- Injecté par JS -->
+            </div>
+            <a href="cart.html" class="cart-btn">
+                <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count" class="badge">0</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div id="profile-container">
+            <p style="text-align:center; padding: 4rem 0;">Chargement du profil...</p>
+        </div>
+    </main>
+
+    <footer style="margin-top: 4rem;">
+        <p>&copy; 2023 LeBonPlan. La plateforme de référence pour l'achat en gros entre particuliers.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

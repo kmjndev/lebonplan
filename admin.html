@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - LeBonPlan</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar admin-nav">
+        <div class="logo"><img src="logo.svg" alt="Logo LeBonPlan" style="height: 30px; margin-right: 5px;"> LeBonPlan <span class="badge">ADMIN</span></div>
+        <a href="index.html" class="btn-secondary">Retour au site</a>
+    </nav>
+
+    <main class="container">
+        <div id="admin-root"></div>
+    </main>
+
+    <!-- Modal Login Admin -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-admin-login close">&times;</span>
+            <h2 style="text-align:center; margin-bottom:1.5rem;">Connexion Admin</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Identifiant</label>
+                    <div class="input-icon"><i class="fa-solid fa-user"></i><input type="text" id="adminId" required value="admin"></div>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <div class="input-icon"><i class="fa-solid fa-lock"></i><input type="password" id="adminPass" required placeholder="••••••••"></div>
+                </div>
+                <button type="submit" class="btn-primary full-width">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Modification -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-edit close">&times;</span>
+            <h2>Gestion complète</h2>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label>Titre</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Marque</label>
+                    <input type="text" id="editBrand" placeholder="Ex: Apple, Nike...">
+                </div>
+                <div class="form-group">
+                    <label>Prix (€)</label>
+                    <input type="number" id="editPrice" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Quantité</label>
+                    <input type="number" id="editQty" required>
+                </div>
+                <div class="form-group">
+                    <label>État</label>
+                    <select id="editCondition" required style="width:100%; padding: 0.7rem; border: 1px solid #E5E7EB; border-radius: 12px;">
+                        <option value="Neuf">Neuf</option>
+                        <option value="Très bon état">Très bon état</option>
+                        <option value="Bon état">Bon état</option>
+                        <option value="Reconditionné">Reconditionné</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="editDesc" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary full-width">Sauvegarder</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Inspection (Vue Produit) -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content" style="max-width: 900px; width: 95%;">
+            <span class="close-detail close">&times;</span>
+            <div id="detail-content"></div>
+            <div id="detail-actions" style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end; border-top: 1px solid #eee; padding-top: 1rem;"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

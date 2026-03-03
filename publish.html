@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publier une annonce - LeBonPlan</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><img src="logo.svg" alt="Logo LeBonPlan" style="height: 30px; margin-right: 5px;"> LeBonPlan <span class="slogan">Acheter moins cher</span></div>
+        <div class="nav-links">
+            <a href="index.html" class="btn-secondary">Retour au site</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h2>Publier une nouvelle annonce</h2>
+        <div class="card" style="padding: 2rem; max-width: 800px; margin: 0 auto; opacity: 1; animation: none;">
+            <form id="adForm">
+                <div class="form-group">
+                    <label>Titre du produit</label>
+                    <div class="input-icon"><i class="fa-solid fa-tag"></i><input type="text" id="title" required placeholder="Ex: Lot de 50 T-shirts"></div>
+                </div>
+                <div class="form-group">
+                    <label>Marque</label>
+                    <div class="input-icon"><i class="fa-solid fa-tag"></i><input type="text" id="brand" placeholder="Ex: Nike, Apple, Sony..."></div>
+                </div>
+                <div class="form-group">
+                    <label>Prix unitaire (€)</label>
+                    <div class="input-icon"><i class="fa-solid fa-euro-sign"></i><input type="number" id="price" step="0.01" required placeholder="Ex: 5.50"></div>
+                </div>
+                <div class="form-group">
+                    <label>Catégorie</label>
+                    <div class="input-icon"><i class="fa-solid fa-list"></i>
+                        <select id="category" required style="width:100%; padding: 0.7rem; padding-left: 2.5rem; border: 1px solid #E5E7EB; border-radius: var(--radius); background: white;">
+                            <option value="Électronique">Électronique</option>
+                            <option value="Vêtements">Vêtements</option>
+                            <option value="Maison">Maison</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>État de l'objet</label>
+                    <div class="input-icon"><i class="fa-solid fa-star"></i>
+                        <select id="condition" required style="width:100%; padding: 0.7rem; padding-left: 2.5rem; border: 1px solid #E5E7EB; border-radius: var(--radius); background: white;">
+                            <option value="Neuf">Neuf</option>
+                            <option value="Très bon état">Très bon état</option>
+                            <option value="Bon état">Bon état</option>
+                            <option value="Reconditionné">Reconditionné</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Quantité disponible</label>
+                    <div class="input-icon"><i class="fa-solid fa-layer-group"></i><input type="number" id="quantity" required placeholder="50"></div>
+                </div>
+                <div class="form-group">
+                    <label>URL de l'image</label>
+                    <div class="input-icon"><i class="fa-solid fa-image"></i><input type="url" id="image" required placeholder="https://..."></div>
+                </div>
+                <div class="form-group">
+                    <label>Description détaillée</label>
+                    <textarea id="description" rows="5" required placeholder="Détails du produit, état, origine..."></textarea>
+                </div>
+
+                <div class="verification-section" id="auth-section-wrapper">
+                    <h3><i class="fa-solid fa-shield-halved"></i> Vérification authenticité</h3>
+                    <p>Les champs ci-dessous sont adaptés à la catégorie sélectionnée.</p>
+                    
+                    <!-- Champs communs -->
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Magasin d'achat</label>
+                            <div class="input-icon"><i class="fa-solid fa-store"></i><input type="text" id="store" placeholder="Ex: Apple Store, Nike Store..."></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Date d'achat</label>
+                            <div class="input-icon"><i class="fa-solid fa-calendar"></i><input type="date" id="purchaseDate"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Facture d'achat (URL)</label>
+                        <div class="input-icon"><i class="fa-solid fa-file-invoice"></i><input type="url" id="invoiceUrl" placeholder="https://..."></div>
+                    </div>
+
+                    <!-- Champs pour Vêtements / Par défaut -->
+                    <div id="auth-clothing-fields">
+                        <label style="display:block; margin-bottom:0.5rem; font-weight:500;">Photos de l'objet (URL)</label>
+                        <div class="grid-2">
+                            <div class="input-icon"><i class="fa-solid fa-camera"></i><input type="url" id="angleFront" placeholder="Vue de face"></div>
+                            <div class="input-icon"><i class="fa-solid fa-camera"></i><input type="url" id="angleSide" placeholder="Vue de profil"></div>
+                            <div class="input-icon"><i class="fa-solid fa-shoe-prints"></i><input type="url" id="angleSole" placeholder="Semelle (si applicable)"></div>
+                            <div class="input-icon"><i class="fa-solid fa-tag"></i><input type="url" id="angleLabel" placeholder="Étiquette (si applicable)"></div>
+                        </div>
+                    </div>
+
+                    <!-- Champs pour Électronique -->
+                    <div id="auth-electronics-fields" style="display: none;">
+                        <div class="form-group">
+                            <label>Numéro de série</label>
+                            <div class="input-icon"><i class="fa-solid fa-barcode"></i><input type="text" id="serialNumber" placeholder="S/N sur la boîte ou l'appareil"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Vidéo de fonctionnement (URL)</label>
+                            <div class="input-icon"><i class="fa-solid fa-video"></i><input type="url" id="videoProofUrl" placeholder="Lien vers une vidéo YouTube, Drive..."></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary full-width">Envoyer pour validation</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 LeBonPlan. La plateforme de référence pour l'achat en gros entre particuliers.</p>
+    </footer>
+
+    <!-- Modal Compte (Connexion / Inscription) -->
+    <div id="accountModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-account close">&times;</span>
+            
+            <!-- Formulaire Connexion -->
+            <div id="login-form-container">
+                <h2 style="text-align:center;">Connexion</h2>
+                <form id="loginUserForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <div class="input-icon"><i class="fa-solid fa-envelope"></i><input type="email" id="loginEmail" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe</label>
+                        <div class="input-icon"><i class="fa-solid fa-lock"></i><input type="password" id="loginPassword" required></div>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">Se connecter</button>
+                </form>
+                <p style="text-align:center; margin-top:1rem;">Pas de compte ? <a href="#" id="show-register-form">S'inscrire</a></p>
+            </div>
+
+            <!-- Formulaire Inscription -->
+            <div id="register-form-container" style="display:none;">
+                <h2 style="text-align:center;">Inscription</h2>
+                <form id="registerUserForm">
+                    <div class="grid-2" style="gap: 0.5rem 1rem;">
+                        <div class="form-group">
+                            <label>Prénom</label>
+                            <div class="input-icon"><i class="fa-solid fa-user"></i><input type="text" id="registerFirstName" required></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Nom</label>
+                            <div class="input-icon"><i class="fa-solid fa-user"></i><input type="text" id="registerLastName" required></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <div class="input-icon"><i class="fa-solid fa-envelope"></i><input type="email" id="registerEmail" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe</label>
+                        <div class="input-icon"><i class="fa-solid fa-lock"></i><input type="password" id="registerPassword" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Date de naissance</label>
+                        <div class="input-icon"><i class="fa-solid fa-calendar-day"></i><input type="date" id="registerBirthDate" required></div>
+                    </div>
+                    <div class="grid-2" style="gap: 0.5rem 1rem;">
+                        <div class="form-group">
+                            <label>Ville</label>
+                            <div class="input-icon"><i class="fa-solid fa-city"></i><input type="text" id="registerCity" required></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Code Postal</label>
+                            <div class="input-icon"><i class="fa-solid fa-map-pin"></i><input type="text" id="registerPostalCode" required></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">S'inscrire</button>
+                </form>
+                <p style="text-align:center; margin-top:1rem;">Déjà un compte ? <a href="#" id="show-login-form">Se connecter</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

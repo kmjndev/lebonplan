@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats de recherche - LeBonPlan</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><img src="logo.svg" alt="Logo LeBonPlan" style="height: 30px; margin-right: 5px;"> LeBonPlan <span class="slogan">Acheter moins cher</span></div>
+        <div class="nav-links">
+            <a href="index.html" class="btn-secondary">Accueil</a>
+            <a href="cart.html" class="cart-btn">
+                <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count" class="badge">0</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="search-block">
+        <div class="container">
+            <h1>Résultats de recherche</h1>
+            <div class="filters-container">
+                 <div class="main-filters">
+                    <div class="input-icon"><i class="fa-solid fa-search"></i><input type="text" id="searchInput" placeholder="Rechercher un produit, une marque..."></div>
+                    <button class="btn-secondary" id="openFilterPanelBtn"><i class="fa-solid fa-sliders"></i> Filtres</button>
+                    <button class="btn-primary" id="searchBtn">Rechercher</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <div id="ads-container" class="grid-container">
+            <!-- Les résultats seront injectés ici -->
+        </div>
+    </main>
+
+    <!-- Modal Filtres -->
+    <div id="filterModal" class="modal">
+        <div class="modal-content">
+            <span class="close-filter close">&times;</span>
+            <h2>Filtres</h2>
+            <form id="filterForm">
+                <div class="secondary-filters">
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        <div class="input-icon"><i class="fa-solid fa-list"></i>
+                            <select id="categoryFilter">
+                                <option value="">Toutes les catégories</option>
+                                <option value="Électronique">Électronique</option>
+                                <option value="Vêtements">Vêtements</option>
+                                <option value="Maison">Maison</option>
+                                <option value="Autre">Autre</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Marque</label>
+                        <div class="input-icon"><i class="fa-solid fa-tag"></i>
+                            <select id="brandFilter">
+                                <option value="">Toutes les marques</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>État</label>
+                        <div class="input-icon"><i class="fa-solid fa-award"></i>
+                            <select id="conditionFilter">
+                                <option value="">Tous les états</option>
+                                <option value="Neuf">Neuf</option>
+                                <option value="Très bon état">Très bon état</option>
+                                <option value="Bon état">Bon état</option>
+                                <option value="Reconditionné">Reconditionné</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Prix</label>
+                        <div class="price-filters">
+                            <div class="input-icon"><i class="fa-solid fa-euro-sign"></i><input type="number" id="minPrice" placeholder="Min"></div>
+                            <span>-</span>
+                            <div class="input-icon"><i class="fa-solid fa-euro-sign"></i><input type="number" id="maxPrice" placeholder="Max"></div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary full-width">Appliquer les filtres</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 LeBonPlan. La plateforme de référence pour l'achat en gros entre particuliers.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

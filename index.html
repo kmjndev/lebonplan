@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeBonPlan - Achat en gros entre particuliers</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Barre de promo / Annonces système -->
+    <div class="promo-bar">
+        <div class="promo-content">
+            <div class="promo-slide">🔥 <b>OFFRE DU MOMENT :</b> -5% dès 2 articles achetés !</div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.svg" alt="Logo LeBonPlan" style="height: 30px; margin-right: 5px;"> 
+            LeBonPlan <span class="slogan">Acheter moins cher</span>
+            <a href="publish.html" class="btn-primary" style="margin-left: 1.5rem;">Vendre</a>
+        </div>
+        <div class="nav-links">
+            <div id="user-account-links">
+                <!-- Injecté par JS -->
+            </div>
+            <a href="cart.html" class="cart-btn">
+                <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count" class="badge">0</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Search Header -->
+    <header class="search-header">
+        <div class="container">
+            <div class="search-bar-wrapper-main">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" id="mainSearchInput" placeholder="Rechercher un produit, une marque...">
+                <button id="mainSearchActionBtn" class="btn-primary">Rechercher</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu Principal -->
+    <main class="container">
+        <div class="home-header" style="display:flex; justify-content:space-between; align-items:center; margin: 2rem 0;">
+            <h1>Les dernières pépites</h1>
+            <button class="btn-secondary" id="openFilterPanelBtn"><i class="fa-solid fa-sliders"></i> Filtres</button>
+        </div>
+
+        <div id="ads-container" class="grid-container">
+            <!-- Les annonces seront injectées ici par JS -->
+            <p style="text-align:center; width:100%;">Chargement des offres...</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 LeBonPlan. La plateforme de référence pour l'achat en gros entre particuliers.</p>
+        <p><a href="admin.html" style="color: #666; font-size: 0.8rem;">Administration</a></p>
+    </footer>
+
+    <!-- Modal Compte (Connexion / Inscription) -->
+    <div id="accountModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-account close">&times;</span>
+            
+            <!-- Formulaire Connexion -->
+            <div id="login-form-container">
+                <h2 style="text-align:center;">Connexion</h2>
+                <form id="loginUserForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <div class="input-icon"><i class="fa-solid fa-envelope"></i><input type="email" id="loginEmail" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe</label>
+                        <div class="input-icon"><i class="fa-solid fa-lock"></i><input type="password" id="loginPassword" required></div>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">Se connecter</button>
+                </form>
+                <p style="text-align:center; margin-top:1rem;">Pas de compte ? <a href="#" id="show-register-form">S'inscrire</a></p>
+            </div>
+
+            <!-- Formulaire Inscription -->
+            <div id="register-form-container" style="display:none;">
+                <h2 style="text-align:center;">Inscription</h2>
+                <form id="registerUserForm">
+                    <div class="grid-2" style="gap: 0.5rem 1rem;">
+                        <div class="form-group">
+                            <label>Prénom</label>
+                            <div class="input-icon"><i class="fa-solid fa-user"></i><input type="text" id="registerFirstName" required></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Nom</label>
+                            <div class="input-icon"><i class="fa-solid fa-user"></i><input type="text" id="registerLastName" required></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <div class="input-icon"><i class="fa-solid fa-envelope"></i><input type="email" id="registerEmail" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe</label>
+                        <div class="input-icon"><i class="fa-solid fa-lock"></i><input type="password" id="registerPassword" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Date de naissance</label>
+                        <div class="input-icon"><i class="fa-solid fa-calendar-day"></i><input type="date" id="registerBirthDate" required></div>
+                    </div>
+                    <div class="grid-2" style="gap: 0.5rem 1rem;">
+                        <div class="form-group">
+                            <label>Ville</label>
+                            <div class="input-icon"><i class="fa-solid fa-city"></i><input type="text" id="registerCity" required></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Code Postal</label>
+                            <div class="input-icon"><i class="fa-solid fa-map-pin"></i><input type="text" id="registerPostalCode" required></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">S'inscrire</button>
+                </form>
+                <p style="text-align:center; margin-top:1rem;">Déjà un compte ? <a href="#" id="show-login-form">Se connecter</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Filtres -->
+    <div id="filterModal" class="modal">
+        <div class="modal-content">
+            <span class="close-filter close">&times;</span>
+            <h2>Filtres</h2>
+            <form id="filterForm">
+                <div class="secondary-filters">
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        <div class="input-icon"><i class="fa-solid fa-list"></i>
+                            <select id="categoryFilter">
+                                <option value="">Toutes les catégories</option>
+                                <option value="Électronique">Électronique</option>
+                                <option value="Vêtements">Vêtements</option>
+                                <option value="Maison">Maison</option>
+                                <option value="Autre">Autre</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Marque</label>
+                        <div class="input-icon"><i class="fa-solid fa-tag"></i>
+                            <select id="brandFilter">
+                                <option value="">Toutes les marques</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>État</label>
+                        <div class="input-icon"><i class="fa-solid fa-award"></i>
+                            <select id="conditionFilter">
+                                <option value="">Tous les états</option>
+                                <option value="Neuf">Neuf</option>
+                                <option value="Très bon état">Très bon état</option>
+                                <option value="Bon état">Bon état</option>
+                                <option value="Reconditionné">Reconditionné</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Prix</label>
+                        <div class="price-filters" style="display: flex; gap: 10px; align-items: center;">
+                            <div class="input-icon"><i class="fa-solid fa-euro-sign"></i><input type="number" id="minPrice" placeholder="Min"></div>
+                            <span>-</span>
+                            <div class="input-icon"><i class="fa-solid fa-euro-sign"></i><input type="number" id="maxPrice" placeholder="Max"></div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary full-width">Appliquer les filtres</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
