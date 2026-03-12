@@ -1,0 +1,2326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>lebonplan</title>
+<script src="https://accounts.google.com/gsi/client" async></script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Epilogue:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--k:#0a0a0a;--g:#666;--l:#ddd;--bg:#fff;--off:#f6f6f5;--r:#e8341c;--grn:#15803d;--bl:#1d4ed8;--warn:#854d0e}
+body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--k);min-height:100vh;line-height:1.5}
+a{text-decoration:none;color:inherit;cursor:pointer}
+button{cursor:pointer;font-family:'Epilogue',sans-serif;background:none;border:none;color:inherit;line-height:1}
+input,select,textarea{font-family:'Epilogue',sans-serif;color:var(--k)}
+::selection{background:var(--k);color:#fff}
+::-webkit-scrollbar{width:3px;height:3px}::-webkit-scrollbar-thumb{background:var(--l)}
+
+/* ═══ BUTTONS ═══ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 16px;height:36px;border-radius:3px;font-size:12px;font-weight:700;transition:all .13s;white-space:nowrap;cursor:pointer;border:2px solid transparent;font-family:'Epilogue',sans-serif}
+.btn-sm{height:28px;padding:0 11px;font-size:11px}
+.btn-lg{height:42px;padding:0 22px;font-size:13px}
+.btn-full{width:100%;justify-content:center}
+.bd {background:var(--k);color:#fff;border-color:var(--k)}      .bd:hover{background:#2a2a2a;border-color:#2a2a2a}
+.br {background:var(--r);color:#fff;border-color:var(--r)}      .br:hover{background:#c72d18;border-color:#c72d18}
+.bg {background:var(--grn);color:#fff;border-color:var(--grn)}  .bg:hover{background:#166534;border-color:#166534}
+.bbl{background:var(--bl);color:#fff;border-color:var(--bl)}    .bbl:hover{background:#1e40af}
+.bo {background:transparent;color:var(--k);border-color:var(--k)}.bo:hover{background:var(--k);color:#fff}
+.bgo{background:transparent;color:var(--g);border-color:var(--l)}.bgo:hover{border-color:var(--k);color:var(--k)}
+.bro{background:transparent;color:var(--r);border-color:#fca5a5} .bro:hover{background:#fee2e2}
+.bgr{background:transparent;color:var(--grn);border-color:#86efac}.bgr:hover{background:#dcfce7}
+.bwa{background:transparent;color:var(--warn);border-color:#fde047}.bwa:hover{background:#fef9c3}
+
+/* ═══ HEADER ═══ */
+header{position:sticky;top:0;z-index:300;background:var(--bg);border-bottom:2px solid var(--l)}
+.hbar{max-width:1200px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;gap:14px}
+.logo{display:flex;align-items:center;gap:8px;flex-shrink:0;cursor:pointer;user-select:none}
+.logo svg{width:22px;height:22px;stroke:var(--k);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.logo-txt{font-family:'Fraunces',serif;font-weight:400;font-size:19px;letter-spacing:-.5px}
+.logo-txt b{font-weight:600;color:var(--r)}
+.h-srch{flex:1;max-width:380px}
+.h-srch input{width:100%;height:34px;border:none;border-bottom:2px solid var(--l);padding:0 6px;font-size:13px;outline:none;background:none;transition:border-color .15s;color:var(--k)}
+.h-srch input:focus{border-bottom-color:var(--k)}.h-srch input::placeholder{color:#bbb}
+.hr{display:flex;align-items:center;gap:6px;margin-left:auto}
+.hico{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:3px;color:var(--g);position:relative;cursor:pointer;border:2px solid transparent;transition:all .12s}
+.hico:hover{background:var(--off);border-color:var(--l);color:var(--k)}
+.hico svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hdot{position:absolute;top:3px;right:3px;width:8px;height:8px;border-radius:50%;border:2px solid #fff;display:none}
+.hdot.r{background:var(--r)}.hdot.k{background:var(--k)}
+.upill{display:flex;align-items:center;gap:7px;height:34px;padding:0 11px;border:2px solid var(--l);border-radius:3px;cursor:pointer;transition:border-color .12s;background:var(--bg)}
+.upill:hover{border-color:var(--k)}
+.uav{width:22px;height:22px;border-radius:50%;background:var(--k);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.uav img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.upill-nm{font-size:12px;font-weight:700;color:var(--k)}
+/* SUBNAV */
+.subnav{border-bottom:2px solid var(--l);overflow-x:auto;scrollbar-width:none}
+.subnav::-webkit-scrollbar{display:none}
+.snav-i{max-width:1200px;margin:0 auto;padding:0 24px;display:flex}
+.sn{padding:9px 11px;font-size:12px;font-weight:600;color:var(--g);white-space:nowrap;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;transition:all .12s}
+.sn:hover{color:var(--k)}.sn.on{color:var(--k);border-bottom-color:var(--k)}
+
+/* ═══ PAGES ═══ */
+.page{display:none}.page.on{display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:32px 24px}
+
+/* ═══ HOME ═══ */
+.hero{max-width:1200px;margin:0 auto;padding:76px 24px 60px;border-bottom:2px solid var(--l);text-align:center}
+.headline{font-family:'Fraunces',serif;font-size:clamp(38px,5.5vw,68px);font-weight:300;line-height:1.07;letter-spacing:-1px;color:var(--k)}
+.headline em{font-style:italic;color:var(--r)}
+.hero-sub{font-size:14px;color:var(--g);margin:16px auto 42px;line-height:1.8;max-width:440px}
+.hero-q{display:flex;align-items:stretch;border-bottom:2.5px solid var(--k);max-width:480px;margin:0 auto;padding-bottom:11px}
+.hero-q input{flex:1;border:none;outline:none;background:none;font-size:16px;padding:0 4px;color:var(--k)}.hero-q input::placeholder{color:#ccc}
+.hero-q button{font-size:13px;font-weight:700;color:var(--g);padding-left:10px;transition:color .12s}.hero-q button:hover{color:var(--r)}
+.cat-sec{max-width:1200px;margin:0 auto;padding:26px 24px;border-bottom:2px solid var(--l)}
+.sec-lbl{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#bbb;margin-bottom:16px}
+.cat-grid{display:grid;grid-template-columns:repeat(5,1fr)}
+.cat-item{padding:10px 0;border-top:2px solid var(--l);display:flex;justify-content:space-between;align-items:baseline;cursor:pointer;transition:opacity .12s}
+.cat-item:hover{opacity:.7}.cat-n{font-size:13px;font-weight:600}.cat-c{font-size:11px;color:#bbb}
+/* AD SECTIONS */
+.sec-hd{display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 14px}
+.sec-title{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#bbb}
+.sec-more{font-size:12px;font-weight:700;color:var(--g);cursor:pointer;transition:color .12s}.sec-more:hover{color:var(--k)}
+.ag-wrap{border:2px solid var(--l)}
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(198px,1fr));gap:1px;background:var(--l)}
+.ac{background:var(--bg);cursor:pointer;transition:background .12s}.ac:hover{background:var(--off)}
+.ac-img{aspect-ratio:4/3;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden;position:relative;border-bottom:1px solid var(--l)}
+.ac-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ac-bdg{position:absolute;top:7px;left:7px;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;color:#fff}
+.ac-bdg.urg{background:var(--r)}.ac-bdg.pro{background:var(--bl)}.ac-bdg.k{background:var(--k)}
+.ac-fav{position:absolute;top:5px;right:5px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(255,255,255,.92);border-radius:2px;border:1px solid rgba(0,0,0,.07);transition:background .12s}
+.ac-fav:hover{background:#fff}
+.ac-body{padding:10px 12px}
+.ac-price{font-family:'Fraunces',serif;font-size:16px;font-weight:300;letter-spacing:-.3px;margin-bottom:2px}
+.ac-title{font-size:12px;color:var(--g);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.ac-foot{display:flex;justify-content:space-between;font-size:10px;color:#bbb;font-weight:500}
+
+/* ═══ LISTINGS ═══ */
+.filters{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-bottom:14px;border-bottom:2px solid var(--l);margin-bottom:16px}
+.fb{height:30px;padding:0 13px;border:2px solid var(--l);border-radius:3px;font-size:11px;font-weight:700;color:var(--g);transition:all .12s;cursor:pointer;background:var(--bg)}
+.fb:hover{border-color:var(--k);color:var(--k)}.fb.on{background:var(--k);color:#fff;border-color:var(--k)}
+.pr{display:flex;align-items:center;gap:5px;margin-left:auto;font-size:11px;color:var(--g);font-weight:600}
+.pr input{width:62px;height:30px;border:2px solid var(--l);border-radius:3px;padding:0 7px;font-size:11px;outline:none;background:var(--bg);transition:border-color .12s}
+.pr input:focus{border-color:var(--k)}
+.rct{font-size:11px;color:var(--g);margin-bottom:12px;font-weight:600}
+
+/* ═══ DETAIL ═══ */
+.det-wrap{max-width:1200px;margin:0 auto;padding:20px 24px 40px}
+.det-grid{display:grid;grid-template-columns:1fr 295px;gap:32px;align-items:start}
+.gallery{border:2px solid var(--l)}
+.gal-m{aspect-ratio:16/10;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:80px;overflow:hidden}
+.gal-m img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-ths{display:flex;border-top:2px solid var(--l)}
+.gal-th{flex:1;aspect-ratio:4/3;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:16px;border-right:2px solid var(--l);cursor:pointer;overflow:hidden;transition:opacity .12s}
+.gal-th:last-child{border-right:none}.gal-th:hover{opacity:.7}.gal-th.on{opacity:.5}
+.gal-th img{width:100%;height:100%;object-fit:cover;display:block}
+.dinfo{margin-top:16px}
+.d-price{font-family:'Fraunces',serif;font-size:30px;font-weight:300;letter-spacing:-.6px;margin-bottom:5px}
+.d-title{font-size:17px;font-weight:700;margin-bottom:10px;line-height:1.4}
+.d-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid var(--l)}
+.d-tag{font-size:11px;color:var(--g);background:var(--off);padding:3px 9px;border:1px solid var(--l);font-weight:500}
+.d-desc{font-size:13px;line-height:1.9;color:#333;padding-top:12px;border-top:2px solid var(--l);white-space:pre-wrap}
+.d-attrs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;padding-top:12px;border-top:2px solid var(--l)}
+.d-attr b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#bbb;margin-bottom:3px;font-weight:700}
+.d-attr span{font-size:12px;font-weight:600}
+.seller-box{border:2px solid var(--l)}.sblk{padding:15px;border-bottom:2px solid var(--l)}.sblk:last-child{border-bottom:none}
+.s-av{width:38px;height:38px;border-radius:50%;background:var(--k);color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-family:'Fraunces',serif}
+.s-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.s-name{font-size:14px;font-weight:700;margin-bottom:2px}.s-sub{font-size:11px;color:var(--g)}
+.cta-btn{width:100%;height:38px;border-radius:3px;font-size:13px;font-weight:700;margin-bottom:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;border:2px solid transparent;transition:all .13s;font-family:'Epilogue',sans-serif}
+.cta-p{background:var(--k);color:#fff;border-color:var(--k)}.cta-p:hover{background:#2a2a2a}
+.cta-s{background:transparent;color:var(--k);border-color:var(--l)}.cta-s:hover{border-color:var(--k)}
+.cta-r{background:transparent;color:var(--r);border-color:#fca5a5}.cta-r:hover{background:#fee2e2}
+.cta-b{background:transparent;color:var(--bl);border-color:#93c5fd}.cta-b:hover{background:#eff6ff}
+.safety{font-size:11px;color:var(--g);line-height:1.7;margin-top:10px;padding-top:10px;border-top:2px solid var(--l)}
+.sim-item{display:flex;gap:9px;padding:8px 0;border-bottom:1px solid var(--l);cursor:pointer;align-items:center;transition:opacity .1s}
+.sim-item:last-child{border-bottom:none}.sim-item:hover{opacity:.7}
+
+/* ═══ POST/EDIT AD ═══ */
+.pw{max-width:560px;margin:0 auto;padding:36px 24px}
+.pw-title{font-family:'Fraunces',serif;font-size:27px;font-weight:300;letter-spacing:-.4px;margin-bottom:28px}
+.fsec{margin-bottom:20px;padding-bottom:20px;border-bottom:2px solid var(--l)}.fsec:last-of-type{border-bottom:none;padding-bottom:0}
+.fsec-lbl{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#bbb;margin-bottom:13px}
+.fg{margin-bottom:12px}.fg label{display:block;font-size:11px;font-weight:700;color:var(--g);margin-bottom:4px;letter-spacing:.1px}
+.fg label em{color:var(--r);font-style:normal}
+.fc{width:100%;border:none;border-bottom:2px solid var(--l);padding:7px 0;font-size:13px;outline:none;background:none;transition:border-color .15s}
+.fc:focus{border-bottom-color:var(--k)}
+select.fc{cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 4px center;padding-right:22px}
+textarea.fc{resize:vertical;min-height:88px;border:2px solid var(--l);padding:9px;border-radius:2px}
+textarea.fc:focus{border-color:var(--k)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.upz{border:2px dashed var(--l);padding:24px;text-align:center;cursor:pointer;transition:all .15s;border-radius:2px}
+.upz:hover{border-color:var(--k);background:var(--off)}
+.iprevs{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.iprev{width:64px;height:48px;background:var(--off);position:relative;overflow:hidden;border:2px solid var(--l)}
+.iprev img{width:100%;height:100%;object-fit:cover;display:block}
+.iprev .irm{position:absolute;top:0;right:0;width:16px;height:16px;background:rgba(0,0,0,.8);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;cursor:pointer;border:none}
+.cc{font-size:10px;color:#bbb;text-align:right;margin-top:3px}
+
+/* ═══ MESSAGES ═══ */
+.msg-wrap{max-width:980px;margin:0 auto;padding:22px 24px}
+.msg-title{font-family:'Fraunces',serif;font-size:22px;font-weight:300;letter-spacing:-.3px;margin-bottom:14px}
+.msg-shell{display:grid;grid-template-columns:270px 1fr;border:2px solid var(--l);height:570px}
+.cv-col{border-right:2px solid var(--l);display:flex;flex-direction:column;overflow:hidden}
+.cv-hd{padding:11px 14px;font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:#bbb;border-bottom:2px solid var(--l);flex-shrink:0}
+.cv-list{overflow-y:auto;flex:1}
+.ci{display:flex;gap:9px;padding:11px 13px;cursor:pointer;border-bottom:2px solid var(--l);transition:background .1s;position:relative}
+.ci:hover{background:var(--off)}.ci.on{background:var(--off);border-left:3px solid var(--k)}
+.ci-av{width:34px;height:34px;border-radius:50%;background:var(--k);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;font-family:'Fraunces',serif}
+.ci-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.ci-body{flex:1;min-width:0}
+.ci-nm{font-size:12px;font-weight:700;margin-bottom:1px}.ci-sub{font-size:10px;color:var(--r);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-pv{font-size:11px;color:var(--g);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}.ci-t{font-size:10px;color:#bbb;margin-top:2px}
+.ci-bdg{position:absolute;top:11px;right:11px;min-width:18px;height:18px;padding:0 4px;background:var(--r);color:#fff;border-radius:2px;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.cht-col{display:flex;flex-direction:column;overflow:hidden;height:570px}
+.cht-hd{padding:11px 15px;border-bottom:2px solid var(--l);flex-shrink:0;display:flex;align-items:center;gap:10px;background:var(--bg)}
+.cht-hd-av{width:32px;height:32px;border-radius:50%;background:var(--k);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;font-family:'Fraunces',serif}
+.cht-hd-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.cht-hd-nm{font-size:13px;font-weight:700}.cht-hd-sb{font-size:11px;color:var(--g)}
+.cht-msgs{flex:1;padding:14px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;background:var(--off);min-height:0}
+.cbbl{max-width:70%}.cbbl.s{align-self:flex-end}.cbbl.rx{align-self:flex-start}
+.cbbl-t{padding:9px 13px;font-size:12px;line-height:1.6;border-radius:2px}
+.cbbl.s .cbbl-t{background:var(--k);color:#fff}.cbbl.rx .cbbl-t{background:#fff;border:2px solid var(--l);color:var(--k)}
+.cbbl-time{font-size:10px;color:#bbb;margin-top:3px}.cbbl.s .cbbl-time{text-align:right}
+.cht-in{display:flex;border-top:2px solid var(--l);flex-shrink:0}
+.cht-in input{flex:1;border:none;outline:none;padding:12px 14px;font-size:13px;background:var(--bg);color:var(--k)}
+.cht-send{padding:0 18px;background:var(--k);color:#fff;font-size:12px;font-weight:700;transition:background .12s;border:none;cursor:pointer;font-family:'Epilogue',sans-serif;flex-shrink:0}
+.cht-send:hover{background:#2a2a2a}
+.cht-idle{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.cht-idle svg{width:32px;height:32px;stroke:#ddd;fill:none;stroke-width:1.5}
+.cht-idle p{font-size:12px;color:#bbb}
+
+/* ═══ PROFILE ═══ */
+.prof-wrap{max-width:860px;margin:0 auto;padding:30px 24px}
+.prof-hero{display:flex;gap:18px;align-items:flex-start;margin-bottom:22px;padding-bottom:20px;border-bottom:2px solid var(--l)}
+.prof-av{width:56px;height:56px;border-radius:50%;background:var(--k);color:#fff;font-size:22px;font-weight:300;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;overflow:hidden;flex-shrink:0}
+.prof-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.prof-nm{font-family:'Fraunces',serif;font-size:24px;font-weight:300;letter-spacing:-.4px;margin-bottom:3px}
+.prof-sub{font-size:12px;color:var(--g);font-weight:500}
+.prof-stats{display:flex;gap:22px;margin-top:10px}
+.pst strong{display:block;font-family:'Fraunces',serif;font-size:20px;font-weight:300;line-height:1.2}
+.pst span{font-size:11px;color:var(--g);font-weight:600}
+.rating-avg{display:flex;align-items:center;gap:6px;margin-top:8px}
+.rating-avg .stars{color:#f59e0b;font-size:14px;letter-spacing:1px}
+.rating-avg span{font-size:12px;color:var(--g);font-weight:600}
+.tabs{display:flex;border-bottom:2px solid var(--l);margin-bottom:18px}
+.tab{padding:9px 14px;font-size:12px;font-weight:700;color:var(--g);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;background:none;transition:all .12s}
+.tab:hover{color:var(--k)}.tab.on{color:var(--k);border-bottom-color:var(--k)}
+.tabp{display:none}.tabp.on{display:block}
+.sblk2{margin-bottom:18px;padding-bottom:18px;border-bottom:2px solid var(--l)}.sblk2:last-child{border-bottom:none}
+.sblk2 h4{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#bbb;margin-bottom:12px}
+
+/* REVIEWS */
+.review-item{padding:13px 0;border-bottom:2px solid var(--l)}.review-item:last-child{border-bottom:none}
+.rev-hd{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.rev-av{width:28px;height:28px;border-radius:50%;background:var(--k);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-family:'Fraunces',serif}
+.rev-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.rev-nm{font-size:12px;font-weight:700}
+.rev-date{font-size:10px;color:#bbb;font-weight:500;margin-left:auto}
+.stars{color:#f59e0b;font-size:12px;letter-spacing:.5px}
+.rev-txt{font-size:12px;color:#333;line-height:1.7;margin-top:4px}
+.star-inp{display:flex;gap:3px;margin:10px 0}
+.star-inp-btn{font-size:24px;line-height:1;color:#ddd;background:none;border:none;cursor:pointer;padding:0 2px;transition:all .1s;font-family:inherit}
+.star-inp button{font-size:24px;line-height:1;color:#ddd;background:none;border:none;cursor:pointer;padding:0 2px;transition:all .1s}
+.star-inp button.on{color:#f59e0b}.star-inp button:hover{transform:scale(1.1)}
+
+/* ═══ ADMIN ═══ */
+.admin-shell{display:grid;grid-template-columns:218px 1fr;min-height:calc(100vh - 100px)}
+.adm-side{background:#0a0a0a;color:#fff;display:flex;flex-direction:column;border-right:1px solid #1a1a1a}
+.adm-logo{padding:18px 16px 14px;border-bottom:1px solid rgba(255,255,255,.07);font-family:'Fraunces',serif;font-size:14px;font-weight:300;letter-spacing:-.2px}
+.adm-logo span{color:rgba(255,255,255,.3)}.adm-logo b{color:var(--r);font-weight:600}
+.adm-sep{padding:14px 16px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.2)}
+.adm-nav{display:flex;align-items:center;gap:9px;padding:9px 16px;font-size:12px;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;transition:all .12s;border-left:3px solid transparent}
+.adm-nav svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.adm-nav:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.04)}.adm-nav.on{color:#fff;background:rgba(255,255,255,.07);border-left-color:var(--r)}
+.adm-nav .nbdg{margin-left:auto;background:var(--r);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:2px}
+.adm-foot{margin-top:auto;padding:12px 16px;border-top:1px solid rgba(255,255,255,.07)}
+.adm-main{background:var(--bg);padding:26px 30px;overflow-y:auto;min-width:0}
+.adm-pane{display:none}.adm-pane.on{display:block}
+.adm-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;gap:10px}
+.adm-h1{font-family:'Fraunces',serif;font-size:22px;font-weight:300;letter-spacing:-.3px}
+.adm-h1-sub{font-size:11px;color:var(--g);margin-top:3px;font-weight:500}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:22px}
+.kpi{border:2px solid var(--l);padding:15px}
+.kpi-v{font-family:'Fraunces',serif;font-size:26px;font-weight:300;letter-spacing:-.5px;margin-bottom:3px}
+.kpi-l{font-size:11px;color:var(--g);font-weight:600}
+.kpi-d{font-size:10px;font-weight:700;margin-top:5px}
+.kpi-d.up{color:var(--grn)}.kpi-d.dn{color:var(--r)}.kpi-d.neu{color:var(--g)}
+
+/* TABLE */
+.tbl-w{border:2px solid var(--l);overflow:hidden;margin-bottom:16px}.tbl-w.sc{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;min-width:480px}
+.tbl th{padding:9px 12px;font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#bbb;background:var(--off);border-bottom:2px solid var(--l);text-align:left;white-space:nowrap}
+.tbl td{padding:9px 12px;font-size:12px;border-bottom:2px solid var(--l);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}.tbl tr:hover td{background:var(--off)}
+.tag{display:inline-block;padding:2px 8px;border-radius:2px;font-size:10px;font-weight:700;white-space:nowrap}
+.tag.ok{background:#dcfce7;color:var(--grn)}.tag.warn{background:#fef9c3;color:var(--warn)}
+.tag.ban{background:#fee2e2;color:var(--r)}.tag.pro{background:#eff6ff;color:var(--bl)}
+.tag.part{background:var(--off);color:var(--g);border:1px solid var(--l)}.tag.rem{background:#fee2e2;color:var(--r)}
+.tag.pend{background:#fef9c3;color:var(--warn)}.tag.adm{background:#f3e8ff;color:#7e22ce}
+.tag.info{background:#eff6ff;color:var(--bl)}
+
+.srch-row{display:flex;gap:7px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.srch-row input,.srch-row select{height:30px;border:2px solid var(--l);border-radius:3px;padding:0 9px;font-size:12px;outline:none;background:var(--bg);color:var(--k);font-family:'Epilogue',sans-serif}
+.srch-row input{flex:1;max-width:230px;min-width:120px}.srch-row input:focus,.srch-row select:focus{border-color:var(--k)}
+
+/* CHART */
+.chart-box{border:2px solid var(--l);padding:16px;margin-bottom:14px}
+.chart-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#bbb;margin-bottom:14px}
+.bar-chart{display:flex;align-items:flex-end;gap:5px;height:80px}
+.bar{flex:1;border-radius:2px 2px 0 0;position:relative;min-width:0;transition:opacity .12s}.bar:hover{opacity:.75}
+.bar.dk{background:var(--k)}.bar.re{background:var(--r)}.bar.gr{background:var(--grn)}
+.bv{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;white-space:nowrap;color:var(--k)}
+.bx{flex:1;text-align:center;font-size:9px;color:#bbb;margin-top:4px;font-weight:600}
+.c2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+
+/* TOGGLE */
+.tog{width:36px;height:20px;background:var(--l);border-radius:10px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none}
+.tog.on{background:var(--k)}.tog::after{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.tog.on::after{transform:translateX(16px)}
+
+/* SETTINGS */
+.set-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.set-card{border:2px solid var(--l);padding:15px}
+.set-card h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#bbb;margin-bottom:12px}
+.set-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:2px solid var(--l);font-size:12px;font-weight:600;gap:8px}
+.set-row:last-child{border-bottom:none}
+
+/* SERVICES */
+.svc-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:2px solid var(--l);gap:8px}
+.svc-item:last-child{border-bottom:none}
+.svc-nm{font-size:12px;font-weight:700}.svc-host{font-size:11px;color:var(--g);margin-top:1px}
+.sdot{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700}
+.sdot::before{content:'';width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sdot.on{color:var(--grn)}.sdot.on::before{background:var(--grn)}.sdot.off{color:var(--r)}.sdot.off::before{background:var(--r)}.sdot.w{color:var(--warn)}.sdot.w::before{background:#eab308}
+
+/* LOGS */
+.log-item{display:flex;gap:10px;padding:8px 0;border-bottom:2px solid var(--l);font-size:12px;align-items:flex-start}
+.log-item:last-child{border-bottom:none}
+.log-t{font-size:10px;color:#bbb;flex-shrink:0;width:72px;margin-top:1px;font-weight:600}
+.log-b{font-size:9px;font-weight:700;letter-spacing:.3px;padding:2px 7px;border-radius:2px;flex-shrink:0;margin-top:1px}
+.log-b.inf{background:#eff6ff;color:var(--bl)}.log-b.wrn{background:#fef9c3;color:var(--warn)}.log-b.err{background:#fee2e2;color:var(--r)}
+
+/* ═══ MODALS ═══ */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:500;display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(4px)}
+.ov.on{display:flex;animation:fa .15s ease}
+@keyframes fa{from{opacity:0}to{opacity:1}}
+.modal{background:var(--bg);width:100%;max-width:400px;animation:ms .18s ease;border:2px solid var(--l)}
+.modal.wide{max-width:520px}.modal.xlg{max-width:700px}
+@keyframes ms{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+.mhd{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:2px solid var(--l)}
+.mhd h2{font-family:'Fraunces',serif;font-size:18px;font-weight:300;letter-spacing:-.3px}
+.mcl{width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:var(--g);font-size:16px;border-radius:2px;cursor:pointer;border:2px solid transparent;transition:all .12s;font-weight:700;background:none}
+.mcl:hover{background:var(--off);border-color:var(--l);color:var(--k)}
+.mbody{padding:18px}
+.mfoot{padding:11px 18px;border-top:2px solid var(--l);text-align:center;font-size:12px;color:var(--g)}
+.mfoot a{color:var(--k);font-weight:700;cursor:pointer;text-decoration:underline}
+.google-btn{width:100%;height:40px;border:2px solid var(--l);border-radius:3px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .15s;background:#fff;color:#3c4043;cursor:pointer}
+.google-btn:hover{border-color:#999;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.or-sep{text-align:center;font-size:11px;color:#bbb;margin:12px 0;position:relative}
+.or-sep::before,.or-sep::after{content:'';position:absolute;top:50%;width:42%;height:2px;background:var(--l)}
+.or-sep::before{left:0}.or-sep::after{right:0}
+.mfg{margin-bottom:11px}
+.mfg label{display:block;font-size:11px;font-weight:700;color:var(--g);margin-bottom:4px}
+.mfc{width:100%;height:34px;border:none;border-bottom:2px solid var(--l);padding:0 2px;font-size:13px;outline:none;background:none;transition:border-color .15s;color:var(--k)}
+.mfc:focus{border-bottom-color:var(--k)}
+.mfrow{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.msub{width:100%;height:38px;background:var(--k);color:#fff;font-size:13px;font-weight:700;margin-top:5px;border-radius:3px;border:none;cursor:pointer;font-family:'Epilogue',sans-serif;transition:background .13s}
+.msub:hover{background:#2a2a2a}
+.merr{font-size:11px;color:var(--r);padding:8px 11px;border:2px solid #fca5a5;background:#fff5f5;margin-bottom:11px;border-radius:2px;font-weight:600}
+.mok{font-size:11px;color:var(--grn);padding:8px 11px;border:2px solid #86efac;background:#f0fdf4;margin-bottom:11px;border-radius:2px;font-weight:600}
+.forgot{text-align:right;font-size:11px;color:var(--g);margin-bottom:9px}
+
+/* DROPDOWNS */
+.ndd{position:absolute;top:calc(100% + 8px);right:0;width:295px;background:var(--bg);border:2px solid var(--l);z-index:400;display:none;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.ndd.on{display:block;animation:fa .12s ease}
+.ndd-hd{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border-bottom:2px solid var(--l)}
+.ndd-hd span{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#bbb}
+.ndd-hd button{font-size:11px;font-weight:700;color:var(--g);cursor:pointer;border:none;background:none;transition:color .12s}.ndd-hd button:hover{color:var(--k)}
+.ni{display:flex;gap:9px;padding:10px 13px;cursor:pointer;border-bottom:2px solid var(--l);transition:background .1s}
+.ni:hover{background:var(--off)}.ni.unread{background:#fafaf8}
+.ni-ico{width:26px;height:26px;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;border:2px solid var(--l);border-radius:2px}
+.ni-title{font-size:12px;font-weight:700}.ni-desc{font-size:11px;color:var(--g);margin-top:1px}.ni-time{font-size:10px;color:#bbb;margin-top:2px}
+.ni-dot{width:6px;height:6px;background:var(--r);border-radius:50%;align-self:center;margin-left:auto;flex-shrink:0}
+.ndd-empty{padding:18px;text-align:center;font-size:12px;color:#bbb}
+.udd{position:absolute;top:calc(100% + 8px);right:0;width:182px;background:var(--bg);border:2px solid var(--l);z-index:400;display:none;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.udd.on{display:block;animation:fa .12s ease}
+.udd-hd{padding:11px 13px;border-bottom:2px solid var(--l)}
+.udd-nm{font-size:12px;font-weight:700}.udd-em{font-size:11px;color:var(--g);margin-top:2px}
+.uddi{padding:9px 13px;font-size:12px;font-weight:600;cursor:pointer;border-bottom:2px solid var(--l);transition:background .1s}
+.uddi:last-child{border-bottom:none}.uddi:hover{background:var(--off)}.uddi.red{color:var(--r)}
+
+/* BREADCRUMB */
+.bc{max-width:1200px;margin:0 auto;padding:13px 24px 0;font-size:11px;color:var(--g);display:flex;gap:5px;align-items:center;font-weight:600}
+.bc a{cursor:pointer;transition:color .1s}.bc a:hover{color:var(--k)}.bc .cur{color:var(--k)}
+
+/* TOAST */
+.toasts{position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:5px}
+.toast{background:var(--k);color:#fff;padding:10px 15px;font-size:12px;font-weight:600;min-width:180px;animation:tIn .17s ease;border-radius:3px;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.toast.ok{background:var(--grn)}.toast.err{background:var(--r)}.toast.info{background:var(--bl)}
+@keyframes tIn{from{transform:translateX(30px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* AUTOCOMPLETE */
+.pos-rel{position:relative}
+.ac-list{position:absolute;top:100%;left:0;right:0;background:var(--bg);border:2px solid var(--l);max-height:200px;overflow-y:auto;z-index:200;display:none}
+.ac-list.on{display:block}
+.ac-opt{padding:8px 11px;font-size:12px;cursor:pointer;transition:background .1s;font-weight:500}
+.ac-opt:hover,.ac-opt.sel{background:var(--off)}
+
+/* EMPTY */
+.pg-empty{text-align:center;padding:48px 20px}
+.pg-empty h3{font-family:'Fraunces',serif;font-size:20px;font-weight:300;margin-bottom:6px}
+.pg-empty p{font-size:12px;color:var(--g);margin-bottom:18px;line-height:1.7}
+
+/* GCID BANNER */
+.gcid-banner{background:#fef9c3;border-bottom:2px solid #fde047;padding:9px 24px;font-size:12px;color:var(--warn);display:flex;align-items:center;gap:10px;font-weight:600}
+.gcid-banner a{text-decoration:underline;cursor:pointer}
+
+/* ACT FEED */
+.act-item{display:flex;gap:10px;padding:9px 0;border-bottom:2px solid var(--l);font-size:12px;align-items:center}
+.act-item:last-child{border-bottom:none}
+.act-ico{width:28px;height:28px;background:var(--off);border:2px solid var(--l);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.act-txt{flex:1;color:var(--k);line-height:1.4}.act-time{font-size:10px;color:#bbb;white-space:nowrap;font-weight:600}
+
+/* REPORT PAGE */
+.rep-page{max-width:600px;margin:0 auto;padding:40px 24px}
+.rep-page h1{font-family:'Fraunces',serif;font-size:26px;font-weight:300;letter-spacing:-.4px;margin-bottom:8px}
+.rep-page p{font-size:13px;color:var(--g);margin-bottom:28px;line-height:1.7}
+.rep-card{border:2px solid var(--l);padding:14px;margin-bottom:20px;background:var(--off)}
+.rep-card strong{font-size:13px;font-weight:700}.rep-card span{font-size:12px;color:var(--g)}
+
+/* FOOTER */
+footer{border-top:2px solid var(--l);margin-top:56px;padding:28px 24px 18px}
+.fw{max-width:1200px;margin:0 auto}
+.ft-grid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:32px;margin-bottom:22px}
+.f-logo{font-family:'Fraunces',serif;font-size:16px;font-weight:300;margin-bottom:6px}
+.f-logo b{font-weight:600;color:var(--r)}
+.f-desc{font-size:12px;color:var(--g);line-height:1.8}
+.f-col h5{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:#bbb;margin-bottom:10px}
+.f-col a{display:block;font-size:12px;color:var(--g);margin-bottom:6px;transition:color .1s;font-weight:500}.f-col a:hover{color:var(--k)}
+.f-bot{display:flex;justify-content:space-between;padding-top:14px;border-top:2px solid var(--l);font-size:11px;color:#bbb}
+
+@media(max-width:768px){
+  .cat-grid{grid-template-columns:repeat(2,1fr)}.det-grid{grid-template-columns:1fr}.msg-shell{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:1fr 1fr}.frow{grid-template-columns:1fr}.admin-shell{grid-template-columns:1fr}.adm-side{display:none}
+  .kpi-row{grid-template-columns:1fr 1fr}.c2{grid-template-columns:1fr}.set-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="gcidBanner" class="gcid-banner" style="display:none">⚠ Connexion Google non configurée — <a onclick="openM('gsetup')">Configurer →</a></div>
+
+<header>
+  <div class="hbar">
+    <a class="logo" onclick="go('home')">
+      <svg viewBox="0 0 24 24"><path d="M13 2H7a1 1 0 0 0-1 1v7c0 .27.1.51.29.71l7 7a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 0-1.42l-7-7A1 1 0 0 0 13 2z"/><circle cx="9.5" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg>
+      <span class="logo-txt">lebon<b>plan</b></span>
+    </a>
+    <div class="h-srch"><input type="text" id="hq" placeholder="Rechercher…" onkeydown="if(event.key==='Enter')doSearch()"></div>
+    <div class="hr">
+      <div style="position:relative" id="nWrap">
+        <div class="hico" onclick="toggleDD('nDD')">
+          <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="hdot r" id="nDot"></span>
+        </div>
+        <div class="ndd" id="nDD">
+          <div class="ndd-hd"><span>Notifications</span><button onclick="markAllRead()">Tout lire</button></div>
+          <div id="nList"></div>
+        </div>
+      </div>
+      <div class="hico" onclick="requireAuth(()=>go('messages'))" style="position:relative">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="hdot k" id="mDot"></span>
+      </div>
+      <div id="hGuest" style="display:flex;gap:6px">
+        <button class="btn bgo btn-sm" onclick="openM('login')">Connexion</button>
+        <button class="btn bd btn-sm" onclick="openM('register')">S'inscrire</button>
+      </div>
+      <div id="hUser" style="display:none;position:relative">
+        <div class="upill" onclick="toggleDD('uDD')">
+          <div class="uav" id="uAv"></div>
+          <span class="upill-nm" id="uNm">—</span>
+        </div>
+        <div class="udd" id="uDD">
+          <div class="udd-hd"><div class="udd-nm" id="uddNm">—</div><div class="udd-em" id="uddEm">—</div></div>
+          <div class="uddi" onclick="closeAllDD();go('profile')">👤 Mon profil</div>
+          <div class="uddi" onclick="closeAllDD();requireAuth(()=>go('messages'))">✉ Messages</div>
+          <div class="uddi" onclick="closeAllDD();requireAuth(()=>go('post-ad'))">＋ Déposer</div>
+          <div class="uddi" id="adminLink" style="display:none" onclick="closeAllDD();go('admin')">⚙ Administration</div>
+          <div class="uddi red" onclick="logout()">Déconnexion</div>
+        </div>
+      </div>
+      <button class="btn br btn-sm" onclick="requireAuth(()=>go('post-ad'))">＋ Déposer</button>
+    </div>
+  </div>
+  <div class="subnav">
+    <div class="snav-i">
+      <div class="sn on" data-cat="" onclick="setCat(this,'')">Tout</div>
+      <div class="sn" data-cat="Véhicules" onclick="setCat(this,'Véhicules')">Véhicules</div>
+      <div class="sn" data-cat="Immobilier" onclick="setCat(this,'Immobilier')">Immobilier</div>
+      <div class="sn" data-cat="Électronique" onclick="setCat(this,'Électronique')">Électronique</div>
+      <div class="sn" data-cat="Mode" onclick="setCat(this,'Mode')">Mode</div>
+      <div class="sn" data-cat="Maison" onclick="setCat(this,'Maison')">Maison</div>
+      <div class="sn" data-cat="Loisirs" onclick="setCat(this,'Loisirs')">Loisirs</div>
+      <div class="sn" data-cat="Sports" onclick="setCat(this,'Sports')">Sports</div>
+      <div class="sn" data-cat="Animaux" onclick="setCat(this,'Animaux')">Animaux</div>
+      <div class="sn" data-cat="Services" onclick="setCat(this,'Services')">Services</div>
+    </div>
+  </div>
+</header>
+
+<!-- ════ HOME ════ -->
+<div class="page on" id="page-home">
+  <div class="hero">
+    <div class="headline">Trouvez le<br><em>bon plan</em><br>près de chez vous.</div>
+    <p class="hero-sub">La plateforme gratuite pour acheter et vendre entre particuliers.</p>
+    <div class="hero-q">
+      <input id="heroQ" type="text" placeholder="iPhone, appartement, voiture…" onkeydown="if(event.key==='Enter')doHeroSearch()">
+      <button onclick="doHeroSearch()">Rechercher →</button>
+    </div>
+  </div>
+  <div class="cat-sec">
+    <div class="sec-lbl">Catégories</div>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+  <div class="wrap" id="homeAds"></div>
+</div>
+
+<!-- ════ LISTINGS ════ -->
+<div class="page" id="page-listings">
+  <div class="bc"><a onclick="go('home')">Accueil</a><span>›</span><span class="cur" id="listTitle">Annonces</span></div>
+  <div class="wrap" style="padding-top:16px">
+    <div class="filters">
+      <button class="fb on" id="fsR" onclick="setSort('r',this)">Récentes</button>
+      <button class="fb" id="fsA" onclick="setSort('a',this)">Prix ↑</button>
+      <button class="fb" id="fsD" onclick="setSort('d',this)">Prix ↓</button>
+      <button class="fb" id="ftP" onclick="toggleType('particular')">Particulier</button>
+      <button class="fb" id="ftB" onclick="toggleType('pro')">Pro</button>
+      <div class="pr">Prix&nbsp;<input type="number" id="pMn" placeholder="Min" oninput="renderList()">–<input type="number" id="pMx" placeholder="Max" oninput="renderList()"> €</div>
+    </div>
+    <p class="rct"><span id="rCt">0</span> annonces</p>
+    <div id="listGrid"></div>
+    <div id="listEmpty" class="pg-empty" style="display:none"><h3>Aucun résultat</h3><p>Essayez d'autres filtres.</p><button class="btn bd" onclick="go('home')">Retour à l'accueil</button></div>
+  </div>
+</div>
+
+<!-- ════ DETAIL ════ -->
+<div class="page" id="page-detail">
+  <div class="bc"><a onclick="go('home')">Accueil</a><span>›</span><a onclick="go('listings')" id="dCatBC">Annonces</a><span>›</span><span class="cur" id="dTBC">—</span></div>
+  <div class="det-wrap">
+    <div class="det-grid">
+      <div>
+        <div class="gallery"><div class="gal-m" id="galM"></div><div class="gal-ths" id="galTh"></div></div>
+        <div class="dinfo">
+          <div class="d-price" id="dPrice"></div>
+          <div class="d-title" id="dTitle"></div>
+          <div class="d-tags" id="dTags"></div>
+          <div class="d-desc" id="dDesc"></div>
+          <div class="d-attrs" id="dAttrs"></div>
+        </div>
+      </div>
+      <div>
+        <div class="seller-box">
+          <div class="sblk">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <div class="s-av" id="sAv" style="cursor:pointer" onclick="openSellerProfile()"></div>
+              <div><div class="s-name" id="sName" style="cursor:pointer" onclick="openSellerProfile()"></div><div class="s-sub" id="sSub"></div></div>
+            </div>
+            <button class="cta-btn cta-p" id="btnContact" onclick="contactSeller()">✉ Envoyer un message</button>
+            <button class="cta-btn cta-s" onclick="revealPhone()">📞 Voir le numéro</button>
+            <button class="cta-btn cta-r" id="btnReport" onclick="requireAuth(()=>openReport())">⚑ Signaler l'annonce</button>
+            <button class="cta-btn cta-b" id="btnEditAd" style="display:none" onclick="openEditAd()">✏ Modifier l'annonce</button>
+            <button class="cta-btn" id="btnDeleteAd" style="display:none;background:transparent;color:var(--r);border:2px solid #fca5a5" onclick="deleteMyAd()">🗑 Supprimer l'annonce</button>
+            <p class="safety">Ne payez jamais avant d'avoir vu l'objet. Préférez les rencontres en lieu public.</p>
+          </div>
+          <div class="sblk">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#bbb;margin-bottom:11px">Annonces similaires</div>
+            <div id="simAds"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ REPORT PAGE ════ -->
+<div class="page" id="page-report">
+  <div class="bc"><a onclick="go('home')">Accueil</a><span>›</span><a onclick="history.back()">Annonce</a><span>›</span><span class="cur">Signalement</span></div>
+  <div class="rep-page">
+    <h1>⚑ Signaler une annonce</h1>
+    <p>Votre signalement sera examiné par notre équipe de modération dans les plus brefs délais.</p>
+    <div class="rep-card" id="repAdCard"></div>
+    <div class="fg"><label style="font-size:11px;font-weight:700;color:var(--g);margin-bottom:6px;display:block;letter-spacing:.1px">Motif du signalement <em style="color:var(--r)">*</em></label>
+      <select class="fc" id="repReason">
+        <option value="">Sélectionner un motif…</option>
+        <option>Arnaque / fraude</option>
+        <option>Contenu inapproprié ou choquant</option>
+        <option>Spam ou annonce en double</option>
+        <option>Article interdit à la vente</option>
+        <option>Prix abusif</option>
+        <option>Informations fausses</option>
+        <option>Autre</option>
+      </select>
+    </div>
+    <div class="fg" style="margin-top:12px"><label style="font-size:11px;font-weight:700;color:var(--g);margin-bottom:6px;display:block">Détails supplémentaires</label>
+      <textarea class="fc" id="repDetails" rows="4" placeholder="Décrivez le problème en détail…" style="margin-top:4px"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button class="btn br btn-lg" onclick="submitReport()">Envoyer le signalement</button>
+      <button class="btn bgo btn-lg" onclick="go('home')">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ POST AD ════ -->
+<div class="page" id="page-post-ad">
+  <div class="pw">
+    <div class="pw-title" id="postAdTitle">Déposer une annonce</div>
+    <input type="hidden" id="editAdId" value="">
+    <div class="fsec">
+      <div class="fsec-lbl">Catégorie</div>
+      <div class="fg"><label>Catégorie <em>*</em></label>
+        <select class="fc" id="aC"><option value="">Choisir…</option><option>Véhicules</option><option>Immobilier</option><option>Électronique</option><option>Mode</option><option>Maison</option><option>Loisirs</option><option>Animaux</option><option>Services</option><option>Sports</option><option>Musique</option></select>
+      </div>
+    </div>
+    <div class="fsec">
+      <div class="fsec-lbl">Photos</div>
+      <div class="upz" onclick="document.getElementById('fIn').click()"><div style="font-size:26px;color:#bbb">↑</div><p style="font-size:12px;color:var(--g);margin-top:4px">Cliquez pour ajouter des photos · max 5</p></div>
+      <input type="file" id="fIn" accept="image/*" multiple style="display:none" onchange="handleFiles(this)">
+      <div class="iprevs" id="imgPrev"></div>
+    </div>
+    <div class="fsec">
+      <div class="fsec-lbl">Détails</div>
+      <div class="fg"><label>Titre <em>*</em></label><input class="fc" type="text" id="aTitle" maxlength="70" oninput="document.getElementById('tcc').textContent=this.value.length" placeholder="Ex : iPhone 14 Pro 256Go"><div class="cc"><span id="tcc">0</span>/70</div></div>
+      <div class="fg"><label>Description <em>*</em></label><textarea class="fc" id="aDesc" rows="5" placeholder="Décrivez votre article…"></textarea></div>
+      <div class="frow">
+        <div class="fg"><label>Prix (€)</label><input class="fc" type="number" id="aPrice" placeholder="0 = Gratuit" min="0"></div>
+        <div class="fg"><label>État</label><select class="fc" id="aCond"><option>Neuf avec étiquette</option><option>Neuf sans étiquette</option><option>Très bon état</option><option selected>Bon état</option><option>État correct</option><option>Pour pièces</option></select></div>
+      </div>
+      <div class="fg"><label>Type de vendeur</label><select class="fc" id="aType"><option value="particular">Particulier</option><option value="pro">Professionnel</option></select></div>
+    </div>
+    <div class="fsec">
+      <div class="fsec-lbl">Localisation</div>
+      <div class="frow">
+        <div class="fg pos-rel"><label>Ville <em>*</em></label><input class="fc" type="text" id="aCity" placeholder="Tapez une ville…" autocomplete="off" oninput="cityAC('aCity','aCityAC','aZip')"><div class="ac-list" id="aCityAC"></div></div>
+        <div class="fg"><label>Code postal</label><input class="fc" type="text" id="aZip" placeholder="75001" maxlength="5" style="color:var(--g)"></div>
+      </div>
+    </div>
+    <div class="fsec" style="border-bottom:none">
+      <div class="fsec-lbl">Options</div>
+      <div style="display:flex;gap:20px">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;font-weight:700"><input type="checkbox" id="oUrg"> Urgent</label>
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;font-weight:700"><input type="checkbox" id="oDel"> Livraison possible</label>
+      </div>
+    </div>
+    <div style="margin-top:24px;display:flex;gap:10px">
+      <button class="btn bd btn-lg" onclick="submitAd()" style="flex:1" id="submitAdBtn">Publier l'annonce</button>
+      <button class="btn bgo btn-lg" id="cancelEditBtn" style="display:none" onclick="go('home')">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ MESSAGES ════ -->
+<div class="page" id="page-messages">
+  <div class="msg-wrap">
+    <div class="msg-title">Messages</div>
+    <div class="msg-shell">
+      <div class="cv-col"><div class="cv-hd">Conversations</div><div class="cv-list" id="cvList"></div></div>
+      <div class="cht-col" id="chtCol">
+        <div class="cht-idle"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><p>Sélectionnez une conversation</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ PROFILE (own) ════ -->
+<div class="page" id="page-profile">
+  <div class="prof-wrap">
+    <div class="prof-hero">
+      <div class="prof-av" id="profAv"></div>
+      <div style="flex:1">
+        <div class="prof-nm" id="profNm">—</div>
+        <div class="prof-sub" id="profSub">—</div>
+        <div class="prof-stats">
+          <div class="pst"><strong id="stAds">0</strong><span>annonces</span></div>
+          <div class="pst"><strong id="stFavs">0</strong><span>favoris</span></div>
+          <div class="pst"><strong id="stRevs">—</strong><span>note moyenne</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab on" onclick="switchTab('tAds',this)">Mes annonces</button>
+      <button class="tab" onclick="switchTab('tFavs',this)">Favoris</button>
+      <button class="tab" onclick="switchTab('tRevs',this)">Avis reçus</button>
+      <button class="tab" onclick="switchTab('tSet',this)">Paramètres</button>
+    </div>
+    <div class="tabp on" id="tAds"><div id="myAdsG"></div><div id="myAdsE" class="pg-empty" style="display:none"><h3>Aucune annonce</h3><p>Vous n'avez rien publié.</p><button class="btn bd" onclick="go('post-ad')">＋ Déposer</button></div></div>    <div class="tabp" id="tFavs"><div id="favG"></div><div id="favE" class="pg-empty" style="display:none"><h3>Aucun favori</h3><p>Aimez des annonces pour les retrouver ici.</p><button class="btn bd" onclick="go('listings')">Parcourir</button></div></div>
+    <div class="tabp" id="tRevs"><div id="myRevsG"></div><div id="myRevsE" class="pg-empty" style="display:none"><h3>Aucun avis reçu</h3><p>Personne n'a encore laissé d'avis sur votre profil.</p></div></div>
+    <div class="tabp" id="tSet">
+      <div class="sblk2"><h4>Informations personnelles</h4>
+        <div class="frow"><div class="fg"><label>Prénom</label><input class="fc" type="text" id="sfFirst"></div><div class="fg"><label>Nom</label><input class="fc" type="text" id="sfLast"></div></div>
+        <div class="fg"><label>Email</label><input class="fc" type="email" id="sfEmail" disabled style="color:var(--g)"></div>
+        <div class="fg"><label>Téléphone</label><input class="fc" type="tel" id="sfPhone" placeholder="06 XX XX XX XX"></div>
+        <div class="frow">
+          <div class="fg pos-rel"><label>Ville</label><input class="fc" type="text" id="sfCity" placeholder="Tapez une ville…" autocomplete="off" oninput="cityAC('sfCity','sfCityAC','sfZip')"><div class="ac-list" id="sfCityAC"></div></div>
+          <div class="fg"><label>Code postal</label><input class="fc" type="text" id="sfZip" readonly style="color:var(--g)"></div>
+        </div>
+        <button class="btn bd" style="margin-top:6px" onclick="saveProfile()">Enregistrer</button>
+      </div>
+      <div class="sblk2" style="border-bottom:none">
+        <h4>Compte</h4>
+        <div style="display:flex;gap:9px;flex-wrap:wrap">
+          <button class="btn bgo" onclick="logout()">Se déconnecter</button>
+          <button class="btn bro" onclick="deleteAccount()">Supprimer mon compte</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ SELLER PROFILE ════ -->
+<div class="page" id="page-seller">
+  <div class="prof-wrap">
+    <div class="prof-hero">
+      <div class="prof-av" id="spAv"></div>
+      <div style="flex:1">
+        <div class="prof-nm" id="spNm">—</div>
+        <div class="prof-sub" id="spSub">—</div>
+        <div class="prof-stats">
+          <div class="pst"><strong id="spAdsC">0</strong><span>annonces</span></div>
+          <div class="pst"><strong id="spRevC">0</strong><span>avis</span></div>
+        </div>
+        <div class="rating-avg" id="spRating"></div>
+        <div style="margin-top:12px" id="spRevBtn"></div>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab on" onclick="switchTab('spAdsT',this)">Annonces</button>
+      <button class="tab" onclick="switchTab('spRevT',this)">Avis reçus</button>
+    </div>
+    <div class="tabp on" id="spAdsT"><div id="spAdsG"></div><div class="pg-empty" id="spAdsE" style="display:none"><h3>Aucune annonce active</h3></div></div>
+    <div class="tabp" id="spRevT"><div id="spRevG"></div><div class="pg-empty" id="spRevE" style="display:none"><h3>Aucun avis</h3><p>Cet utilisateur n'a pas encore reçu d'avis.</p></div></div>
+  </div>
+</div>
+
+<!-- ════ ADMIN ════ -->
+<div class="page" id="page-admin">
+  <div class="admin-shell">
+    <div class="adm-side">
+      <div class="adm-logo"><span>lebon</span><b>plan</b> Admin</div>
+      <div class="adm-sep">Général</div>
+      <div class="adm-nav on" onclick="aPane('dashboard',this)">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard
+      </div>
+      <div class="adm-sep">Contenu</div>
+      <div class="adm-nav" onclick="aPane('ads',this)">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>Annonces
+      </div>
+      <div class="adm-nav" id="navReports" onclick="aPane('reports',this)">
+        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Signalements<span class="nbdg" id="repBdg" style="display:none">0</span>
+      </div>
+      <div class="adm-nav" onclick="aPane('reviews',this)">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Avis
+      </div>
+      <div class="adm-sep">Utilisateurs</div>
+      <div class="adm-nav" onclick="aPane('users',this)">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comptes
+      </div>
+      <div class="adm-nav" onclick="aPane('messages',this)">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messagerie
+      </div>
+      <div class="adm-sep">Système</div>
+      <div class="adm-nav" onclick="aPane('system',this)">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Infrastructure
+      </div>
+      <div class="adm-nav" onclick="aPane('logs',this)">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Journaux
+      </div>
+      <div class="adm-nav" onclick="aPane('settings',this)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Paramètres
+      </div>
+      <div class="adm-foot">
+        <div class="adm-nav" style="border-left:none" onclick="go('home')">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Retour au site
+        </div>
+      </div>
+    </div>
+    <div class="adm-main">
+      <!-- DASHBOARD -->
+      <div class="adm-pane on" id="ap-dashboard">
+        <div class="adm-top"><div><div class="adm-h1">Dashboard</div><div class="adm-h1-sub">Statistiques en temps réel</div></div><button class="btn bgo btn-sm" onclick="renderDash()">↻ Actualiser</button></div>
+        <div class="kpi-row" id="kpiRow"></div>
+        <div class="c2">
+          <div class="chart-box"><div class="chart-lbl">Annonces par catégorie</div><div id="catChartW"></div></div>
+          <div class="chart-box"><div class="chart-lbl">Activité récente</div><div id="actFeed"></div></div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-lbl" style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">Signalements récents <button class="btn bro btn-sm" onclick="aPane('reports',document.querySelector('[onclick*=reports]'))">Voir tous →</button></div>
+          <div id="repPreview"></div>
+        </div>
+      </div>
+      <!-- ADS -->
+      <div class="adm-pane" id="ap-ads">
+        <div class="adm-top"><div><div class="adm-h1">Annonces</div><div class="adm-h1-sub">Toutes les annonces de la plateforme</div></div></div>
+        <div class="srch-row">
+          <input type="text" id="adQ" placeholder="Titre, vendeur…" oninput="renderAdmAds()">
+          <select id="adCF" onchange="renderAdmAds()"><option value="">Toutes catégories</option><option>Véhicules</option><option>Immobilier</option><option>Électronique</option><option>Mode</option><option>Maison</option><option>Loisirs</option><option>Animaux</option><option>Services</option><option>Sports</option></select>
+          <select id="adSF" onchange="renderAdmAds()"><option value="">Tous statuts</option><option value="active">Active</option><option value="removed">Retirée</option></select>
+        </div>
+        <div class="tbl-w sc"><table class="tbl" id="admAdsT"></table></div>
+      </div>
+      <!-- REPORTS -->
+      <div class="adm-pane" id="ap-reports">
+        <div class="adm-top"><div><div class="adm-h1">Signalements</div><div class="adm-h1-sub">Contenu signalé par les utilisateurs</div></div></div>
+        <div class="srch-row"><select id="repSF" onchange="renderAdmRep()"><option value="">Tous</option><option value="pending">En attente</option><option value="resolved">Résolus</option></select></div>
+        <div class="tbl-w sc"><table class="tbl" id="admRepT"></table></div>
+      </div>
+      <!-- REVIEWS -->
+      <div class="adm-pane" id="ap-reviews">
+        <div class="adm-top"><div><div class="adm-h1">Avis</div><div class="adm-h1-sub">Tous les avis laissés sur la plateforme</div></div></div>
+        <div class="tbl-w sc"><table class="tbl" id="admRevT"></table></div>
+      </div>
+      <!-- USERS -->
+      <div class="adm-pane" id="ap-users">
+        <div class="adm-top"><div><div class="adm-h1">Comptes</div><div class="adm-h1-sub">Gestion des utilisateurs</div></div></div>
+        <div class="srch-row">
+          <input type="text" id="uQ" placeholder="Nom, email…" oninput="renderAdmUsers()">
+          <select id="uRF" onchange="renderAdmUsers()"><option value="">Tous</option><option value="admin">Admins</option><option value="user">Utilisateurs</option><option value="banned">Bannis</option></select>
+        </div>
+        <div class="tbl-w sc"><table class="tbl" id="admUsersT"></table></div>
+      </div>
+      <!-- MESSAGES ADMIN -->
+      <div class="adm-pane" id="ap-messages">
+        <div class="adm-top"><div><div class="adm-h1">Messagerie</div><div class="adm-h1-sub">Toutes les conversations</div></div></div>
+        <div class="tbl-w sc"><table class="tbl" id="admMsgT"></table></div>
+      </div>
+      <!-- SYSTEM -->
+      <div class="adm-pane" id="ap-system">
+        <div class="adm-top"><div><div class="adm-h1">Infrastructure</div><div class="adm-h1-sub">État des services système</div></div><button class="btn bgo btn-sm" onclick="renderSystem()">↻ Actualiser</button></div>
+        <div class="kpi-row" id="sysKpi"></div>
+        <div class="c2">
+          <div class="set-card"><h4>Services</h4>
+            <div class="svc-item"><div><div class="svc-nm">API principale</div><div class="svc-host">api.lebonplan.fr</div></div><div class="sdot on">En ligne</div></div>
+            <div class="svc-item"><div><div class="svc-nm">Base de données</div><div class="svc-host">PostgreSQL 15</div></div><div class="sdot on">En ligne</div></div>
+            <div class="svc-item"><div><div class="svc-nm">Stockage S3</div></div><div class="sdot on">En ligne</div></div>
+            <div class="svc-item"><div><div class="svc-nm">Emails SendGrid</div></div><div class="sdot on">En ligne</div></div>
+            <div class="svc-item"><div><div class="svc-nm">CDN Cloudflare</div></div><div class="sdot on">En ligne</div></div>
+            <div class="svc-item"><div><div class="svc-nm">Google OAuth</div></div><div class="sdot" id="gAuthSt">Non configuré</div></div>
+          </div>
+          <div class="set-card"><h4>Ressources serveur</h4>
+            <div class="svc-item"><div class="svc-nm">CPU</div><span id="cpuV" style="font-weight:700;font-size:13px">—</span></div>
+            <div class="svc-item"><div class="svc-nm">RAM</div><span id="ramV" style="font-weight:700;font-size:13px">—</span></div>
+            <div class="svc-item"><div class="svc-nm">Disque</div><span style="font-weight:700;font-size:13px">142 / 500 GB</span></div>
+            <div class="svc-item"><div class="svc-nm">Bande passante</div><span style="font-weight:700;font-size:13px">3.2 TB/mois</span></div>
+            <div class="svc-item"><div class="svc-nm">Uptime</div><span style="font-weight:700;font-size:13px;color:var(--grn)">99.98%</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- LOGS -->
+      <div class="adm-pane" id="ap-logs">
+        <div class="adm-top">
+          <div><div class="adm-h1">Journaux</div><div class="adm-h1-sub">Logs d'activité en temps réel</div></div>
+          <div style="display:flex;gap:7px">
+            <select id="logF" onchange="renderLogs()" style="height:30px;border:2px solid var(--l);border-radius:3px;padding:0 9px;font-size:12px;outline:none;background:var(--bg);font-family:'Epilogue',sans-serif"><option value="">Tous</option><option value="inf">INFO</option><option value="wrn">WARN</option><option value="err">ERROR</option></select>
+            <button class="btn bd btn-sm" onclick="simLog()">＋ Simuler</button>
+          </div>
+        </div>
+        <div class="tbl-w" style="max-height:460px;overflow-y:auto"><div style="padding:0 12px" id="logList"></div></div>
+      </div>
+      <!-- SETTINGS -->
+      <div class="adm-pane" id="ap-settings">
+        <div class="adm-top"><div><div class="adm-h1">Paramètres</div><div class="adm-h1-sub">Configuration de la plateforme</div></div></div>
+        <div class="set-grid">
+          <div class="set-card"><h4>Général</h4>
+            <div class="set-row"><span>Mode maintenance</span><button class="tog" onclick="this.classList.toggle('on')"></button></div>
+            <div class="set-row"><span>Inscriptions ouvertes</span><button class="tog on" onclick="this.classList.toggle('on')"></button></div>
+            <div class="set-row"><span>Modération automatique</span><button class="tog on" onclick="this.classList.toggle('on')"></button></div>
+            <div class="set-row"><span>Annonces pro payantes</span><button class="tog" onclick="this.classList.toggle('on')"></button></div>
+          </div>
+          <div class="set-card"><h4>Annonces</h4>
+            <div class="set-row"><span>Validation avant publication</span><button class="tog" onclick="this.classList.toggle('on')"></button></div>
+            <div class="set-row"><span>Alerte prix suspects</span><button class="tog on" onclick="this.classList.toggle('on')"></button></div>
+            <div class="set-row"><span>Max photos gratuites</span><input type="number" value="5" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
+            <div class="set-row"><span>Durée publication (j)</span><input type="number" value="60" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
+          </div>
+          <div class="set-card"><h4>Sécurité</h4>
+            <div class="set-row"><span>2FA obligatoire admins</span><button class="tog on" onclick="this.classList.toggle('on')"></button></div>
+            <div class="set-row"><span>Whitelist IP admin</span><button class="tog" onclick="this.classList.toggle('on')"></button></div>
+            <div class="set-row"><span>Limite login</span><input type="number" value="5" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
+            <div class="set-row"><span>Session (heures)</span><input type="number" value="24" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
+          </div>
+          <div class="set-card"><h4>Google OAuth</h4>
+            <p style="font-size:12px;color:var(--g);margin-bottom:10px;line-height:1.6">Client ID actuel :</p>
+            <code id="gcidShow" style="font-size:11px;background:var(--off);padding:4px 9px;border-radius:2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:10px;font-weight:600">Non configuré</code>
+            <button class="btn bgo btn-sm" onclick="openM('gsetup')">Modifier</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
+          <button class="btn bd" onclick="toast('Paramètres sauvegardés','ok')">Sauvegarder</button>
+          <button class="btn bgo" onclick="toast('Configuration exportée','info')">Exporter JSON</button>
+          <button class="btn bro btn-sm" style="height:36px" onclick="toast('Cache vidé','ok')">Vider le cache</button>
+        </div>
+        <div style="border:2px solid #fca5a5;padding:16px;border-radius:2px;background:#fff5f5">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--r);margin-bottom:12px">⚠ Zone dangereuse</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn bro" onclick="admPurgeAds()">🗑 Supprimer toutes les annonces</button>
+            <button class="btn bro" onclick="admPurgeUsers()">👤 Supprimer tous les comptes (sauf admin)</button>
+            <button class="btn bro" onclick="admPurgeAll()">💥 Tout réinitialiser</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="ov" id="loginModal">
+  <div class="modal">
+    <div class="mhd"><h2>Connexion</h2><button class="mcl" onclick="closeM('login')">✕</button></div>
+    <div class="mbody">
+      <div id="lErr" class="merr" style="display:none"></div>
+      <button class="google-btn" onclick="signInWithGoogle()">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Continuer avec Google
+      </button>
+      <div class="or-sep">ou</div>
+      <div class="mfg"><label>Email</label><input class="mfc" type="email" id="lEm" placeholder="vous@email.fr" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="mfg"><label>Mot de passe</label><input class="mfc" type="password" id="lPw" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="forgot"><a onclick="toast('Fonctionnalité à venir','info')">Mot de passe oublié ?</a></div>
+      <button class="msub" onclick="doLogin()">Se connecter</button>
+    </div>
+    <div class="mfoot">Pas de compte ? <a onclick="switchModal('register')">S'inscrire gratuitement</a></div>
+  </div>
+</div>
+<div class="ov" id="registerModal">
+  <div class="modal">
+    <div class="mhd"><h2>Créer un compte</h2><button class="mcl" onclick="closeM('register')">✕</button></div>
+    <div class="mbody">
+      <div id="rErr" class="merr" style="display:none"></div>
+      <div id="rOk" class="mok" style="display:none"></div>
+      <button class="google-btn" onclick="signInWithGoogle()">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Continuer avec Google
+      </button>
+      <div class="or-sep">ou par email</div>
+      <div class="mfrow"><div class="mfg"><label>Prénom *</label><input class="mfc" type="text" id="rFi" placeholder="Marie"></div><div class="mfg"><label>Nom *</label><input class="mfc" type="text" id="rLa" placeholder="Dupont"></div></div>
+      <div class="mfg"><label>Email *</label><input class="mfc" type="email" id="rEm" placeholder="marie@email.fr"></div>
+      <div class="mfg"><label>Mot de passe * (min. 6 car.)</label><input class="mfc" type="password" id="rPw" placeholder="••••••••"></div>
+      <div class="mfg"><label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-weight:400"><input type="checkbox" id="rTm"> J'accepte les conditions d'utilisation</label></div>
+      <button class="msub" onclick="doRegister()">Créer mon compte</button>
+    </div>
+    <div class="mfoot">Déjà inscrit ? <a onclick="switchModal('login')">Se connecter</a></div>
+  </div>
+</div>
+<div class="ov" id="reviewModal">
+  <div class="modal">
+    <div class="mhd"><h2>Laisser un avis</h2><button class="mcl" onclick="closeM('review')">✕</button></div>
+    <div class="mbody">
+      <p style="font-size:12px;color:var(--g);margin-bottom:14px">Votre avis sur <strong id="revTargetNm">—</strong></p>
+      <div style="margin-bottom:12px"><div style="font-size:11px;font-weight:700;color:var(--g);margin-bottom:7px">Note</div>
+        <div class="star-inp" id="starInp">
+          <button class="star-inp-btn" data-v="1" onclick="setStar(1)">★</button>
+          <button class="star-inp-btn" data-v="2" onclick="setStar(2)">★</button>
+          <button class="star-inp-btn" data-v="3" onclick="setStar(3)">★</button>
+          <button class="star-inp-btn" data-v="4" onclick="setStar(4)">★</button>
+          <button class="star-inp-btn" data-v="5" onclick="setStar(5)">★</button>
+        </div>
+      </div>
+      <div class="mfg"><label>Commentaire</label><textarea class="mfc" id="revTxt" rows="3" placeholder="Partagez votre expérience…" style="height:auto;padding:8px;border:2px solid var(--l);border-radius:2px;resize:vertical;width:100%;outline:none;transition:border-color .15s"></textarea></div>
+      <input type="hidden" id="revTargetEmail">
+      <button class="msub" onclick="submitReview()">Publier l'avis</button>
+    </div>
+  </div>
+</div>
+<div class="ov" id="gsetupModal">
+  <div class="modal wide">
+    <div class="mhd"><h2>🔑 Google OAuth</h2><button class="mcl" onclick="closeM('gsetup')">✕</button></div>
+    <div class="mbody">
+      <p style="font-size:13px;line-height:1.7;margin-bottom:14px;color:var(--k)">Pour activer la connexion Google, créez des identifiants OAuth 2.0 dans Google Cloud Console.</p>
+      <div style="background:var(--off);border:2px solid var(--l);padding:13px;margin-bottom:14px;font-size:12px;line-height:1.8;border-radius:2px">
+        <strong>Étapes :</strong><br>
+        1. <a href="https://console.cloud.google.com" target="_blank" style="color:var(--r);text-decoration:underline">console.cloud.google.com</a> → créer un projet<br>
+        2. APIs & Services → Identifiants → OAuth 2.0<br>
+        3. Type : <strong>Application Web</strong><br>
+        4. Origines JS : <code style="background:#fff;padding:1px 5px">http://localhost</code> ou votre domaine<br>
+        5. Copiez le <strong>Client ID</strong> ci-dessous
+      </div>
+      <div class="mfg"><label>Client ID Google</label><input class="mfc" type="text" id="gcidInput" placeholder="XXXXXXXX.apps.googleusercontent.com" style="font-size:12px"></div>
+      <p style="font-size:11px;color:var(--g);margin:8px 0 13px">⚠ Fonctionne uniquement sur HTTP/HTTPS. Pas en file://. Utilisez <code style="background:var(--off);padding:1px 5px">python3 -m http.server 8080</code> ou déployez en ligne.</p>
+      <button class="msub" onclick="saveGcid()">Activer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<footer>
+  <div class="fw">
+    <div class="ft-grid">
+      <div><div class="f-logo">lebon<b>plan</b></div><p class="f-desc">La plateforme de petites annonces 100% gratuite pour particuliers.</p></div>
+      <div class="f-col"><h5>Annonces</h5><a onclick="go('post-ad')">Déposer</a><a onclick="go('listings')">Parcourir</a><a onclick="setCat(null,'Immobilier')">Immobilier</a><a onclick="setCat(null,'Véhicules')">Véhicules</a></div>
+      <div class="f-col"><h5>Compte</h5><a onclick="openM('login')">Connexion</a><a onclick="openM('register')">Inscription</a><a onclick="requireAuth(()=>go('profile'))">Mon profil</a></div>
+      <div class="f-col"><h5>Aide</h5><a>Centre d'aide</a><a>Conditions</a><a>Confidentialité</a><a>Contact</a></div>
+    </div>
+    <div class="f-bot"><span style="font-family:'Fraunces',serif;font-weight:300">lebon<b style="color:var(--r)">plan</b></span><span>© 2024 lebonplan · Fait en France 🇫🇷</span></div>
+  </div>
+</footer>
+<script>
+// ═══════════════════════════════════════════════════════════
+// CITY REFERENCE DATA (sample of French cities)
+// ═══════════════════════════════════════════════════════════
+const CITIES = [
+  {n:'Paris',z:'75001'},{n:'Marseille',z:'13001'},{n:'Lyon',z:'69001'},{n:'Toulouse',z:'31000'},
+  {n:'Nice',z:'06000'},{n:'Nantes',z:'44000'},{n:'Montpellier',z:'34000'},{n:'Strasbourg',z:'67000'},
+  {n:'Bordeaux',z:'33000'},{n:'Lille',z:'59000'},{n:'Rennes',z:'35000'},{n:'Reims',z:'51100'},
+  {n:'Le Havre',z:'76600'},{n:'Saint-Étienne',z:'42000'},{n:'Toulon',z:'83000'},{n:'Grenoble',z:'38000'},
+  {n:'Dijon',z:'21000'},{n:'Angers',z:'49000'},{n:'Nîmes',z:'30000'},{n:'Villeurbanne',z:'69100'},
+  {n:'Le Mans',z:'72000'},{n:'Aix-en-Provence',z:'13100'},{n:'Clermont-Ferrand',z:'63000'},
+  {n:'Brest',z:'29200'},{n:'Tours',z:'37000'},{n:'Amiens',z:'80000'},{n:'Limoges',z:'87000'},
+  {n:'Annecy',z:'74000'},{n:'Perpignan',z:'66000'},{n:'Boulogne-Billancourt',z:'92100'},
+  {n:'Metz',z:'57000'},{n:'Besançon',z:'25000'},{n:'Orléans',z:'45000'},{n:'Rouen',z:'76000'},
+  {n:'Mulhouse',z:'68100'},{n:'Caen',z:'14000'},{n:'Nancy',z:'54000'},{n:'Avignon',z:'84000'},
+  {n:'Poitiers',z:'86000'},{n:'Dunkerque',z:'59140'},{n:'Versailles',z:'78000'},{n:'Pau',z:'64000'},
+  {n:'Colombes',z:'92700'},{n:'Fort-de-France',z:'97200'},{n:'Aubervilliers',z:'93300'},
+  {n:'Argenteuil',z:'95100'},{n:'Créteil',z:'94000'},{n:'Vitry-sur-Seine',z:'94400'},
+  {n:'Montreuil',z:'93100'},{n:'Courbevoie',z:'92400'},{n:'Rueil-Malmaison',z:'92500'},
+  {n:'Champigny-sur-Marne',z:'94500'},{n:'Noisy-le-Grand',z:'93160'},{n:'Cannes',z:'06400'},
+  {n:'Antibes',z:'06600'},{n:'Saint-Denis',z:'93200'},{n:'Aulnay-sous-Bois',z:'93600'},
+  {n:'Béziers',z:'34500'},{n:'Calais',z:'62100'},{n:'Bourges',z:'18000'},{n:'La Rochelle',z:'17000'},
+  {n:'Ajaccio',z:'20090'},{n:'Bastia',z:'20200'},{n:'Quimper',z:'29000'},{n:'Lorient',z:'56100'},
+  {n:'Bayonne',z:'64100'},{n:'Valenciennes',z:'59300'},{n:'Troyes',z:'10000'},{n:'Nanterre',z:'92000'},
+  {n:'Issy-les-Moulineaux',z:'92130'},{n:'Levallois-Perret',z:'92300'},{n:'Antony',z:'92160'},
+  {n:'Noisy-le-Sec',z:'93130'},{n:'Clichy',z:'92110'},{n:'Vincennes',z:'94300'},
+  {n:'Ivry-sur-Seine',z:'94200'},{n:'Évry-Courcouronnes',z:'91000'},{n:'Cergy',z:'95000'},
+  {n:'Massy',z:'91300'},{n:'Vélizy-Villacoublay',z:'78140'},{n:'Fontainebleau',z:'77300'},
+  {n:'Chartres',z:'28000'},{n:'Cherbourg-en-Cotentin',z:'50100'},{n:'Évreux',z:'27000'},
+  {n:'La Seyne-sur-Mer',z:'83500'},{n:'Hyères',z:'83400'},{n:'Fréjus',z:'83600'},
+];
+
+function cityAC(inputId, listId, zipId) {
+  const q = document.getElementById(inputId).value.trim().toLowerCase();
+  const list = document.getElementById(listId);
+  if (q.length < 2) { list.classList.remove('on'); return; }
+  const matches = CITIES.filter(c => c.n.toLowerCase().startsWith(q) || c.n.toLowerCase().includes(q)).slice(0, 8);
+  if (!matches.length) { list.classList.remove('on'); return; }
+  list.innerHTML = '';
+  matches.forEach(c => {
+    const d = document.createElement('div');
+    d.className = 'ac-opt';
+    d.textContent = c.n + ' — ' + c.z;
+    d.onclick = () => {
+      document.getElementById(inputId).value = c.n;
+      if (zipId) document.getElementById(zipId).value = c.z;
+      list.classList.remove('on');
+    };
+    list.appendChild(d);
+  });
+  list.classList.add('on');
+}
+document.addEventListener('click', e => {
+  document.querySelectorAll('.ac-list').forEach(l => { if (!l.previousElementSibling?.contains(e.target) && !l.contains(e.target)) l.classList.remove('on'); });
+});
+
+// ═══════════════════════════════════════════════════════════
+// STATE — localStorage persistence
+// ═══════════════════════════════════════════════════════════
+let GCID = localStorage.getItem('lbp_gcid') || '';
+
+// ═══ MIGRATION : remise à zéro (annonces + comptes non-admin) ═══
+const MIGRATION_VERSION = 2;
+const savedMigVer = parseInt(localStorage.getItem('lbp_migration') || '0');
+if (savedMigVer < MIGRATION_VERSION) {
+  try {
+    const raw = localStorage.getItem('lbp_st');
+    if (raw) {
+      const old = JSON.parse(raw);
+      const cleanedState = {
+        user: null,
+        ads: [],
+        users: [ADMIN_USER],
+        convs: [],
+        notifs: [],
+        favs: [],
+        reports: [],
+        reviews: [],
+        logs: [],
+        activeConv: null
+      };
+      // Keep only admin user
+      if (old.users) {
+        const adminU = old.users.find(u => u.email === 'admin@lebonplan.fr');
+        if (adminU) cleanedState.users = [{ ...ADMIN_USER }];
+      }
+      localStorage.setItem('lbp_st', JSON.stringify(cleanedState));
+    }
+  } catch(e) { localStorage.removeItem('lbp_st'); }
+  localStorage.setItem('lbp_migration', String(MIGRATION_VERSION));
+}
+
+function loadSt() {
+  try { return JSON.parse(localStorage.getItem('lbp_st') || '{}'); } catch { return {}; }
+}
+function saveSt() { localStorage.setItem('lbp_st', JSON.stringify(S)); }
+
+// ADMIN USER — always present, immutable
+const ADMIN_USER = {
+  id: 'admin',
+  name: 'Admin lebonplan',
+  first: 'Admin',
+  last: 'lebonplan',
+  email: 'admin@lebonplan.fr',
+  password: 'admin123',
+  init: 'A',
+  picture: '',
+  since: 'Janvier 2024',
+  phone: '',
+  city: 'Paris',
+  zip: '75001',
+  role: 'admin',
+  status: 'active',
+  via: 'email'
+};
+
+const saved = loadSt();
+const S = {
+  user: saved.user || null,
+  ads: saved.ads || [],
+  users: saved.users || [ADMIN_USER],
+  convs: saved.convs || [],
+  notifs: saved.notifs || [],
+  favs: saved.favs || [],
+  reports: saved.reports || [],
+  reviews: saved.reviews || [],
+  logs: saved.logs || [],
+  activeConv: saved.activeConv || null,
+  filter: '',
+  sort: 'r',
+  typeFilter: '',
+  query: '',
+  currentAdId: null,
+  currentSellerEmail: null
+};
+
+// Ensure admin always exists
+if (!S.users.find(u => u.email === 'admin@lebonplan.fr')) {
+  S.users.unshift(ADMIN_USER);
+}
+
+const CATS = ['Véhicules','Immobilier','Électronique','Mode','Maison','Loisirs','Sports','Animaux','Services'];
+const CAT_ICONS = {Véhicules:'🚗',Immobilier:'🏠',Électronique:'📱',Mode:'👗',Maison:'🛋️',Loisirs:'🎮',Sports:'⚽',Animaux:'🐾',Services:'🔧',Musique:'🎵'};
+const AUTO_REPLIES = [
+  "Oui, c'est toujours disponible.",
+  "D'accord, on peut se retrouver quand vous voulez.",
+  "Je vous envoie plus d'infos bientôt.",
+  "Votre meilleure offre ?",
+  "Merci pour votre intérêt !",
+  "C'est encore disponible oui.",
+  "Envoyez-moi votre numéro et je vous rappelle.",
+  "Je suis disponible ce week-end.",
+];
+
+// ═══════════════════════════════════════════════════════════
+// GOOGLE AUTH
+// ═══════════════════════════════════════════════════════════
+function initGoogle() {
+  if (!GCID) return;
+  if (typeof google === 'undefined') { setTimeout(initGoogle, 600); return; }
+  try {
+    google.accounts.id.initialize({ client_id: GCID, callback: handleGoogleCred, auto_select: false });
+    document.getElementById('gcidBanner').style.display = 'none';
+  } catch(e) { console.warn('Google init:', e); }
+}
+function handleGoogleCred(resp) {
+  try {
+    const p = parseJWT(resp.credential);
+    let u = S.users.find(x => x.email === p.email);
+    if (!u) {
+      u = { id: 'u'+Date.now(), name: p.name, first: p.given_name||p.name.split(' ')[0], last: p.family_name||'', email: p.email, password: '', init: (p.given_name||p.name)[0].toUpperCase(), picture: p.picture||'', since: fmtMonth(new Date()), phone: '', city: '', zip: '', role: 'user', status: 'active', via: 'google' };
+      S.users.push(u);
+      addLog('inf', 'Inscription Google : ' + p.email);
+    } else {
+      addLog('inf', 'Connexion Google : ' + p.email);
+    }
+    S.user = { ...u };
+    saveSt(); closeAllModals(); updateAuthUI();
+    toast('Bienvenue ' + (u.first || u.name) + ' !', 'ok');
+    addNotif('👋', 'Connecté', 'Bienvenue sur lebonplan !');
+  } catch(e) { toast('Erreur connexion Google', 'err'); console.error(e); }
+}
+function parseJWT(t) {
+  const b = t.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+  const p = b.length % 4 ? b + '='.repeat(4 - b.length % 4) : b;
+  return JSON.parse(atob(p));
+}
+function signInWithGoogle() {
+  if (!GCID) { closeAllModals(); openM('gsetup'); return; }
+  if (typeof google === 'undefined') { toast('Bibliothèque Google non chargée', 'err'); return; }
+  try { google.accounts.id.prompt(n => { if (n.isNotDisplayed() || n.isSkippedMoment()) toast('Popup Google bloquée. Vérifiez votre navigateur.', 'err'); }); } catch(e) { toast('Erreur Google : ' + e.message, 'err'); }
+}
+function saveGcid() {
+  const v = document.getElementById('gcidInput').value.trim();
+  if (!v) { toast('Client ID invalide', 'err'); return; }
+  GCID = v;
+  localStorage.setItem('lbp_gcid', v);
+  initGoogle();
+  closeM('gsetup');
+  document.getElementById('gcidShow').textContent = v.length > 28 ? v.substring(0,28) + '…' : v;
+  document.getElementById('gcidBanner').style.display = 'none';
+  toast('Google OAuth activé !', 'ok');
+}
+
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════
+function go(p) {
+  closeAllDD();
+  const guarded = ['post-ad','messages','profile','favorites'];
+  if (guarded.includes(p) && !S.user) { openM('login'); return; }
+  if (p === 'admin' && (!S.user || S.user.role !== 'admin')) { toast('Accès réservé aux admins', 'err'); return; }
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('on'));
+  const el = document.getElementById('page-' + p);
+  if (!el) return;
+  el.classList.add('on');
+  window.scrollTo(0, 0);
+  if (p === 'home') renderHome();
+  if (p === 'listings') renderList();
+  if (p === 'messages') renderMessages();
+  if (p === 'profile') renderProfile();
+  if (p === 'admin') {
+    renderDash(); renderAdmAds(); renderAdmRep(); renderAdmUsers();
+    renderAdmRev(); renderAdmMsg(); renderLogs();
+  }
+}
+
+function requireAuth(cb) { S.user ? cb() : openM('login'); }
+
+function aPane(id, el) {
+  document.querySelectorAll('.adm-pane').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.adm-nav').forEach(n => n.classList.remove('on'));
+  const pane = document.getElementById('ap-' + id);
+  if (pane) pane.classList.add('on');
+  if (el) el.classList.add('on');
+  const renders = { dashboard: renderDash, ads: renderAdmAds, reports: renderAdmRep, reviews: renderAdmRev, users: renderAdmUsers, messages: renderAdmMsg, system: renderSystem, logs: renderLogs };
+  if (renders[id]) renders[id]();
+}
+
+// ═══════════════════════════════════════════════════════════
+// CATEGORIES
+// ═══════════════════════════════════════════════════════════
+function buildCats() {
+  const el = document.getElementById('catGrid');
+  el.innerHTML = '';
+  CATS.forEach(c => {
+    const cnt = S.ads.filter(a => a.cat === c && a.status !== 'removed').length;
+    const d = document.createElement('div');
+    d.className = 'cat-item';
+    d.innerHTML = `<span class="cat-n">${c}</span><span class="cat-c">${cnt}</span>`;
+    d.onclick = () => setCat(null, c);
+    el.appendChild(d);
+  });
+}
+function setCat(el, cat) {
+  S.filter = cat; S.query = '';
+  document.getElementById('listTitle').textContent = cat || 'Toutes les annonces';
+  document.querySelectorAll('.sn').forEach(n => n.classList.toggle('on', n.dataset.cat === cat));
+  go('listings');
+}
+function doSearch() { const q = document.getElementById('hq').value.trim(); S.query = q; S.filter = ''; document.getElementById('listTitle').textContent = q ? `"${q}"` : 'Toutes les annonces'; go('listings'); }
+function doHeroSearch() { const q = document.getElementById('heroQ').value.trim(); S.query = q; S.filter = ''; document.getElementById('listTitle').textContent = q ? `"${q}"` : 'Toutes les annonces'; go('listings'); }
+
+// ═══════════════════════════════════════════════════════════
+// FILTERS
+// ═══════════════════════════════════════════════════════════
+function setSort(s, btn) {
+  S.sort = s;
+  ['fsR','fsA','fsD'].forEach(id => document.getElementById(id)?.classList.remove('on'));
+  btn.classList.add('on');
+  renderList();
+}
+function toggleType(t) {
+  S.typeFilter = S.typeFilter === t ? '' : t;
+  document.getElementById('ftP').classList.toggle('on', S.typeFilter === 'particular');
+  document.getElementById('ftB').classList.toggle('on', S.typeFilter === 'pro');
+  renderList();
+}
+function getFiltered() {
+  let ads = S.ads.filter(a => a.status !== 'removed');
+  if (S.filter) ads = ads.filter(a => a.cat === S.filter);
+  if (S.query) { const q = S.query.toLowerCase(); ads = ads.filter(a => a.title.toLowerCase().includes(q) || a.city.toLowerCase().includes(q) || a.cat.toLowerCase().includes(q)); }
+  if (S.typeFilter) ads = ads.filter(a => a.type === S.typeFilter);
+  const mn = parseFloat(document.getElementById('pMn')?.value) || 0;
+  const mx = parseFloat(document.getElementById('pMx')?.value) || Infinity;
+  if (mn) ads = ads.filter(a => a.price >= mn);
+  if (mx < Infinity) ads = ads.filter(a => a.price <= mx);
+  if (S.sort === 'a') ads.sort((a, b) => a.price - b.price);
+  else if (S.sort === 'd') ads.sort((a, b) => b.price - a.price);
+  else ads.sort((a, b) => b.id - a.id);
+  return ads;
+}
+
+// ═══════════════════════════════════════════════════════════
+// AD CARD
+// ═══════════════════════════════════════════════════════════
+function adCard(ad) {
+  const isFav = S.favs.includes(ad.id);
+  const d = document.createElement('div');
+  d.className = 'ac';
+  const imgContent = (ad.images && ad.images[0]) ? `<img src="${ad.images[0]}" alt="">` : `<span>${CAT_ICONS[ad.cat]||'📦'}</span>`;
+  let badge = '';
+  if (ad.urgent) badge = '<span class="ac-bdg urg">Urgent</span>';
+  else if (ad.type === 'pro') badge = '<span class="ac-bdg pro">Pro</span>';
+  d.innerHTML = `
+    <div class="ac-img">${imgContent}${badge}
+      <button class="ac-fav" onclick="event.stopPropagation();toggleFav(${ad.id})" title="${isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}">${isFav ? '❤' : '♡'}</button>
+    </div>
+    <div class="ac-body">
+      <div class="ac-price">${ad.price > 0 ? fmt(ad.price) + ' €' : 'Gratuit'}</div>
+      <div class="ac-title">${esc(ad.title)}</div>
+      <div class="ac-foot"><span>${esc(ad.city)}</span><span>${fmtDate(ad.date)}</span></div>
+    </div>`;
+  d.onclick = () => openAd(ad.id);
+  return d;
+}
+function adGrid(ads) {
+  const w = document.createElement('div'); w.className = 'ag-wrap';
+  const g = document.createElement('div'); g.className = 'ag';
+  ads.forEach(a => g.appendChild(adCard(a)));
+  w.appendChild(g); return w;
+}
+
+// ═══════════════════════════════════════════════════════════
+// HOME
+// ═══════════════════════════════════════════════════════════
+function renderHome() {
+  buildCats();
+  const el = document.getElementById('homeAds');
+  el.innerHTML = '';
+  const active = S.ads.filter(a => a.status !== 'removed');
+  if (!active.length) {
+    el.innerHTML = `<div class="pg-empty" style="padding:72px 20px"><h3>Aucune annonce pour le moment</h3><p>Soyez le premier à publier une annonce sur lebonplan.</p><button class="btn br btn-lg" onclick="requireAuth(()=>go('post-ad'))">＋ Déposer une annonce</button></div>`;
+    return;
+  }
+  const recent = [...active].sort((a,b)=>b.id-a.id).slice(0,8);
+  const s1 = document.createElement('div');
+  s1.innerHTML = `<div class="sec-hd"><span class="sec-title">Récemment publiées</span><span class="sec-more" onclick="go('listings')">Tout voir →</span></div>`;
+  el.appendChild(s1); el.appendChild(adGrid(recent));
+  CATS.forEach(c => {
+    const catAds = active.filter(a => a.cat === c).slice(0, 4);
+    if (!catAds.length) return;
+    const s = document.createElement('div');
+    s.innerHTML = `<div class="sec-hd"><span class="sec-title">${c}</span><span class="sec-more" onclick="setCat(null,'${c}')">Tout voir →</span></div>`;
+    el.appendChild(s); el.appendChild(adGrid(catAds));
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// LISTINGS
+// ═══════════════════════════════════════════════════════════
+function renderList() {
+  const grid = document.getElementById('listGrid');
+  const empty = document.getElementById('listEmpty');
+  grid.innerHTML = '';
+  const ads = getFiltered();
+  document.getElementById('rCt').textContent = ads.length;
+  if (!ads.length) { grid.style.display = 'none'; empty.style.display = 'block'; }
+  else { grid.style.display = ''; empty.style.display = 'none'; grid.appendChild(adGrid(ads)); }
+}
+
+// ═══════════════════════════════════════════════════════════
+// AD DETAIL
+// ═══════════════════════════════════════════════════════════
+function openAd(id) {
+  const ad = S.ads.find(a => a.id === id);
+  if (!ad) return;
+  S.currentAdId = id;
+  document.getElementById('dPrice').textContent = ad.price > 0 ? fmt(ad.price) + ' €' : 'Gratuit';
+  document.getElementById('dTitle').textContent = ad.title;
+  document.getElementById('dTBC').textContent = ad.title;
+  document.getElementById('dCatBC').textContent = ad.cat;
+  document.getElementById('dDesc').textContent = ad.desc;
+  // Tags
+  const tags = document.getElementById('dTags');
+  tags.innerHTML = '';
+  const addTag = (t) => { const s = document.createElement('span'); s.className = 'd-tag'; s.textContent = t; tags.appendChild(s); };
+  if (ad.cond) addTag(ad.cond);
+  if (ad.delivery) addTag('Livraison disponible');
+  if (ad.urgent) { const s = document.createElement('span'); s.className = 'd-tag'; s.textContent = 'Urgent'; s.style.color = 'var(--r)'; tags.appendChild(s); }
+  addTag(ad.city + (ad.zip ? ' ' + ad.zip : ''));
+  if (ad.type === 'pro') { const s = document.createElement('span'); s.className = 'd-tag'; s.textContent = 'Professionnel'; s.style.color = 'var(--bl)'; tags.appendChild(s); }
+  // Attrs
+  document.getElementById('dAttrs').innerHTML = `
+    <div class="d-attr"><b>Catégorie</b><span>${ad.cat}</span></div>
+    <div class="d-attr"><b>Type</b><span>${ad.type === 'pro' ? 'Professionnel' : 'Particulier'}</span></div>
+    <div class="d-attr"><b>Publié le</b><span>${fmtDate(ad.date)}</span></div>
+    ${ad.cond ? `<div class="d-attr"><b>État</b><span>${ad.cond}</span></div>` : ''}`;
+  // Gallery
+  const icon = CAT_ICONS[ad.cat] || '📦';
+  const galM = document.getElementById('galM');
+  const galTh = document.getElementById('galTh');
+  if (ad.images && ad.images.length) {
+    galM.innerHTML = `<img src="${ad.images[0]}" alt="">`;
+    galTh.innerHTML = '';
+    ad.images.forEach((img, i) => {
+      const t = document.createElement('div');
+      t.className = 'gal-th' + (i===0?' on':'');
+      t.innerHTML = `<img src="${img}" alt="">`;
+      t.onclick = () => { galM.innerHTML = `<img src="${img}" alt="">`; galTh.querySelectorAll('.gal-th').forEach(x=>x.classList.remove('on')); t.classList.add('on'); };
+      galTh.appendChild(t);
+    });
+  } else {
+    galM.innerHTML = `<span style="font-size:80px">${icon}</span>`;
+    galTh.innerHTML = [0,1,2].map((_,i) => `<div class="gal-th${i===0?' on':''}">${icon}</div>`).join('');
+  }
+  // Seller
+  const seller = S.users.find(u => u.email === ad.sellerEmail) || {};
+  S.currentSellerEmail = ad.sellerEmail;
+  const sAv = document.getElementById('sAv');
+  if (seller.picture) { sAv.innerHTML = `<img src="${seller.picture}" alt="">`; } 
+  else { sAv.textContent = ad.sellerInit || (ad.seller||'?')[0]; sAv.style.background = 'var(--k)'; sAv.style.color = '#fff'; }
+  document.getElementById('sName').textContent = ad.seller;
+  document.getElementById('sSub').textContent = `Membre ${seller.since||'—'} · ${ad.type==='pro'?'Professionnel':'Particulier'}`;
+  // Edit/delete buttons - show for owner or admin; hide contact/report for own ad
+  const isOwner = S.user && S.user.email === ad.sellerEmail;
+  const isAdmin = S.user && S.user.role === 'admin';
+  const canEdit = isOwner || isAdmin;
+  document.getElementById('btnEditAd').style.display = canEdit ? 'flex' : 'none';
+  document.getElementById('btnDeleteAd').style.display = canEdit ? 'flex' : 'none';
+  document.getElementById('btnContact').style.display = isOwner ? 'none' : 'flex';
+  document.getElementById('btnReport').style.display = isOwner ? 'none' : 'flex';
+  // Similar
+  const sim = document.getElementById('simAds');
+  sim.innerHTML = '';
+  S.ads.filter(a => a.cat === ad.cat && a.id !== id && a.status !== 'removed').slice(0,3).forEach(s => {
+    const img = (s.images && s.images[0]) ? `<img src="${s.images[0]}" style="width:32px;height:32px;object-fit:cover;flex-shrink:0;border-radius:2px">` : `<span style="font-size:24px;flex-shrink:0">${CAT_ICONS[s.cat]||'📦'}</span>`;
+    const d = document.createElement('div');
+    d.className = 'sim-item';
+    d.onclick = () => openAd(s.id);
+    d.innerHTML = `${img}<div><div style="font-size:12px;font-weight:700">${esc(s.title)}</div><div style="font-size:11px;color:var(--g)">${s.price > 0 ? fmt(s.price) + ' €' : 'Gratuit'}</div></div>`;
+    sim.appendChild(d);
+  });
+  if (!sim.children.length) sim.innerHTML = '<p style="font-size:11px;color:#bbb">Aucune annonce similaire</p>';
+  go('detail');
+}
+
+function openSellerProfile() {
+  if (S.currentSellerEmail) openUserProfile(S.currentSellerEmail);
+}
+
+function revealPhone() {
+  const seller = S.users.find(u => u.email === S.currentSellerEmail);
+  const phone = seller?.phone || '06 XX XX XX XX';
+  toast('📞 ' + phone, 'info');
+}
+
+// ═══════════════════════════════════════════════════════════
+// REPORT
+// ═══════════════════════════════════════════════════════════
+function openReport() {
+  const ad = S.ads.find(a => a.id === S.currentAdId);
+  if (!ad) return;
+  if (S.user && S.user.email === ad.sellerEmail) { toast('Vous ne pouvez pas signaler votre propre annonce', 'err'); return; }
+  const card = document.getElementById('repAdCard');
+  card.innerHTML = `<strong style="display:block;margin-bottom:4px">${esc(ad.title)}</strong><span>${ad.price > 0 ? fmt(ad.price) + ' €' : 'Gratuit'} · ${esc(ad.city)} · ${ad.cat}</span>`;
+  document.getElementById('repReason').value = '';
+  document.getElementById('repDetails').value = '';
+  go('report');
+}
+function submitReport() {
+  const reason = document.getElementById('repReason').value;
+  const details = document.getElementById('repDetails').value.trim();
+  if (!reason) { toast('Sélectionnez un motif', 'err'); return; }
+  const ad = S.ads.find(a => a.id === S.currentAdId);
+  if (!ad) return;
+  const rep = { id: Date.now(), adId: ad.id, adTitle: ad.title, sellerEmail: ad.sellerEmail, sellerName: ad.seller, reporter: S.user.name, reporterEmail: S.user.email, reason, details, date: fmtDateFull(new Date()), status: 'pending' };
+  S.reports.push(rep);
+  addLog('wrn', `Signalement : "${ad.title}" par ${S.user.name} — ${reason}`);
+  saveSt(); updateRepBadge();
+  toast('Signalement envoyé. Merci !', 'ok');
+  go('home');
+}
+
+// ═══════════════════════════════════════════════════════════
+// FAVORITES
+// ═══════════════════════════════════════════════════════════
+function toggleFav(id) {
+  if (!S.user) { openM('login'); return; }
+  const i = S.favs.indexOf(id);
+  if (i >= 0) { S.favs.splice(i, 1); toast('Retiré des favoris'); }
+  else { S.favs.push(id); toast('Ajouté aux favoris ♥', 'ok'); }
+  saveSt(); renderHome(); renderList();
+}
+
+// ═══════════════════════════════════════════════════════════
+// CONTACT SELLER
+// ═══════════════════════════════════════════════════════════
+function contactSeller() {
+  if (!S.user) { openM('login'); return; }
+  const ad = S.ads.find(a => a.id === S.currentAdId);
+  if (!ad) return;
+  if (ad.sellerEmail === S.user.email) { toast("C'est votre propre annonce", 'err'); return; }
+  let conv = S.convs.find(c => c.adId === ad.id && c.me === S.user.email);
+  if (!conv) {
+    const seller = S.users.find(u => u.email === ad.sellerEmail) || {};
+    conv = {
+      id: Date.now(), adId: ad.id, adTitle: ad.title, adPrice: ad.price > 0 ? fmt(ad.price) + ' €' : 'Gratuit',
+      withName: ad.seller, withEmail: ad.sellerEmail, withInit: ad.sellerInit || (ad.seller||'?')[0], withPic: seller.picture || '',
+      me: S.user.email, ts: Date.now(), unread: 0, msgs: []
+    };
+    S.convs.unshift(conv);
+  }
+  S.activeConv = conv.id;
+  saveSt(); go('messages');
+}
+
+// ═══════════════════════════════════════════════════════════
+// MESSAGES
+// ═══════════════════════════════════════════════════════════
+function renderMessages() {
+  if (!S.user) return;
+  buildCvList();
+  if (S.activeConv) openConv(S.activeConv);
+  else showChtIdle();
+  updateMsgDot();
+}
+
+function buildCvList() {
+  const el = document.getElementById('cvList');
+  const mine = S.convs.filter(c => c.me === S.user?.email).sort((a,b) => b.ts - a.ts);
+  if (!mine.length) {
+    el.innerHTML = '<div style="padding:20px;text-align:center;font-size:12px;color:#bbb;line-height:1.7">Aucune conversation.<br>Contactez un vendeur pour démarrer.</div>';
+    return;
+  }
+  el.innerHTML = '';
+  mine.forEach(c => {
+    const d = document.createElement('div');
+    d.className = 'ci' + (S.activeConv === c.id ? ' on' : '');
+    d.dataset.id = c.id;
+    d.onclick = () => selConv(c.id);
+    const prev = c.msgs.length ? esc(c.msgs[c.msgs.length-1].txt.substring(0,40)) : '…';
+    const avHtml = c.withPic ? `<img src="${c.withPic}" alt="">` : c.withInit.toUpperCase();
+    d.innerHTML = `
+      <div class="ci-av">${avHtml}</div>
+      <div class="ci-body">
+        <div class="ci-nm">${esc(c.withName)}</div>
+        <div class="ci-sub">${esc(c.adTitle)}</div>
+        <div class="ci-pv">${prev}</div>
+        <div class="ci-t">${c.msgs.length ? tstamp(c.ts) : 'Nouveau'}</div>
+      </div>
+      ${c.unread > 0 ? `<div class="ci-bdg">${c.unread}</div>` : ''}`;
+    el.appendChild(d);
+  });
+}
+
+function selConv(id) {
+  const c = S.convs.find(x => x.id === id);
+  if (c) { c.unread = 0; saveSt(); }
+  S.activeConv = id;
+  buildCvList(); openConv(id); updateMsgDot();
+}
+
+function openConv(id) {
+  const c = S.convs.find(x => x.id === id);
+  if (!c) { showChtIdle(); return; }
+  const col = document.getElementById('chtCol');
+  const avHtml = c.withPic ? `<img src="${c.withPic}" alt="">` : c.withInit.toUpperCase();
+  col.innerHTML = `
+    <div class="cht-hd">
+      <div class="cht-hd-av" style="cursor:pointer" onclick="openUserProfile('${c.withEmail}')">${avHtml}</div>
+      <div style="flex:1;min-width:0"><div class="cht-hd-nm">${esc(c.withName)}</div><div class="cht-hd-sb">${esc(c.adTitle)} — ${esc(c.adPrice)}</div></div>
+    </div>
+    <div class="cht-msgs" id="chtMsgs"></div>
+    <div class="cht-in">
+      <input type="text" id="chtIn" placeholder="Votre message…" onkeydown="if(event.key==='Enter'&&!event.shiftKey)sendMsg()">
+      <button class="cht-send" onclick="sendMsg()">Envoyer</button>
+    </div>`;
+  const box = document.getElementById('chtMsgs');
+  c.msgs.forEach(m => appendBbl(box, m.from === S.user.email ? 's' : 'rx', m.txt, tstamp(m.ts)));
+  box.scrollTop = box.scrollHeight;
+  setTimeout(() => document.getElementById('chtIn')?.focus(), 50);
+}
+
+function appendBbl(box, side, txt, time) {
+  const b = document.createElement('div');
+  b.className = 'cbbl ' + side;
+  b.innerHTML = `<div class="cbbl-t">${esc(txt)}</div><div class="cbbl-time">${time}</div>`;
+  box.appendChild(b);
+}
+
+function sendMsg() {
+  const inp = document.getElementById('chtIn');
+  if (!inp) return;
+  const txt = inp.value.trim();
+  if (!txt) return;
+  const c = S.convs.find(x => x.id === S.activeConv);
+  if (!c) return;
+  const now = Date.now();
+  c.msgs.push({ from: S.user.email, txt, ts: now });
+  c.ts = now;
+  inp.value = '';
+  const box = document.getElementById('chtMsgs');
+  if (box) { appendBbl(box, 's', txt, tstamp(now)); box.scrollTop = box.scrollHeight; }
+  buildCvList();
+  saveSt();
+  // Auto reply
+  setTimeout(() => {
+    const reply = AUTO_REPLIES[Math.floor(Math.random() * AUTO_REPLIES.length)];
+    const rts = Date.now();
+    c.msgs.push({ from: c.withEmail, txt: reply, ts: rts });
+    c.ts = rts; c.unread = (c.unread || 0) + 1;
+    const box2 = document.getElementById('chtMsgs');
+    if (box2) { appendBbl(box2, 'rx', reply, tstamp(rts)); box2.scrollTop = box2.scrollHeight; }
+    buildCvList();
+    addNotif('✉', 'Nouveau message', esc(c.withName) + ' a répondu.');
+    saveSt(); updateMsgDot();
+  }, 1000 + Math.random() * 2000);
+}
+
+function showChtIdle() {
+  document.getElementById('chtCol').innerHTML = `<div class="cht-idle"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><p>Sélectionnez une conversation</p></div>`;
+}
+function updateMsgDot() {
+  const tot = S.convs.filter(c => c.me === S.user?.email).reduce((s,c) => s + (c.unread||0), 0);
+  const dot = document.getElementById('mDot');
+  if (dot) dot.style.display = tot > 0 ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════════════════════
+// NOTIFICATIONS
+// ═══════════════════════════════════════════════════════════
+function addNotif(ico, title, desc) {
+  S.notifs.unshift({ id: Date.now(), ico, title, desc, ts: Date.now(), unread: true });
+  if (S.notifs.length > 20) S.notifs = S.notifs.slice(0, 20);
+  saveSt(); renderNotifs();
+}
+function renderNotifs() {
+  const el = document.getElementById('nList');
+  const nn = S.notifs.slice(0, 8);
+  if (!nn.length) { el.innerHTML = '<div class="ndd-empty">Aucune notification</div>'; }
+  else {
+    el.innerHTML = '';
+    nn.forEach(n => {
+      const d = document.createElement('div');
+      d.className = 'ni' + (n.unread ? ' unread' : '');
+      d.onclick = () => { n.unread = false; saveSt(); renderNotifs(); };
+      d.innerHTML = `<div class="ni-ico">${n.ico}</div><div style="flex:1;min-width:0"><div class="ni-title">${n.title}</div><div class="ni-desc">${n.desc}</div><div class="ni-time">${tstamp(n.ts)}</div></div>${n.unread ? '<div class="ni-dot"></div>' : ''}`;
+      el.appendChild(d);
+    });
+  }
+  const unr = S.notifs.filter(n => n.unread).length;
+  const dot = document.getElementById('nDot');
+  if (dot) dot.style.display = unr > 0 ? 'block' : 'none';
+}
+function markAllRead() { S.notifs.forEach(n => n.unread = false); saveSt(); renderNotifs(); toast('Tout lu'); }
+
+// ═══════════════════════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════════════════════
+function doLogin() {
+  const em = document.getElementById('lEm').value.trim();
+  const pw = document.getElementById('lPw').value;
+  const err = document.getElementById('lErr');
+  err.style.display = 'none';
+  if (!em || !pw) { err.textContent = 'Remplissez tous les champs.'; err.style.display = 'block'; return; }
+  const u = S.users.find(x => x.email === em && x.password === pw);
+  if (!u) { err.textContent = 'Email ou mot de passe incorrect.'; err.style.display = 'block'; return; }
+  if (u.status === 'banned') { err.textContent = 'Compte suspendu. Contactez le support.'; err.style.display = 'block'; return; }
+  S.user = { ...u };
+  addLog('inf', 'Connexion : ' + em);
+  saveSt(); closeAllModals(); updateAuthUI();
+  toast('Bienvenue ' + (u.first || u.name) + ' !', 'ok');
+}
+
+function doRegister() {
+  const fi = document.getElementById('rFi').value.trim();
+  const la = document.getElementById('rLa').value.trim();
+  const em = document.getElementById('rEm').value.trim();
+  const pw = document.getElementById('rPw').value;
+  const tm = document.getElementById('rTm').checked;
+  const err = document.getElementById('rErr'), ok = document.getElementById('rOk');
+  err.style.display = 'none'; ok.style.display = 'none';
+  if (!fi||!la||!em||!pw) { err.textContent = 'Tous les champs sont obligatoires.'; err.style.display = 'block'; return; }
+  if (!em.includes('@')) { err.textContent = 'Email invalide.'; err.style.display = 'block'; return; }
+  if (pw.length < 6) { err.textContent = 'Mot de passe trop court (min. 6 caractères).'; err.style.display = 'block'; return; }
+  if (!tm) { err.textContent = 'Acceptez les conditions d\'utilisation.'; err.style.display = 'block'; return; }
+  if (S.users.find(u => u.email === em)) { err.textContent = 'Cet email est déjà utilisé.'; err.style.display = 'block'; return; }
+  const u = { id: 'u'+Date.now(), name: fi+' '+la, first: fi, last: la, email: em, password: pw, init: fi[0].toUpperCase(), picture: '', since: fmtMonth(new Date()), phone: '', city: '', zip: '', role: 'user', status: 'active', via: 'email' };
+  S.users.push(u);
+  S.user = { ...u };
+  addLog('inf', 'Inscription : ' + em);
+  ok.textContent = 'Compte créé !'; ok.style.display = 'block';
+  saveSt();
+  setTimeout(() => { closeAllModals(); updateAuthUI(); toast('Bienvenue ' + fi + ' !', 'ok'); addNotif('🎉', 'Bienvenue !', 'Compte créé avec succès.'); }, 700);
+}
+
+function logout() { S.user = null; S.activeConv = null; saveSt(); closeAllDD(); updateAuthUI(); go('home'); toast('Déconnecté.'); }
+
+function deleteAccount() {
+  if (!confirm('Supprimer définitivement votre compte ?')) return;
+  if (S.user.role === 'admin') { toast('Impossible de supprimer le compte admin', 'err'); return; }
+  const em = S.user.email;
+  S.users = S.users.filter(u => u.email !== em);
+  S.ads = S.ads.filter(a => a.sellerEmail !== em);
+  S.convs = S.convs.filter(c => c.me !== em);
+  S.user = null;
+  saveSt(); updateAuthUI(); go('home'); toast('Compte supprimé.', 'ok');
+}
+
+function updateAuthUI() {
+  const u = S.user;
+  const g = document.getElementById('hGuest');
+  const hu = document.getElementById('hUser');
+  if (g) g.style.display = u ? 'none' : 'flex';
+  if (hu) hu.style.display = u ? 'flex' : 'none';
+  if (u) {
+    const av = document.getElementById('uAv');
+    if (av) { if (u.picture) { av.innerHTML = `<img src="${u.picture}" alt="">`; } else { av.textContent = u.init||'?'; av.style.background='var(--k)'; av.style.color='#fff'; } }
+    const nm = document.getElementById('uNm'); if (nm) nm.textContent = u.first || u.name;
+    const uddNm = document.getElementById('uddNm'); if (uddNm) uddNm.textContent = u.name;
+    const uddEm = document.getElementById('uddEm'); if (uddEm) uddEm.textContent = u.email;
+    const al = document.getElementById('adminLink'); if (al) al.style.display = u.role === 'admin' ? 'block' : 'none';
+  }
+  renderNotifs(); updateMsgDot(); updateRepBadge();
+}
+
+// ═══════════════════════════════════════════════════════════
+// POST / EDIT AD
+// ═══════════════════════════════════════════════════════════
+let pendingImgs = [];
+function handleFiles(input) {
+  const prev = document.getElementById('imgPrev');
+  prev.innerHTML = ''; pendingImgs = [];
+  Array.from(input.files).slice(0,5).forEach(f => {
+    const r = new FileReader();
+    r.onload = e => {
+      const idx = pendingImgs.length;
+      pendingImgs.push(e.target.result);
+      const d = document.createElement('div'); d.className = 'iprev';
+      d.innerHTML = `<img src="${e.target.result}" alt=""><button class="irm" onclick="removeImg(${idx})">✕</button>`;
+      prev.appendChild(d);
+    };
+    r.readAsDataURL(f);
+  });
+  input.value = '';
+}
+function removeImg(i) { pendingImgs.splice(i, 1); renderImgPrev(); }
+function renderImgPrev() {
+  const prev = document.getElementById('imgPrev'); prev.innerHTML = '';
+  pendingImgs.forEach((img, i) => { const d = document.createElement('div'); d.className = 'iprev'; d.innerHTML = `<img src="${img}" alt=""><button class="irm" onclick="removeImg(${i})">✕</button>`; prev.appendChild(d); });
+}
+
+function openPostAd() {
+  document.getElementById('editAdId').value = '';
+  document.getElementById('postAdTitle').textContent = 'Déposer une annonce';
+  document.getElementById('submitAdBtn').textContent = 'Publier l\'annonce';
+  document.getElementById('cancelEditBtn').style.display = 'none';
+  ['aTitle','aDesc','aCity','aZip'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('aPrice').value = '';
+  document.getElementById('aC').value = '';
+  document.getElementById('aCond').value = 'Bon état';
+  document.getElementById('aType').value = 'particular';
+  document.getElementById('oUrg').checked = false;
+  document.getElementById('oDel').checked = false;
+  document.getElementById('imgPrev').innerHTML = '';
+  pendingImgs = [];
+  go('post-ad');
+}
+
+function openEditAd() {
+  const ad = S.ads.find(a => a.id === S.currentAdId);
+  if (!ad) return;
+  document.getElementById('editAdId').value = ad.id;
+  document.getElementById('postAdTitle').textContent = 'Modifier l\'annonce';
+  document.getElementById('submitAdBtn').textContent = 'Enregistrer les modifications';
+  document.getElementById('cancelEditBtn').style.display = 'inline-flex';
+  document.getElementById('aTitle').value = ad.title;
+  document.getElementById('aDesc').value = ad.desc;
+  document.getElementById('aC').value = ad.cat;
+  document.getElementById('aPrice').value = ad.price;
+  document.getElementById('aCond').value = ad.cond || 'Bon état';
+  document.getElementById('aType').value = ad.type;
+  document.getElementById('aCity').value = ad.city;
+  document.getElementById('aZip').value = ad.zip || '';
+  document.getElementById('oUrg').checked = ad.urgent || false;
+  document.getElementById('oDel').checked = ad.delivery || false;
+  document.getElementById('tcc').textContent = ad.title.length;
+  pendingImgs = [...(ad.images || [])];
+  renderImgPrev();
+  go('post-ad');
+}
+
+function submitAd() {
+  const title = document.getElementById('aTitle').value.trim();
+  const cat = document.getElementById('aC').value;
+  const desc = document.getElementById('aDesc').value.trim();
+  const city = document.getElementById('aCity').value.trim();
+  if (!title||!cat||!desc||!city) { toast('Remplissez tous les champs obligatoires', 'err'); return; }
+  const editId = document.getElementById('editAdId').value;
+  if (editId) {
+    // Edit mode
+    const ad = S.ads.find(a => a.id == editId);
+    if (!ad) return;
+    ad.title = title; ad.cat = cat; ad.desc = desc;
+    ad.price = parseFloat(document.getElementById('aPrice').value) || 0;
+    ad.cond = document.getElementById('aCond').value;
+    ad.type = document.getElementById('aType').value;
+    ad.city = city;
+    ad.zip = document.getElementById('aZip').value.trim();
+    ad.urgent = document.getElementById('oUrg').checked;
+    ad.delivery = document.getElementById('oDel').checked;
+    if (pendingImgs.length) ad.images = [...pendingImgs];
+    addLog('inf', `Annonce modifiée : "${title}"`);
+    saveSt(); renderHome(); toast('Annonce mise à jour !', 'ok');
+    openAd(ad.id);
+    return;
+  }
+  // New ad
+  const ad = {
+    id: Date.now(), title, cat, desc,
+    price: parseFloat(document.getElementById('aPrice').value) || 0,
+    cond: document.getElementById('aCond').value,
+    type: document.getElementById('aType').value,
+    city, zip: document.getElementById('aZip').value.trim(),
+    urgent: document.getElementById('oUrg').checked,
+    delivery: document.getElementById('oDel').checked,
+    images: [...pendingImgs],
+    seller: S.user.name, sellerEmail: S.user.email, sellerInit: S.user.init,
+    date: new Date().toISOString().split('T')[0], status: 'active'
+  };
+  S.ads.unshift(ad);
+  const u = S.users.find(x => x.email === S.user.email);
+  addLog('inf', `Nouvelle annonce : "${title}" par ${S.user.name}`);
+  saveSt(); renderHome();
+  toast('Annonce publiée !', 'ok');
+  addNotif('📝', 'Annonce publiée', `"${title}" est maintenant visible.`);
+  go('listings');
+}
+
+// ═══════════════════════════════════════════════════════════
+// PROFILE
+// ═══════════════════════════════════════════════════════════
+function renderProfile() {
+  if (!S.user) return;
+  const u = S.user;
+  const av = document.getElementById('profAv');
+  if (u.picture) av.innerHTML = `<img src="${u.picture}" alt="">`;
+  else { av.textContent = u.init||'?'; av.style.background='var(--k)'; av.style.color='#fff'; }
+  document.getElementById('profNm').textContent = u.name;
+  const profCityInfo = u.city ? ` · 📍 ${u.city}${u.zip ? ' ('+u.zip+')' : ''}` : '';
+  document.getElementById('profSub').textContent = `Membre depuis ${u.since||'—'} · ${u.email}${profCityInfo}`;
+  const myAds = S.ads.filter(a => a.sellerEmail === u.email);
+  document.getElementById('stAds').textContent = myAds.filter(a=>a.status!=='removed').length;
+  document.getElementById('stFavs').textContent = S.favs.length;
+  // Ratings
+  const myRevs = S.reviews.filter(r => r.targetEmail === u.email);
+  const avg = myRevs.length ? (myRevs.reduce((s,r)=>s+r.stars,0)/myRevs.length).toFixed(1) : '—';
+  document.getElementById('stRevs').textContent = avg;
+  // Settings
+  ['sfFirst','sfLast','sfEmail','sfPhone','sfCity','sfZip'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const key = id.replace('sf','').toLowerCase();
+    const map = { first: u.first||'', last: u.last||'', email: u.email, phone: u.phone||'', city: u.city||'', zip: u.zip||'' };
+    el.value = map[key] || '';
+  });
+  // My ads
+  const g = document.getElementById('myAdsG'), e = document.getElementById('myAdsE');
+  g.innerHTML = '';
+  if (!myAds.length) { e.style.display='block'; g.style.display='none'; }
+  else {
+    e.style.display='none'; g.style.display='';
+    const wrap = document.createElement('div');
+    myAds.forEach(ad => {
+      const row = document.createElement('div');
+      row.style.cssText = 'border:2px solid var(--l);margin-bottom:8px;display:flex;align-items:center;gap:12px;padding:10px 12px;cursor:pointer;transition:background .12s';
+      row.onmouseover = () => row.style.background = 'var(--off)';
+      row.onmouseout = () => row.style.background = '';
+      const img = (ad.images && ad.images[0]) ? `<img src="${ad.images[0]}" style="width:52px;height:40px;object-fit:cover;flex-shrink:0;border-radius:2px">` : `<span style="font-size:28px;flex-shrink:0;width:52px;text-align:center">${CAT_ICONS[ad.cat]||'📦'}</span>`;
+      const statusBadge = ad.status === 'removed' ? '<span style="font-size:10px;font-weight:700;color:var(--r);background:#fee2e2;padding:1px 6px;border-radius:2px;margin-left:6px">Retirée</span>' : '<span style="font-size:10px;font-weight:700;color:var(--grn);background:#dcfce7;padding:1px 6px;border-radius:2px;margin-left:6px">Active</span>';
+      row.innerHTML = `
+        ${img}
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(ad.title)}${statusBadge}</div>
+          <div style="font-size:11px;color:var(--g);margin-top:2px">${ad.price>0?fmt(ad.price)+' €':'Gratuit'} · ${esc(ad.city)} · ${ad.cat}</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0" onclick="event.stopPropagation()">
+          <button class="btn bgo btn-sm" onclick="openAd(${ad.id})">Voir</button>
+          <button class="btn bbl btn-sm" onclick="S.currentAdId=${ad.id};openEditAd()">✏ Modifier</button>
+          <button class="btn bro btn-sm" onclick="S.currentAdId=${ad.id};deleteMyAd()">🗑</button>
+        </div>`;
+      row.onclick = () => openAd(ad.id);
+      wrap.appendChild(row);
+    });
+    g.appendChild(wrap);
+  }
+  // Favs
+  const fg = document.getElementById('favG'), fe = document.getElementById('favE');
+  const favAds = S.ads.filter(a => S.favs.includes(a.id) && a.status !== 'removed');
+  fg.innerHTML = '';
+  if (!favAds.length) { fe.style.display='block'; fg.style.display='none'; }
+  else { fe.style.display='none'; fg.style.display=''; fg.appendChild(adGrid(favAds)); }
+  // Reviews received
+  renderReviewsList(document.getElementById('myRevsG'), document.getElementById('myRevsE'), myRevs);
+}
+
+function saveProfile() {
+  if (!S.user) return;
+  const u = S.user;
+  u.first = document.getElementById('sfFirst').value.trim();
+  u.last = document.getElementById('sfLast').value.trim();
+  u.name = u.first + ' ' + u.last;
+  u.phone = document.getElementById('sfPhone').value.trim();
+  u.city = document.getElementById('sfCity').value.trim();
+  u.zip = document.getElementById('sfZip').value.trim();
+  u.init = u.first?.[0]?.toUpperCase() || '?';
+  const du = S.users.find(x => x.email === u.email);
+  if (du) Object.assign(du, { first:u.first, last:u.last, name:u.name, phone:u.phone, city:u.city, zip:u.zip, init:u.init });
+  saveSt(); updateAuthUI(); renderProfile(); toast('Profil mis à jour', 'ok');
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tabp').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
+  document.getElementById(id)?.classList.add('on');
+  btn.classList.add('on');
+}
+
+// ═══════════════════════════════════════════════════════════
+// SELLER PROFILE (other user)
+// ═══════════════════════════════════════════════════════════
+function openUserProfile(email) {
+  if (!email) return;
+  if (S.user && email === S.user.email) { go('profile'); return; }
+  const u = S.users.find(x => x.email === email);
+  if (!u) { toast('Utilisateur introuvable', 'err'); return; }
+  S.currentSellerEmail = email;
+  const av = document.getElementById('spAv');
+  if (u.picture) av.innerHTML = `<img src="${u.picture}" alt="">`;
+  else { av.textContent = u.init||'?'; av.style.background='var(--k)'; av.style.color='#fff'; }
+  document.getElementById('spNm').textContent = u.name;
+  const cityInfo = u.city ? `${u.city}${u.zip ? ' ('+u.zip+')' : ''}` : '';
+  document.getElementById('spSub').textContent = `Membre depuis ${u.since||'—'}${cityInfo ? ' · 📍 ' + cityInfo : ''}`;
+  const selAds = S.ads.filter(a => a.sellerEmail === email && a.status !== 'removed');
+  document.getElementById('spAdsC').textContent = selAds.length;
+  const selRevs = S.reviews.filter(r => r.targetEmail === email);
+  document.getElementById('spRevC').textContent = selRevs.length;
+  // Rating
+  const rat = document.getElementById('spRating');
+  if (selRevs.length) {
+    const avg = (selRevs.reduce((s,r) => s+r.stars, 0) / selRevs.length).toFixed(1);
+    rat.innerHTML = `<div class="stars">${'★'.repeat(Math.round(parseFloat(avg)))}</div><span style="font-size:12px;color:var(--g);font-weight:600">${avg}/5 · ${selRevs.length} avis</span>`;
+  } else { rat.innerHTML = '<span style="font-size:12px;color:#bbb;font-weight:500">Aucun avis</span>'; }
+  // Leave review button
+  const rb = document.getElementById('spRevBtn');
+  if (S.user && S.user.email !== email && !S.reviews.find(r => r.authorEmail === S.user.email && r.targetEmail === email)) {
+    rb.innerHTML = `<button class="btn bbl btn-sm" onclick="openReviewModal('${email}','${esc(u.name)}')">★ Laisser un avis</button>`;
+  } else { rb.innerHTML = ''; }
+  // Ads
+  const ag = document.getElementById('spAdsG'), ae = document.getElementById('spAdsE');
+  ag.innerHTML = '';
+  if (!selAds.length) { ae.style.display='block'; ag.style.display='none'; }
+  else { ae.style.display='none'; ag.style.display=''; ag.appendChild(adGrid(selAds)); }
+  // Reviews
+  renderReviewsList(document.getElementById('spRevG'), document.getElementById('spRevE'), selRevs);
+  go('seller');
+}
+
+function renderReviewsList(gEl, eEl, revs) {
+  gEl.innerHTML = '';
+  if (!revs.length) { eEl.style.display='block'; gEl.style.display='none'; return; }
+  eEl.style.display='none'; gEl.style.display='';
+  revs.sort((a,b)=>b.ts-a.ts).forEach(r => {
+    const author = S.users.find(u => u.email === r.authorEmail) || {};
+    const av = author.picture ? `<img src="${author.picture}" alt="">` : (author.init||'?');
+    const d = document.createElement('div');
+    d.className = 'review-item';
+    d.innerHTML = `<div class="rev-hd"><div class="rev-av">${av}</div><div style="flex:1"><div class="rev-nm">${esc(r.authorName)}</div><div class="stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div></div><div class="rev-date">${fmtDateFull(new Date(r.ts))}</div></div>${r.txt ? `<div class="rev-txt">${esc(r.txt)}</div>` : ''}`;
+    gEl.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// REVIEWS
+// ═══════════════════════════════════════════════════════════
+let selectedStars = 0;
+function openReviewModal(email, name) {
+  selectedStars = 0;
+  document.getElementById('revTargetEmail').value = email;
+  document.getElementById('revTargetNm').textContent = name;
+  document.getElementById('revTxt').value = '';
+  document.getElementById('revTxt').addEventListener('focus', ()=>{document.getElementById('revTxt').style.borderColor='var(--k)'});
+  updateStarDisplay();
+  openM('review');
+}
+function setStar(v) { selectedStars = v; updateStarDisplay(); }
+function updateStarDisplay() {
+  document.querySelectorAll('.star-inp-btn').forEach((b, i) => {
+    b.style.color = i < selectedStars ? '#f59e0b' : '#ddd';
+    b.style.fontSize = '24px';
+  });
+}
+function submitReview() {
+  if (selectedStars === 0) { toast('Sélectionnez une note', 'err'); return; }
+  const targetEmail = document.getElementById('revTargetEmail').value;
+  const txt = document.getElementById('revTxt').value.trim();
+  if (S.reviews.find(r => r.authorEmail === S.user.email && r.targetEmail === targetEmail)) { toast('Vous avez déjà laissé un avis', 'err'); return; }
+  const rev = { id: Date.now(), authorEmail: S.user.email, authorName: S.user.name, authorInit: S.user.init, authorPic: S.user.picture||'', targetEmail, stars: selectedStars, txt, ts: Date.now() };
+  S.reviews.push(rev);
+  addLog('inf', `Avis ${selectedStars}★ de ${S.user.name}`);
+  saveSt(); closeM('review');
+  toast('Avis publié !', 'ok');
+  openUserProfile(targetEmail);
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN — DASHBOARD
+// ═══════════════════════════════════════════════════════════
+function renderDash() {
+  const activeAds = S.ads.filter(a => a.status === 'active').length;
+  const removedAds = S.ads.filter(a => a.status === 'removed').length;
+  const users = S.users.filter(u => u.role !== 'admin').length;
+  const pendRep = S.reports.filter(r => r.status === 'pending').length;
+  const msgs = S.convs.reduce((s,c) => s + c.msgs.length, 0);
+  document.getElementById('kpiRow').innerHTML = [
+    { v: activeAds, l: 'Annonces actives', d: removedAds > 0 ? removedAds + ' retirée(s)' : 'Aucune retirée', up: true },
+    { v: users, l: 'Utilisateurs inscrits', d: S.users.filter(u=>u.status==='banned').length + ' banni(s)', up: true },
+    { v: pendRep, l: 'Signalements en attente', d: pendRep > 0 ? '⚠ À traiter' : 'Aucun en attente', up: pendRep===0 },
+    { v: msgs, l: 'Messages échangés', d: S.convs.length + ' conversation(s)', up: true },
+  ].map(k => `<div class="kpi"><div class="kpi-v">${k.v}</div><div class="kpi-l">${k.l}</div><div class="kpi-d ${k.up?'up':'dn'}">${k.d}</div></div>`).join('');
+  // Cat chart
+  const cw = document.getElementById('catChartW');
+  const catCounts = CATS.map(c => ({ c, n: S.ads.filter(a=>a.cat===c&&a.status!=='removed').length })).filter(x=>x.n>0);
+  if (!catCounts.length) { cw.innerHTML = '<p style="font-size:11px;color:#bbb;text-align:center;padding:20px">Aucune annonce</p>'; }
+  else {
+    const max = Math.max(...catCounts.map(x=>x.n));
+    cw.innerHTML = `<div class="bar-chart">${catCounts.map(x=>`<div class="bar dk" style="height:${(x.n/max*100)}%" title="${x.c}: ${x.n}"><span class="bv">${x.n}</span></div>`).join('')}</div><div style="display:flex;margin-top:4px">${catCounts.map(x=>`<div class="bx" style="font-size:8px">${x.c.substring(0,4)}</div>`).join('')}</div>`;
+  }
+  // Activity feed
+  const feed = document.getElementById('actFeed');
+  const acts = S.logs.slice(0,6);
+  if (!acts.length) { feed.innerHTML = '<p style="font-size:11px;color:#bbb;text-align:center;padding:16px">Aucune activité</p>'; }
+  else { feed.innerHTML = acts.map(l=>`<div class="act-item"><div class="act-ico">${l.type==='err'?'🚨':l.type==='wrn'?'⚠️':'📋'}</div><div class="act-txt">${esc(l.msg)}</div><div class="act-time">${l.time}</div></div>`).join(''); }
+  // Reports preview
+  const rp = document.getElementById('repPreview');
+  const pending = S.reports.filter(r => r.status === 'pending').slice(0,3);
+  if (!pending.length) { rp.innerHTML = '<p style="font-size:11px;color:#bbb;text-align:center;padding:8px">Aucun signalement en attente</p>'; }
+  else { rp.innerHTML = pending.map(r=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:2px solid var(--l);font-size:12px;gap:10px"><div style="flex:1;min-width:0"><strong style="display:block">${esc(r.adTitle)}</strong><span style="color:var(--g)">${esc(r.reason)} · ${esc(r.reporter)}</span></div><button class="btn bgr btn-sm" onclick="resolveRep(${r.id})">Résoudre</button></div>`).join(''); }
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN — ADS
+// ═══════════════════════════════════════════════════════════
+function renderAdmAds() {
+  const q = (document.getElementById('adQ')?.value||'').toLowerCase();
+  const cf = document.getElementById('adCF')?.value||'';
+  const sf = document.getElementById('adSF')?.value||'';
+  let ads = S.ads;
+  if (q) ads = ads.filter(a => a.title.toLowerCase().includes(q) || a.seller.toLowerCase().includes(q));
+  if (cf) ads = ads.filter(a => a.cat === cf);
+  if (sf) ads = ads.filter(a => a.status === sf);
+  const t = document.getElementById('admAdsT');
+  if (!t) return;
+  if (!ads.length) { t.innerHTML = '<thead><tr><th>Aucune annonce</th></tr></thead><tbody><tr><td style="text-align:center;padding:24px;color:#bbb">Aucune annonce sur la plateforme</td></tr></tbody>'; return; }
+  t.innerHTML = `<thead><tr><th>Titre</th><th>Catégorie</th><th>Prix</th><th>Vendeur</th><th>Ville</th><th>Type</th><th>Statut</th><th>Actions</th></tr></thead><tbody>${
+    ads.map(a=>`<tr>
+      <td style="font-weight:700;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(a.title)}</td>
+      <td>${a.cat}</td>
+      <td style="font-weight:700">${a.price>0?fmt(a.price)+' €':'Gratuit'}</td>
+      <td>${esc(a.seller)}</td>
+      <td>${esc(a.city||'—')}</td>
+      <td><span class="tag ${a.type==='pro'?'pro':'part'}">${a.type==='pro'?'Pro':'Part.'}</span></td>
+      <td><span class="tag ${a.status==='active'?'ok':'rem'}">${a.status==='active'?'Active':'Retirée'}</span></td>
+      <td style="white-space:nowrap;display:flex;gap:5px;flex-wrap:wrap">
+        <button class="btn bgo btn-sm" onclick="openAd(${a.id})">Voir</button>
+        <button class="btn bwa btn-sm" onclick="admEditAd(${a.id})">Modifier</button>
+        <button class="btn ${a.status==='removed'?'bgr':'bro'} btn-sm" onclick="toggleAdSt(${a.id})">${a.status==='removed'?'Restaurer':'Retirer'}</button>
+      </td>
+    </tr>`).join('')
+  }</tbody>`;
+}
+function admEditAd(id) { S.currentAdId = id; openEditAd(); }
+function deleteMyAd() {
+  const ad = S.ads.find(a => a.id === S.currentAdId);
+  if (!ad) return;
+  const isOwner = S.user && S.user.email === ad.sellerEmail;
+  const isAdmin = S.user && S.user.role === 'admin';
+  if (!isOwner && !isAdmin) { toast('Non autorisé', 'err'); return; }
+  if (!confirm('Supprimer définitivement cette annonce ?')) return;
+  ad.status = 'removed';
+  addLog('wrn', `Annonce "${ad.title}" supprimée par ${S.user.name}`);
+  saveSt(); renderHome(); toast('Annonce supprimée', 'ok');
+  go('listings');
+}
+function toggleAdSt(id) {
+  const a = S.ads.find(x=>x.id===id); if(!a) return;
+  a.status = a.status==='removed'?'active':'removed';
+  addLog('wrn', `Annonce "${a.title}" ${a.status==='removed'?'retirée':'restaurée'} par admin`);
+  saveSt(); renderAdmAds(); renderHome(); toast(a.status==='removed'?'Annonce retirée':'Annonce restaurée', a.status==='removed'?'err':'ok');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN — REPORTS
+// ═══════════════════════════════════════════════════════════
+function renderAdmRep() {
+  const sf = document.getElementById('repSF')?.value||'';
+  let reps = sf ? S.reports.filter(r=>r.status===sf) : S.reports;
+  const t = document.getElementById('admRepT');
+  if (!t) return;
+  if (!reps.length) { t.innerHTML = '<thead><tr><th>Aucun signalement</th></tr></thead><tbody><tr><td style="text-align:center;padding:24px;color:#bbb">Aucun signalement</td></tr></tbody>'; return; }
+  t.innerHTML = `<thead><tr><th>Annonce</th><th>Motif</th><th>Signalé par</th><th>Date</th><th>Vendeur</th><th>Statut</th><th>Actions</th></tr></thead><tbody>${
+    reps.sort((a,b)=>b.id-a.id).map(r=>`<tr>
+      <td style="font-weight:700;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.adTitle)}</td>
+      <td style="color:var(--g);max-width:150px">${esc(r.reason)}</td>
+      <td>${esc(r.reporter)}</td>
+      <td style="white-space:nowrap;color:#bbb;font-size:11px">${r.date}</td>
+      <td>${esc(r.sellerName||'—')}</td>
+      <td><span class="tag ${r.status==='pending'?'pend':'ok'}">${r.status==='pending'?'En attente':'Résolu'}</span></td>
+      <td style="white-space:nowrap;display:flex;gap:5px">
+        <button class="btn ${r.status==='pending'?'bgr':'bwa'} btn-sm" onclick="resolveRep(${r.id})">${r.status==='pending'?'Résoudre':'Rouvrir'}</button>
+        <button class="btn bro btn-sm" onclick="removeAdByRep(${r.adId})">Retirer annonce</button>
+      </td>
+    </tr>`).join('')
+  }</tbody>`;
+  updateRepBadge();
+}
+function resolveRep(id) {
+  const r = S.reports.find(x=>x.id===id); if(!r) return;
+  r.status = r.status==='pending'?'resolved':'pending';
+  addLog('inf', `Signalement ${r.status==='resolved'?'résolu':'rouvert'} : "${r.adTitle}"`);
+  saveSt(); renderAdmRep(); updateRepBadge(); toast('Mis à jour','ok');
+}
+function removeAdByRep(adId) {
+  const a = S.ads.find(x=>x.id===adId); if(a){ a.status='removed'; addLog('wrn',`Annonce "${a.title}" retirée suite à signalement`); saveSt(); renderAdmRep(); renderAdmAds(); renderHome(); toast('Annonce retirée','ok'); }
+}
+function updateRepBadge() {
+  const n = S.reports.filter(r=>r.status==='pending').length;
+  const b = document.getElementById('repBdg');
+  if (b) { b.style.display = n>0?'inline':'none'; b.textContent = n; }
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN — REVIEWS
+// ═══════════════════════════════════════════════════════════
+function renderAdmRev() {
+  const t = document.getElementById('admRevT');
+  if (!t) return;
+  if (!S.reviews.length) { t.innerHTML = '<thead><tr><th>Aucun avis</th></tr></thead><tbody><tr><td style="text-align:center;padding:24px;color:#bbb">Aucun avis publié</td></tr></tbody>'; return; }
+  t.innerHTML = `<thead><tr><th>Auteur</th><th>Destinataire</th><th>Note</th><th>Commentaire</th><th>Date</th><th>Actions</th></tr></thead><tbody>${
+    S.reviews.sort((a,b)=>b.ts-a.ts).map(r=>`<tr>
+      <td style="font-weight:700">${esc(r.authorName)}</td>
+      <td>${esc(r.targetEmail)}</td>
+      <td><span class="stars">${'★'.repeat(r.stars)}</span></td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--g)">${esc(r.txt||'—')}</td>
+      <td style="color:#bbb;font-size:11px">${fmtDateFull(new Date(r.ts))}</td>
+      <td><button class="btn bro btn-sm" onclick="deleteReview(${r.id})">Supprimer</button></td>
+    </tr>`).join('')
+  }</tbody>`;
+}
+function deleteReview(id) {
+  S.reviews = S.reviews.filter(r=>r.id!==id);
+  addLog('wrn','Avis supprimé par admin');
+  saveSt(); renderAdmRev(); toast('Avis supprimé','ok');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN — USERS
+// ═══════════════════════════════════════════════════════════
+function renderAdmUsers() {
+  const q = (document.getElementById('uQ')?.value||'').toLowerCase();
+  const rf = document.getElementById('uRF')?.value||'';
+  let users = S.users;
+  if (q) users = users.filter(u=>u.name.toLowerCase().includes(q)||u.email.toLowerCase().includes(q));
+  if (rf==='banned') users = users.filter(u=>u.status==='banned');
+  else if (rf) users = users.filter(u=>u.role===rf&&u.status!=='banned');
+  const t = document.getElementById('admUsersT');
+  if (!t) return;
+  if (!users.length) { t.innerHTML = '<thead><tr><th>Aucun utilisateur</th></tr></thead><tbody><tr><td style="text-align:center;padding:24px;color:#bbb">Aucun utilisateur trouvé</td></tr></tbody>'; return; }
+  t.innerHTML = `<thead><tr><th>Nom</th><th>Email</th><th>Ville</th><th>Rôle</th><th>Annonces</th><th>Inscrit</th><th>Statut</th><th>Actions</th></tr></thead><tbody>${
+    users.map(u=>`<tr>
+      <td style="font-weight:700">${esc(u.name)}</td>
+      <td style="color:var(--g);font-size:11px">${esc(u.email)}</td>
+      <td style="color:var(--g);font-size:11px">${esc(u.city||'—')}</td>
+      <td><span class="tag ${u.role==='admin'?'adm':'part'}">${u.role==='admin'?'Admin':'User'}</span></td>
+      <td style="font-weight:700">${S.ads.filter(a=>a.sellerEmail===u.email).length}</td>
+      <td style="color:#bbb;font-size:11px">${u.since||'—'}</td>
+      <td><span class="tag ${u.status==='active'?'ok':'ban'}">${u.status==='active'?'Actif':'Banni'}</span></td>
+      <td style="white-space:nowrap;display:flex;gap:5px;flex-wrap:wrap">
+        ${u.email!=='admin@lebonplan.fr'?`<button class="btn ${u.status==='banned'?'bgr':'bro'} btn-sm" onclick="toggleBan('${u.email}')">${u.status==='banned'?'Débannir':'Bannir'}</button>`:'' }
+        ${u.email!=='admin@lebonplan.fr'?`<button class="btn ${u.role==='admin'?'bwa':'bbl'} btn-sm" onclick="toggleAdmRole('${u.email}')">${u.role==='admin'?'Retirer admin':'Admin'}</button>`:'<span style="font-size:10px;color:#bbb;font-weight:600">Compte système</span>'}
+      </td>
+    </tr>`).join('')
+  }</tbody>`;
+}
+function admPurgeAds() {
+  if (!confirm('Supprimer TOUTES les annonces de la plateforme ? Cette action est irréversible.')) return;
+  const count = S.ads.length;
+  S.ads = [];
+  S.reports = [];
+  S.convs = [];
+  S.favs = [];
+  addLog('wrn', `${count} annonces supprimées par admin`);
+  saveSt(); renderHome(); renderDash(); renderAdmAds(); toast(`${count} annonces supprimées`, 'ok');
+}
+function admPurgeUsers() {
+  if (!confirm('Supprimer tous les comptes sauf admin ? Cette action est irréversible.')) return;
+  const count = S.users.filter(u => u.email !== 'admin@lebonplan.fr').length;
+  S.users = [{ ...ADMIN_USER }];
+  S.ads = S.ads.filter(a => a.sellerEmail === 'admin@lebonplan.fr');
+  S.convs = [];
+  S.reviews = [];
+  addLog('wrn', `${count} comptes supprimés par admin`);
+  saveSt(); renderAdmUsers(); renderDash(); toast(`${count} comptes supprimés`, 'ok');
+}
+function admPurgeAll() {
+  if (!confirm('TOUT réinitialiser ? Annonces, comptes, messages, signalements, avis — tout sera effacé. Seul le compte admin sera conservé.')) return;
+  S.ads = []; S.users = [{ ...ADMIN_USER }]; S.convs = []; S.notifs = []; S.favs = [];
+  S.reports = []; S.reviews = []; S.logs = [];
+  if (S.user && S.user.email !== 'admin@lebonplan.fr') { S.user = null; }
+  addLog('wrn', 'Réinitialisation complète par admin');
+  saveSt(); updateAuthUI(); renderHome(); renderDash(); renderAdmAds(); renderAdmUsers(); toast('Plateforme réinitialisée', 'ok');
+}
+function toggleBan(em) {
+  const u = S.users.find(x=>x.email===em); if(!u||u.email==='admin@lebonplan.fr') return;
+  u.status = u.status==='banned'?'active':'banned';
+  if (S.user?.email===em) { S.user.status = u.status; }
+  addLog('wrn',`${u.name} ${u.status==='banned'?'banni':'débanni'} par admin`);
+  saveSt(); renderAdmUsers(); toast(`${u.name} ${u.status==='banned'?'banni':'débanni'}`, u.status==='banned'?'err':'ok');
+}
+function toggleAdmRole(em) {
+  const u = S.users.find(x=>x.email===em); if(!u||u.email==='admin@lebonplan.fr') return;
+  u.role = u.role==='admin'?'user':'admin';
+  if (S.user?.email===em) { S.user.role = u.role; updateAuthUI(); }
+  addLog('inf',`${u.name} est maintenant ${u.role}`);
+  saveSt(); renderAdmUsers(); toast(`${u.name} : rôle mis à jour`,'ok');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN — MESSAGES
+// ═══════════════════════════════════════════════════════════
+function renderAdmMsg() {
+  const t = document.getElementById('admMsgT');
+  if (!t) return;
+  if (!S.convs.length) { t.innerHTML = '<thead><tr><th>Aucune conversation</th></tr></thead><tbody><tr><td style="text-align:center;padding:24px;color:#bbb">Aucune conversation</td></tr></tbody>'; return; }
+  t.innerHTML = `<thead><tr><th>Utilisateur</th><th>Avec</th><th>Annonce</th><th>Messages</th><th>Dernier msg</th></tr></thead><tbody>${
+    S.convs.sort((a,b)=>b.ts-a.ts).map(c=>`<tr>
+      <td style="font-weight:700">${esc(S.users.find(u=>u.email===c.me)?.name||c.me)}</td>
+      <td>${esc(c.withName)}</td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(c.adTitle)}</td>
+      <td style="font-weight:700">${c.msgs.length}</td>
+      <td style="color:#bbb;font-size:11px">${tstamp(c.ts)}</td>
+    </tr>`).join('')
+  }</tbody>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN — SYSTEM
+// ═══════════════════════════════════════════════════════════
+function renderSystem() {
+  const cpu = Math.floor(15 + Math.random()*35);
+  const ram = (1.2 + Math.random()*1.8).toFixed(1);
+  const sysKpi = document.getElementById('sysKpi');
+  if (sysKpi) sysKpi.innerHTML = [
+    { v: '99.98%', l: 'Uptime 30j', d: 'SLA respecté', up: true },
+    { v: cpu + '%', l: 'CPU actuel', d: cpu < 50 ? 'Normal' : 'Élevé', up: cpu < 50 },
+    { v: ram + ' GB', l: 'RAM / 8 GB', d: 'Normal', up: true },
+    { v: '142 ms', l: 'Latence API', d: 'Bon', up: true },
+  ].map(k => `<div class="kpi"><div class="kpi-v">${k.v}</div><div class="kpi-l">${k.l}</div><div class="kpi-d ${k.up?'up':'dn'}">${k.d}</div></div>`).join('');
+  const cpuEl = document.getElementById('cpuV'); if(cpuEl) cpuEl.textContent = cpu + '%';
+  const ramEl = document.getElementById('ramV'); if(ramEl) ramEl.textContent = ram + ' GB / 8 GB';
+  const gst = document.getElementById('gAuthSt');
+  if (gst) { gst.className = 'sdot ' + (GCID ? 'on' : 'w'); gst.textContent = GCID ? 'Configuré' : 'Non configuré'; }
+  toast('Infrastructure actualisée', 'ok');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN — LOGS
+// ═══════════════════════════════════════════════════════════
+function addLog(type, msg) {
+  S.logs.unshift({ id: Date.now(), time: nowTime(), type, msg });
+  if (S.logs.length > 60) S.logs = S.logs.slice(0, 60);
+  saveSt();
+}
+function renderLogs() {
+  const f = document.getElementById('logF')?.value || '';
+  const logs = f ? S.logs.filter(l=>l.type===f) : S.logs;
+  const el = document.getElementById('logList');
+  if (!el) return;
+  if (!logs.length) { el.innerHTML = '<div style="padding:20px;text-align:center;font-size:12px;color:#bbb">Aucun journal</div>'; return; }
+  el.innerHTML = logs.map(l=>`<div class="log-item"><div class="log-t">${l.time}</div><div class="log-b ${l.type}">${l.type.toUpperCase()}</div><div style="flex:1;font-size:12px;color:var(--k);line-height:1.5">${esc(l.msg)}</div></div>`).join('');
+}
+function simLog() {
+  const e = [
+    {t:'inf',m:'Connexion Google réussie : user@gmail.com'},
+    {t:'wrn',m:'Taux 404 élevé sur /api/search'},
+    {t:'err',m:'Exception non gérée : route /api/ads'},
+    {t:'inf',m:'Cache Redis régénéré — 2 341 clés'},
+    {t:'wrn',m:'Quota email SendGrid à 90%'},
+    {t:'inf',m:'Backup base de données terminé'},
+  ][Math.floor(Math.random()*6)];
+  addLog(e.t, e.m); renderLogs(); toast('Événement simulé', 'info');
+}
+
+// ═══════════════════════════════════════════════════════════
+// MODALS / DROPDOWNS
+// ═══════════════════════════════════════════════════════════
+function openM(id) { closeAllModals(); const el=document.getElementById(id+'Modal'); if(el){el.classList.add('on');} }
+function closeM(id) { const el=document.getElementById(id+'Modal'); if(el) el.classList.remove('on'); }
+function closeAllModals() { document.querySelectorAll('.ov').forEach(o=>o.classList.remove('on')); }
+function switchModal(to) { closeAllModals(); openM(to); }
+document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('on');}));
+function toggleDD(id) { const el=document.getElementById(id); const was=el.classList.contains('on'); closeAllDD(); if(!was)el.classList.add('on'); }
+function closeAllDD() { document.querySelectorAll('.ndd,.udd').forEach(d=>d.classList.remove('on')); }
+document.addEventListener('click', e => {
+  if (!e.target.closest('#nWrap')) document.getElementById('nDD')?.classList.remove('on');
+  if (!e.target.closest('#hUser')) document.getElementById('uDD')?.classList.remove('on');
+});
+
+// ═══════════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════════
+function toast(msg, type='') {
+  const c = document.getElementById('toasts');
+  const d = document.createElement('div');
+  d.className = 'toast' + (type?' '+type:'');
+  d.textContent = msg;
+  c.appendChild(d);
+  setTimeout(()=>{ d.style.opacity='0'; d.style.transform='translateX(30px)'; d.style.transition='all .2s'; setTimeout(()=>d.remove(),200); }, 3000);
+}
+function nowTime() { const d=new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+function pad(n) { return String(n).padStart(2,'0'); }
+function tstamp(ts) { if(!ts) return ''; const d=new Date(ts); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+function fmtDate(s) { if(!s) return ''; const d=new Date(s),n=new Date(),diff=Math.floor((n-d)/86400000); if(diff===0)return"Auj."; if(diff===1)return'Hier'; if(diff<7)return diff+'j'; return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'}); }
+function fmtDateFull(d) { return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'}); }
+function fmtMonth(d) { return d.toLocaleDateString('fr-FR',{month:'long',year:'numeric'}); }
+function fmt(n) { return Number(n).toLocaleString('fr-FR'); }
+function esc(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  // Google setup
+  if (!GCID) {
+    document.getElementById('gcidBanner').style.display = 'flex';
+  } else {
+    const el = document.getElementById('gcidShow');
+    if (el) el.textContent = GCID.length > 28 ? GCID.substring(0,28)+'…' : GCID;
+    const inp = document.getElementById('gcidInput');
+    if (inp) inp.value = GCID;
+  }
+  initGoogle();
+  // Ensure admin user always in DB
+  if (!S.users.find(u => u.email === 'admin@lebonplan.fr')) {
+    S.users.unshift(ADMIN_USER);
+    saveSt();
+  }
+  updateAuthUI();
+  buildCats();
+  renderHome();
+  if (!S.logs.length) addLog('inf', 'Plateforme lebonplan démarrée');
+});
+</script>
+</body>
+</html>
