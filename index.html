@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Epilogue:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--k:#0a0a0a;--g:#666;--l:#ddd;--bg:#fff;--off:#f6f6f5;--r:#e8341c;--grn:#15803d;--bl:#1d4ed8;--warn:#854d0e}
+:root{--k:#0a0a0a;--g:#4a4a4a;--l:#d0d0d0;--bg:#fff;--off:#f5f5f4;--r:#e8341c;--grn:#15803d;--bl:#1d4ed8;--warn:#854d0e}
 body{font-family:'Epilogue',sans-serif;background:var(--bg);color:var(--k);min-height:100vh;line-height:1.5}
 a{text-decoration:none;color:inherit;cursor:pointer}
 button{cursor:pointer;font-family:'Epilogue',sans-serif;background:none;border:none;color:inherit;line-height:1}
@@ -32,10 +32,9 @@ input,select,textarea{font-family:'Epilogue',sans-serif;color:var(--k)}
 .bwa{background:transparent;color:var(--warn);border-color:#fde047}.bwa:hover{background:#fef9c3}
 
 /* ═══ HEADER ═══ */
-header{position:sticky;top:0;z-index:300;background:var(--bg);border-bottom:2px solid var(--l)}
+header{position:sticky;top:0;z-index:300;background:var(--bg);border-bottom:2px solid var(--l);transition:box-shadow .2s}header.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.08)}
 .hbar{max-width:1200px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;gap:14px}
 .logo{display:flex;align-items:center;gap:8px;flex-shrink:0;cursor:pointer;user-select:none}
-.logo svg{width:22px;height:22px;stroke:var(--k);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .logo-txt{font-family:'Fraunces',serif;font-weight:400;font-size:19px;letter-spacing:-.5px}
 .logo-txt b{font-weight:600;color:var(--r)}
 .h-srch{flex:1;max-width:380px}
@@ -56,7 +55,7 @@ header{position:sticky;top:0;z-index:300;background:var(--bg);border-bottom:2px 
 .subnav{border-bottom:2px solid var(--l);overflow-x:auto;scrollbar-width:none}
 .subnav::-webkit-scrollbar{display:none}
 .snav-i{max-width:1200px;margin:0 auto;padding:0 24px;display:flex}
-.sn{padding:9px 11px;font-size:12px;font-weight:600;color:var(--g);white-space:nowrap;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;transition:all .12s}
+.sn{padding:9px 11px;font-size:12px;font-weight:600;color:#444;white-space:nowrap;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;transition:all .12s}
 .sn:hover{color:var(--k)}.sn.on{color:var(--k);border-bottom-color:var(--k)}
 
 /* ═══ PAGES ═══ */
@@ -64,25 +63,24 @@ header{position:sticky;top:0;z-index:300;background:var(--bg);border-bottom:2px 
 .wrap{max-width:1200px;margin:0 auto;padding:32px 24px}
 
 /* ═══ HOME ═══ */
-.hero{max-width:1200px;margin:0 auto;padding:76px 24px 60px;border-bottom:2px solid var(--l);text-align:center}
+.hero{max-width:1200px;margin:0 auto;padding:88px 24px 72px;border-bottom:2px solid var(--l);text-align:center;position:relative;overflow:hidden}.hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(232,52,28,.06) 0%,transparent 68%);pointer-events:none}
 .headline{font-family:'Fraunces',serif;font-size:clamp(38px,5.5vw,68px);font-weight:300;line-height:1.07;letter-spacing:-1px;color:var(--k)}
 .headline em{font-style:italic;color:var(--r)}
-.hero-sub{font-size:14px;color:var(--g);margin:16px auto 42px;line-height:1.8;max-width:440px}
-.hero-q{display:flex;align-items:stretch;border-bottom:2.5px solid var(--k);max-width:480px;margin:0 auto;padding-bottom:11px}
-.hero-q input{flex:1;border:none;outline:none;background:none;font-size:16px;padding:0 4px;color:var(--k)}.hero-q input::placeholder{color:#ccc}
-.hero-q button{font-size:13px;font-weight:700;color:var(--g);padding-left:10px;transition:color .12s}.hero-q button:hover{color:var(--r)}
-.cat-sec{max-width:1200px;margin:0 auto;padding:26px 24px;border-bottom:2px solid var(--l)}
+.hero-sub{font-size:15px;color:#555;margin:18px auto 40px;line-height:1.8;max-width:460px}
+.hero-q{display:flex;align-items:stretch;max-width:520px;margin:0 auto;border:2px solid var(--k);border-radius:4px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.1)}
+.hero-q input{flex:1;border:none;outline:none;background:#fff;font-size:15px;padding:0 18px;color:var(--k);height:50px}.hero-q input::placeholder{color:#bbb}
+.hero-q button{font-size:13px;font-weight:700;color:#fff;background:var(--k);border:none;padding:0 22px;height:50px;cursor:pointer;font-family:'Epilogue',sans-serif;transition:background .13s;white-space:nowrap}.hero-q button:hover{background:var(--r)}
+.hero-badges{display:flex;gap:20px;justify-content:center;margin-top:22px;flex-wrap:wrap}.hero-badge{font-size:11px;font-weight:700;color:#777;letter-spacing:.1px}.cat-sec{max-width:1200px;margin:0 auto;padding:26px 24px;border-bottom:2px solid var(--l)}
 .sec-lbl{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#bbb;margin-bottom:16px}
 .cat-grid{display:grid;grid-template-columns:repeat(5,1fr)}
-.cat-item{padding:10px 0;border-top:2px solid var(--l);display:flex;justify-content:space-between;align-items:baseline;cursor:pointer;transition:opacity .12s}
-.cat-item:hover{opacity:.7}.cat-n{font-size:13px;font-weight:600}.cat-c{font-size:11px;color:#bbb}
+.cat-item{padding:12px 0;border-top:2px solid var(--l);display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .13s}.cat-item:hover{padding-left:5px;border-top-color:var(--k)}.cat-item:hover .cat-n{color:var(--r)}.cat-n{font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;transition:color .13s}.cat-c{font-size:10px;font-weight:700;color:#888;background:var(--off);padding:2px 8px;border:1px solid var(--l);border-radius:2px}
 /* AD SECTIONS */
 .sec-hd{display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 14px}
 .sec-title{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#bbb}
-.sec-more{font-size:12px;font-weight:700;color:var(--g);cursor:pointer;transition:color .12s}.sec-more:hover{color:var(--k)}
+.sec-more{font-size:12px;font-weight:700;color:#444;cursor:pointer;transition:color .12s}.sec-more:hover{color:var(--k)}
 .ag-wrap{border:2px solid var(--l)}
 .ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(198px,1fr));gap:1px;background:var(--l)}
-.ac{background:var(--bg);cursor:pointer;transition:background .12s}.ac:hover{background:var(--off)}
+.ac{background:var(--bg);cursor:pointer;transition:all .15s;position:relative}.ac:hover{background:#fafafa;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.08);z-index:2}
 .ac-img{aspect-ratio:4/3;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden;position:relative;border-bottom:1px solid var(--l)}
 .ac-img img{width:100%;height:100%;object-fit:cover;display:block}
 .ac-bdg{position:absolute;top:7px;left:7px;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;color:#fff}
@@ -91,12 +89,12 @@ header{position:sticky;top:0;z-index:300;background:var(--bg);border-bottom:2px 
 .ac-fav:hover{background:#fff}
 .ac-body{padding:10px 12px}
 .ac-price{font-family:'Fraunces',serif;font-size:16px;font-weight:300;letter-spacing:-.3px;margin-bottom:2px}
-.ac-title{font-size:12px;color:var(--g);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.ac-title{font-size:12px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
 .ac-foot{display:flex;justify-content:space-between;font-size:10px;color:#bbb;font-weight:500}
 
 /* ═══ LISTINGS ═══ */
 .filters{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-bottom:14px;border-bottom:2px solid var(--l);margin-bottom:16px}
-.fb{height:30px;padding:0 13px;border:2px solid var(--l);border-radius:3px;font-size:11px;font-weight:700;color:var(--g);transition:all .12s;cursor:pointer;background:var(--bg)}
+.fb{height:30px;padding:0 13px;border:2px solid var(--l);border-radius:3px;font-size:11px;font-weight:700;color:#333;transition:all .12s;cursor:pointer;background:var(--bg)}
 .fb:hover{border-color:var(--k);color:var(--k)}.fb.on{background:var(--k);color:#fff;border-color:var(--k)}
 .pr{display:flex;align-items:center;gap:5px;margin-left:auto;font-size:11px;color:var(--g);font-weight:600}
 .pr input{width:62px;height:30px;border:2px solid var(--l);border-radius:3px;padding:0 7px;font-size:11px;outline:none;background:var(--bg);transition:border-color .12s}
@@ -114,10 +112,10 @@ header{position:sticky;top:0;z-index:300;background:var(--bg);border-bottom:2px 
 .gal-th:last-child{border-right:none}.gal-th:hover{opacity:.7}.gal-th.on{opacity:.5}
 .gal-th img{width:100%;height:100%;object-fit:cover;display:block}
 .dinfo{margin-top:16px}
-.d-price{font-family:'Fraunces',serif;font-size:30px;font-weight:300;letter-spacing:-.6px;margin-bottom:5px}
+.d-price{font-family:'Fraunces',serif;font-size:34px;font-weight:300;letter-spacing:-.6px;margin-bottom:5px}.d-price.free{color:var(--grn)}
 .d-title{font-size:17px;font-weight:700;margin-bottom:10px;line-height:1.4}
 .d-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid var(--l)}
-.d-tag{font-size:11px;color:var(--g);background:var(--off);padding:3px 9px;border:1px solid var(--l);font-weight:500}
+.d-tag{font-size:11px;color:#333;background:var(--off);padding:3px 9px;border:1px solid var(--l);font-weight:500}
 .d-desc{font-size:13px;line-height:1.9;color:#333;padding-top:12px;border-top:2px solid var(--l);white-space:pre-wrap}
 .d-attrs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;padding-top:12px;border-top:2px solid var(--l)}
 .d-attr b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#bbb;margin-bottom:3px;font-weight:700}
@@ -125,13 +123,13 @@ header{position:sticky;top:0;z-index:300;background:var(--bg);border-bottom:2px 
 .seller-box{border:2px solid var(--l)}.sblk{padding:15px;border-bottom:2px solid var(--l)}.sblk:last-child{border-bottom:none}
 .s-av{width:38px;height:38px;border-radius:50%;background:var(--k);color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-family:'Fraunces',serif}
 .s-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.s-name{font-size:14px;font-weight:700;margin-bottom:2px}.s-sub{font-size:11px;color:var(--g)}
+.s-name{font-size:14px;font-weight:700;margin-bottom:2px}.s-sub{font-size:11px;color:#555}
 .cta-btn{width:100%;height:38px;border-radius:3px;font-size:13px;font-weight:700;margin-bottom:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;border:2px solid transparent;transition:all .13s;font-family:'Epilogue',sans-serif}
 .cta-p{background:var(--k);color:#fff;border-color:var(--k)}.cta-p:hover{background:#2a2a2a}
 .cta-s{background:transparent;color:var(--k);border-color:var(--l)}.cta-s:hover{border-color:var(--k)}
 .cta-r{background:transparent;color:var(--r);border-color:#fca5a5}.cta-r:hover{background:#fee2e2}
 .cta-b{background:transparent;color:var(--bl);border-color:#93c5fd}.cta-b:hover{background:#eff6ff}
-.safety{font-size:11px;color:var(--g);line-height:1.7;margin-top:10px;padding-top:10px;border-top:2px solid var(--l)}
+.safety{font-size:11px;color:#555;line-height:1.7;margin-top:10px;padding-top:10px;border-top:2px solid var(--l)}
 .sim-item{display:flex;gap:9px;padding:8px 0;border-bottom:1px solid var(--l);cursor:pointer;align-items:center;transition:opacity .1s}
 .sim-item:last-child{border-bottom:none}.sim-item:hover{opacity:.7}
 
@@ -140,7 +138,7 @@ header{position:sticky;top:0;z-index:300;background:var(--bg);border-bottom:2px 
 .pw-title{font-family:'Fraunces',serif;font-size:27px;font-weight:300;letter-spacing:-.4px;margin-bottom:28px}
 .fsec{margin-bottom:20px;padding-bottom:20px;border-bottom:2px solid var(--l)}.fsec:last-of-type{border-bottom:none;padding-bottom:0}
 .fsec-lbl{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#bbb;margin-bottom:13px}
-.fg{margin-bottom:12px}.fg label{display:block;font-size:11px;font-weight:700;color:var(--g);margin-bottom:4px;letter-spacing:.1px}
+.fg{margin-bottom:12px}.fg label{display:block;font-size:11px;font-weight:700;color:#333;margin-bottom:4px;letter-spacing:.1px}
 .fg label em{color:var(--r);font-style:normal}
 .fc{width:100%;border:none;border-bottom:2px solid var(--l);padding:7px 0;font-size:13px;outline:none;background:none;transition:border-color .15s}
 .fc:focus{border-bottom-color:var(--k)}
@@ -195,7 +193,7 @@ textarea.fc:focus{border-color:var(--k)}
 .prof-av{width:56px;height:56px;border-radius:50%;background:var(--k);color:#fff;font-size:22px;font-weight:300;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;overflow:hidden;flex-shrink:0}
 .prof-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .prof-nm{font-family:'Fraunces',serif;font-size:24px;font-weight:300;letter-spacing:-.4px;margin-bottom:3px}
-.prof-sub{font-size:12px;color:var(--g);font-weight:500}
+.prof-sub{font-size:12px;color:#555;font-weight:500}
 .prof-stats{display:flex;gap:22px;margin-top:10px}
 .pst strong{display:block;font-family:'Fraunces',serif;font-size:20px;font-weight:300;line-height:1.2}
 .pst span{font-size:11px;color:var(--g);font-weight:600}
@@ -203,7 +201,7 @@ textarea.fc:focus{border-color:var(--k)}
 .rating-avg .stars{color:#f59e0b;font-size:14px;letter-spacing:1px}
 .rating-avg span{font-size:12px;color:var(--g);font-weight:600}
 .tabs{display:flex;border-bottom:2px solid var(--l);margin-bottom:18px}
-.tab{padding:9px 14px;font-size:12px;font-weight:700;color:var(--g);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;background:none;transition:all .12s}
+.tab{padding:9px 14px;font-size:12px;font-weight:700;color:#444;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;background:none;transition:all .12s}
 .tab:hover{color:var(--k)}.tab.on{color:var(--k);border-bottom-color:var(--k)}
 .tabp{display:none}.tabp.on{display:block}
 .sblk2{margin-bottom:18px;padding-bottom:18px;border-bottom:2px solid var(--l)}.sblk2:last-child{border-bottom:none}
@@ -314,15 +312,15 @@ textarea.fc:focus{border-color:var(--k)}
 .mcl{width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:var(--g);font-size:16px;border-radius:2px;cursor:pointer;border:2px solid transparent;transition:all .12s;font-weight:700;background:none}
 .mcl:hover{background:var(--off);border-color:var(--l);color:var(--k)}
 .mbody{padding:18px}
-.mfoot{padding:11px 18px;border-top:2px solid var(--l);text-align:center;font-size:12px;color:var(--g)}
+.mfoot{padding:11px 18px;border-top:2px solid var(--l);text-align:center;font-size:12px;color:#333}
 .mfoot a{color:var(--k);font-weight:700;cursor:pointer;text-decoration:underline}
 .google-btn{width:100%;height:40px;border:2px solid var(--l);border-radius:3px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .15s;background:#fff;color:#3c4043;cursor:pointer}
 .google-btn:hover{border-color:#999;box-shadow:0 1px 6px rgba(0,0,0,.1)}
-.or-sep{text-align:center;font-size:11px;color:#bbb;margin:12px 0;position:relative}
+.or-sep{text-align:center;font-size:11px;color:#888;margin:12px 0;position:relative}
 .or-sep::before,.or-sep::after{content:'';position:absolute;top:50%;width:42%;height:2px;background:var(--l)}
 .or-sep::before{left:0}.or-sep::after{right:0}
 .mfg{margin-bottom:11px}
-.mfg label{display:block;font-size:11px;font-weight:700;color:var(--g);margin-bottom:4px}
+.mfg label{display:block;font-size:11px;font-weight:700;color:#333;margin-bottom:4px}
 .mfc{width:100%;height:34px;border:none;border-bottom:2px solid var(--l);padding:0 2px;font-size:13px;outline:none;background:none;transition:border-color .15s;color:var(--k)}
 .mfc:focus{border-bottom-color:var(--k)}
 .mfrow{display:grid;grid-template-columns:1fr 1fr;gap:11px}
@@ -330,7 +328,7 @@ textarea.fc:focus{border-color:var(--k)}
 .msub:hover{background:#2a2a2a}
 .merr{font-size:11px;color:var(--r);padding:8px 11px;border:2px solid #fca5a5;background:#fff5f5;margin-bottom:11px;border-radius:2px;font-weight:600}
 .mok{font-size:11px;color:var(--grn);padding:8px 11px;border:2px solid #86efac;background:#f0fdf4;margin-bottom:11px;border-radius:2px;font-weight:600}
-.forgot{text-align:right;font-size:11px;color:var(--g);margin-bottom:9px}
+.forgot{text-align:right;font-size:11px;color:#555;margin-bottom:9px}
 
 /* DROPDOWNS */
 .ndd{position:absolute;top:calc(100% + 8px);right:0;width:295px;background:var(--bg);border:2px solid var(--l);z-index:400;display:none;box-shadow:0 8px 24px rgba(0,0,0,.12)}
@@ -352,7 +350,7 @@ textarea.fc:focus{border-color:var(--k)}
 .uddi:last-child{border-bottom:none}.uddi:hover{background:var(--off)}.uddi.red{color:var(--r)}
 
 /* BREADCRUMB */
-.bc{max-width:1200px;margin:0 auto;padding:13px 24px 0;font-size:11px;color:var(--g);display:flex;gap:5px;align-items:center;font-weight:600}
+.bc{max-width:1200px;margin:0 auto;padding:13px 24px 0;font-size:11px;color:#555;display:flex;gap:5px;align-items:center;font-weight:600}
 .bc a{cursor:pointer;transition:color .1s}.bc a:hover{color:var(--k)}.bc .cur{color:var(--k)}
 
 /* TOAST */
@@ -369,9 +367,9 @@ textarea.fc:focus{border-color:var(--k)}
 .ac-opt:hover,.ac-opt.sel{background:var(--off)}
 
 /* EMPTY */
-.pg-empty{text-align:center;padding:48px 20px}
-.pg-empty h3{font-family:'Fraunces',serif;font-size:20px;font-weight:300;margin-bottom:6px}
-.pg-empty p{font-size:12px;color:var(--g);margin-bottom:18px;line-height:1.7}
+.pg-empty{text-align:center;padding:60px 20px}
+.pg-empty h3{font-family:'Fraunces',serif;font-size:22px;font-weight:300;margin-bottom:8px;color:var(--k)}
+.pg-empty p{font-size:13px;color:#555;margin-bottom:20px;line-height:1.7}
 
 /* GCID BANNER */
 .gcid-banner{background:#fef9c3;border-bottom:2px solid #fde047;padding:9px 24px;font-size:12px;color:var(--warn);display:flex;align-items:center;gap:10px;font-weight:600}
@@ -391,19 +389,25 @@ textarea.fc:focus{border-color:var(--k)}
 .rep-card strong{font-size:13px;font-weight:700}.rep-card span{font-size:12px;color:var(--g)}
 
 /* FOOTER */
-footer{border-top:2px solid var(--l);margin-top:56px;padding:28px 24px 18px}
+footer{border-top:2px solid var(--l);margin-top:56px}
 .fw{max-width:1200px;margin:0 auto}
-.ft-grid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:32px;margin-bottom:22px}
-.f-logo{font-family:'Fraunces',serif;font-size:16px;font-weight:300;margin-bottom:6px}
+.ft-trust{display:flex;border-bottom:2px solid var(--l);background:var(--off)}
+.ft-trust-item{flex:1;display:flex;align-items:center;justify-content:center;gap:9px;padding:14px 20px;font-size:12px;font-weight:700;color:var(--k);border-right:2px solid var(--l)}
+.ft-trust-item:last-child{border-right:none}
+.ft-trust-item svg{stroke:var(--r);flex-shrink:0;width:16px;height:16px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ft-grid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:36px;padding:32px 24px 28px;border-bottom:2px solid var(--l)}
+.f-logo-wrap{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.f-logo{font-family:'Fraunces',serif;font-size:17px;font-weight:300}
 .f-logo b{font-weight:600;color:var(--r)}
-.f-desc{font-size:12px;color:var(--g);line-height:1.8}
-.f-col h5{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:#bbb;margin-bottom:10px}
-.f-col a{display:block;font-size:12px;color:var(--g);margin-bottom:6px;transition:color .1s;font-weight:500}.f-col a:hover{color:var(--k)}
-.f-bot{display:flex;justify-content:space-between;padding-top:14px;border-top:2px solid var(--l);font-size:11px;color:#bbb}
+.f-desc{font-size:12px;color:#555;line-height:1.85}
+.f-col h5{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#aaa;margin-bottom:11px}
+.f-col a{display:block;font-size:12px;color:#444;margin-bottom:8px;transition:color .12s;font-weight:500;cursor:pointer}.f-col a:hover{color:var(--k)}
+.f-bot{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;font-size:11px;color:#aaa}
+.f-bot-links{display:flex;gap:14px}.f-bot-links a{color:#aaa;cursor:pointer;font-size:11px;font-weight:600;transition:color .12s}.f-bot-links a:hover{color:var(--k)}
 
 @media(max-width:768px){
   .cat-grid{grid-template-columns:repeat(2,1fr)}.det-grid{grid-template-columns:1fr}.msg-shell{grid-template-columns:1fr}
-  .ft-grid{grid-template-columns:1fr 1fr}.frow{grid-template-columns:1fr}.admin-shell{grid-template-columns:1fr}.adm-side{display:none}
+  .ft-grid{grid-template-columns:1fr 1fr;padding:20px 16px}.ft-trust{flex-wrap:wrap}.ft-trust-item{min-width:50%;border-bottom:2px solid var(--l)}.f-bot{flex-direction:column;gap:8px;text-align:center;padding:12px 16px}.frow{grid-template-columns:1fr}.admin-shell{grid-template-columns:1fr}.adm-side{display:none}
   .kpi-row{grid-template-columns:1fr 1fr}.c2{grid-template-columns:1fr}.set-grid{grid-template-columns:1fr}
 }
 </style>
@@ -415,7 +419,7 @@ footer{border-top:2px solid var(--l);margin-top:56px;padding:28px 24px 18px}
 <header>
   <div class="hbar">
     <a class="logo" onclick="go('home')">
-      <svg viewBox="0 0 24 24"><path d="M13 2H7a1 1 0 0 0-1 1v7c0 .27.1.51.29.71l7 7a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 0-1.42l-7-7A1 1 0 0 0 13 2z"/><circle cx="9.5" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg>
+      <svg viewBox="0 0 32 32" width="32" height="32"><rect width="32" height="32" rx="6" fill="#0a0a0a"/><text x="16" y="21.5" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">lbp</text><rect y="26" width="32" height="6" rx="0" fill="#e8341c"/></svg>
       <span class="logo-txt">lebon<b>plan</b></span>
     </a>
     <div class="h-srch"><input type="text" id="hq" placeholder="Rechercher…" onkeydown="if(event.key==='Enter')doSearch()"></div>
@@ -480,6 +484,7 @@ footer{border-top:2px solid var(--l);margin-top:56px;padding:28px 24px 18px}
       <input id="heroQ" type="text" placeholder="iPhone, appartement, voiture…" onkeydown="if(event.key==='Enter')doHeroSearch()">
       <button onclick="doHeroSearch()">Rechercher →</button>
     </div>
+    <div class="hero-badges"><span class="hero-badge">✓ 100% gratuit</span><span class="hero-badge">✓ Sans inscription pour consulter</span><span class="hero-badge">✓ Partout en France</span></div>
   </div>
   <div class="cat-sec">
     <div class="sec-lbl">Catégories</div>
@@ -826,6 +831,7 @@ footer{border-top:2px solid var(--l);margin-top:56px;padding:28px 24px 18px}
           <div style="display:flex;gap:7px">
             <select id="logF" onchange="renderLogs()" style="height:30px;border:2px solid var(--l);border-radius:3px;padding:0 9px;font-size:12px;outline:none;background:var(--bg);font-family:'Epilogue',sans-serif"><option value="">Tous</option><option value="inf">INFO</option><option value="wrn">WARN</option><option value="err">ERROR</option></select>
             <button class="btn bd btn-sm" onclick="simLog()">＋ Simuler</button>
+            <button class="btn bro btn-sm" onclick="clearLogs()">🗑 Vider</button>
           </div>
         </div>
         <div class="tbl-w" style="max-height:460px;overflow-y:auto"><div style="padding:0 12px" id="logList"></div></div>
@@ -833,24 +839,24 @@ footer{border-top:2px solid var(--l);margin-top:56px;padding:28px 24px 18px}
       <!-- SETTINGS -->
       <div class="adm-pane" id="ap-settings">
         <div class="adm-top"><div><div class="adm-h1">Paramètres</div><div class="adm-h1-sub">Configuration de la plateforme</div></div></div>
-        <div class="set-grid">
+        <div class="set-grid" id="settingsGrid">
           <div class="set-card"><h4>Général</h4>
-            <div class="set-row"><span>Mode maintenance</span><button class="tog" onclick="this.classList.toggle('on')"></button></div>
-            <div class="set-row"><span>Inscriptions ouvertes</span><button class="tog on" onclick="this.classList.toggle('on')"></button></div>
-            <div class="set-row"><span>Modération automatique</span><button class="tog on" onclick="this.classList.toggle('on')"></button></div>
-            <div class="set-row"><span>Annonces pro payantes</span><button class="tog" onclick="this.classList.toggle('on')"></button></div>
+            <div class="set-row"><span>Mode maintenance</span><button class="tog" id="tog-maintenance" onclick="toggleSetting('maintenance',this)"></button></div>
+            <div class="set-row"><span>Inscriptions ouvertes</span><button class="tog on" id="tog-registrations" onclick="toggleSetting('registrations',this)"></button></div>
+            <div class="set-row"><span>Modération automatique</span><button class="tog on" id="tog-autoModeration" onclick="toggleSetting('autoModeration',this)"></button></div>
+            <div class="set-row"><span>Annonces pro payantes</span><button class="tog" id="tog-proPaid" onclick="toggleSetting('proPaid',this)"></button></div>
           </div>
           <div class="set-card"><h4>Annonces</h4>
-            <div class="set-row"><span>Validation avant publication</span><button class="tog" onclick="this.classList.toggle('on')"></button></div>
-            <div class="set-row"><span>Alerte prix suspects</span><button class="tog on" onclick="this.classList.toggle('on')"></button></div>
-            <div class="set-row"><span>Max photos gratuites</span><input type="number" value="5" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
-            <div class="set-row"><span>Durée publication (j)</span><input type="number" value="60" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
+            <div class="set-row"><span>Validation avant publication</span><button class="tog" id="tog-validateBeforePublish" onclick="toggleSetting('validateBeforePublish',this)"></button></div>
+            <div class="set-row"><span>Alerte prix suspects</span><button class="tog on" id="tog-suspiciousPrice" onclick="toggleSetting('suspiciousPrice',this)"></button></div>
+            <div class="set-row"><span>Max photos gratuites</span><input type="number" id="inp-maxPhotos" value="5" min="1" max="20" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
+            <div class="set-row"><span>Durée publication (j)</span><input type="number" id="inp-pubDuration" value="60" min="1" max="365" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
           </div>
           <div class="set-card"><h4>Sécurité</h4>
-            <div class="set-row"><span>2FA obligatoire admins</span><button class="tog on" onclick="this.classList.toggle('on')"></button></div>
-            <div class="set-row"><span>Whitelist IP admin</span><button class="tog" onclick="this.classList.toggle('on')"></button></div>
-            <div class="set-row"><span>Limite login</span><input type="number" value="5" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
-            <div class="set-row"><span>Session (heures)</span><input type="number" value="24" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
+            <div class="set-row"><span>2FA obligatoire admins</span><button class="tog on" id="tog-twoFA" onclick="toggleSetting('twoFA',this)"></button></div>
+            <div class="set-row"><span>Whitelist IP admin</span><button class="tog" id="tog-ipWhitelist" onclick="toggleSetting('ipWhitelist',this)"></button></div>
+            <div class="set-row"><span>Limite login</span><input type="number" id="inp-loginLimit" value="5" min="1" max="20" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
+            <div class="set-row"><span>Session (heures)</span><input type="number" id="inp-sessionHours" value="24" min="1" max="168" style="width:58px;border:2px solid var(--l);padding:2px 7px;font-size:12px;outline:none;text-align:right;border-radius:2px;font-family:'Epilogue',sans-serif"></div>
           </div>
           <div class="set-card"><h4>Google OAuth</h4>
             <p style="font-size:12px;color:var(--g);margin-bottom:10px;line-height:1.6">Client ID actuel :</p>
@@ -859,9 +865,9 @@ footer{border-top:2px solid var(--l);margin-top:56px;padding:28px 24px 18px}
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
-          <button class="btn bd" onclick="toast('Paramètres sauvegardés','ok')">Sauvegarder</button>
-          <button class="btn bgo" onclick="toast('Configuration exportée','info')">Exporter JSON</button>
-          <button class="btn bro btn-sm" style="height:36px" onclick="toast('Cache vidé','ok')">Vider le cache</button>
+          <button class="btn bd" onclick="saveSettings()">💾 Sauvegarder</button>
+          <button class="btn bgo" onclick="exportSettings()">⬇ Exporter JSON</button>
+          <button class="btn bro btn-sm" style="height:36px" onclick="clearCache()">🗑 Vider le cache</button>
         </div>
         <div style="border:2px solid #fca5a5;padding:16px;border-radius:2px;background:#fff5f5">
           <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--r);margin-bottom:12px">⚠ Zone dangereuse</div>
@@ -959,13 +965,29 @@ footer{border-top:2px solid var(--l);margin-top:56px;padding:28px 24px 18px}
 
 <footer>
   <div class="fw">
-    <div class="ft-grid">
-      <div><div class="f-logo">lebon<b>plan</b></div><p class="f-desc">La plateforme de petites annonces 100% gratuite pour particuliers.</p></div>
-      <div class="f-col"><h5>Annonces</h5><a onclick="go('post-ad')">Déposer</a><a onclick="go('listings')">Parcourir</a><a onclick="setCat(null,'Immobilier')">Immobilier</a><a onclick="setCat(null,'Véhicules')">Véhicules</a></div>
-      <div class="f-col"><h5>Compte</h5><a onclick="openM('login')">Connexion</a><a onclick="openM('register')">Inscription</a><a onclick="requireAuth(()=>go('profile'))">Mon profil</a></div>
-      <div class="f-col"><h5>Aide</h5><a>Centre d'aide</a><a>Conditions</a><a>Confidentialité</a><a>Contact</a></div>
+    <div class="ft-trust">
+      <div class="ft-trust-item"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>100% gratuit</div>
+      <div class="ft-trust-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Réponse rapide</div>
+      <div class="ft-trust-item"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Particuliers &amp; Pros</div>
+      <div class="ft-trust-item"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Partout en France</div>
     </div>
-    <div class="f-bot"><span style="font-family:'Fraunces',serif;font-weight:300">lebon<b style="color:var(--r)">plan</b></span><span>© 2024 lebonplan · Fait en France 🇫🇷</span></div>
+    <div class="ft-grid">
+      <div>
+        <div class="f-logo-wrap">
+          <svg viewBox="0 0 32 32" width="26" height="26"><rect width="32" height="32" rx="6" fill="#0a0a0a"/><text x="16" y="21.5" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">lbp</text><rect y="26" width="32" height="6" fill="#e8341c"/></svg>
+          <div class="f-logo">lebon<b>plan</b></div>
+        </div>
+        <p class="f-desc">La plateforme de petites annonces 100% gratuite pour acheter et vendre entre particuliers en France.</p>
+      </div>
+      <div class="f-col"><h5>Annonces</h5><a onclick="go('post-ad')">Déposer une annonce</a><a onclick="go('listings')">Parcourir</a><a onclick="setCat(null,'Immobilier')">Immobilier</a><a onclick="setCat(null,'Véhicules')">Véhicules</a><a onclick="setCat(null,'Électronique')">Électronique</a></div>
+      <div class="f-col"><h5>Compte</h5><a onclick="openM('login')">Connexion</a><a onclick="openM('register')">Inscription gratuite</a><a onclick="requireAuth(()=>go('profile'))">Mon profil</a><a onclick="requireAuth(()=>go('messages'))">Mes messages</a></div>
+      <div class="f-col"><h5>Aide &amp; Légal</h5><a onclick="toast('Bientôt disponible','info')">Centre d'aide</a><a onclick="toast('Bientôt disponible','info')">Conditions d'utilisation</a><a onclick="toast('Bientôt disponible','info')">Confidentialité</a><a onclick="toast('Bientôt disponible','info')">Contact</a></div>
+    </div>
+    <div class="f-bot">
+      <span style="font-family:'Fraunces',serif;font-weight:300;font-size:13px">lebon<b style="color:var(--r)">plan</b></span>
+      <span>© 2025 lebonplan · Fait avec ❤️ en France 🇫🇷</span>
+      <div class="f-bot-links"><a onclick="toast('Bientôt disponible','info')">CGU</a><a onclick="toast('Bientôt disponible','info')">Confidentialité</a><a onclick="toast('Bientôt disponible','info')">Cookies</a></div>
+    </div>
   </div>
 </footer>
 <script>
@@ -1101,7 +1123,21 @@ const S = {
   typeFilter: '',
   query: '',
   currentAdId: null,
-  currentSellerEmail: null
+  currentSellerEmail: null,
+  settings: saved.settings || {
+    maintenance: false,
+    registrations: true,
+    autoModeration: true,
+    proPaid: false,
+    validateBeforePublish: false,
+    suspiciousPrice: true,
+    maxPhotos: 5,
+    pubDuration: 60,
+    twoFA: true,
+    ipWhitelist: false,
+    loginLimit: 5,
+    sessionHours: 24
+  }
 };
 
 // Ensure admin always exists
@@ -1192,6 +1228,7 @@ function go(p) {
   if (p === 'admin') {
     renderDash(); renderAdmAds(); renderAdmRep(); renderAdmUsers();
     renderAdmRev(); renderAdmMsg(); renderLogs();
+    setTimeout(loadSettings, 50);
   }
 }
 
@@ -1203,7 +1240,7 @@ function aPane(id, el) {
   const pane = document.getElementById('ap-' + id);
   if (pane) pane.classList.add('on');
   if (el) el.classList.add('on');
-  const renders = { dashboard: renderDash, ads: renderAdmAds, reports: renderAdmRep, reviews: renderAdmRev, users: renderAdmUsers, messages: renderAdmMsg, system: renderSystem, logs: renderLogs };
+  const renders = { dashboard: renderDash, ads: renderAdmAds, reports: renderAdmRep, reviews: renderAdmRev, users: renderAdmUsers, messages: renderAdmMsg, system: renderSystem, logs: renderLogs, settings: loadSettings };
   if (renders[id]) renders[id]();
 }
 
@@ -1217,7 +1254,7 @@ function buildCats() {
     const cnt = S.ads.filter(a => a.cat === c && a.status !== 'removed').length;
     const d = document.createElement('div');
     d.className = 'cat-item';
-    d.innerHTML = `<span class="cat-n">${c}</span><span class="cat-c">${cnt}</span>`;
+    d.innerHTML = `<span class="cat-n"><span>${CAT_ICONS[c]||'📦'}</span>${c}</span><span class="cat-c">${cnt}</span>`;
     d.onclick = () => setCat(null, c);
     el.appendChild(d);
   });
@@ -1336,7 +1373,7 @@ function openAd(id) {
   const ad = S.ads.find(a => a.id === id);
   if (!ad) return;
   S.currentAdId = id;
-  document.getElementById('dPrice').textContent = ad.price > 0 ? fmt(ad.price) + ' €' : 'Gratuit';
+  const _prEl=document.getElementById('dPrice');_prEl.textContent=ad.price>0?fmt(ad.price)+' €':'Gratuit';_prEl.className='d-price'+(ad.price===0?' free':'');
   document.getElementById('dTitle').textContent = ad.title;
   document.getElementById('dTBC').textContent = ad.title;
   document.getElementById('dCatBC').textContent = ad.cat;
@@ -2262,6 +2299,76 @@ function simLog() {
   addLog(e.t, e.m); renderLogs(); toast('Événement simulé', 'info');
 }
 
+
+// ═══════════════════════════════════════════════════════════
+// SETTINGS — fully functional
+// ═══════════════════════════════════════════════════════════
+function loadSettings() {
+  const cfg = S.settings;
+  // Toggles
+  ['maintenance','registrations','autoModeration','proPaid',
+   'validateBeforePublish','suspiciousPrice','twoFA','ipWhitelist'].forEach(k => {
+    const btn = document.getElementById('tog-'+k);
+    if (btn) btn.classList.toggle('on', !!cfg[k]);
+  });
+  // Inputs
+  ['maxPhotos','pubDuration','loginLimit','sessionHours'].forEach(k => {
+    const inp = document.getElementById('inp-'+k);
+    if (inp) inp.value = cfg[k];
+  });
+  // Maintenance banner
+  const banner = document.getElementById('maintBanner');
+  if (banner) banner.style.display = cfg.maintenance ? 'flex' : 'none';
+}
+function toggleSetting(key, btn) {
+  btn.classList.toggle('on');
+  S.settings[key] = btn.classList.contains('on');
+  // Immediate effects
+  if (key === 'maintenance') {
+    const banner = document.getElementById('maintBanner');
+    if (banner) banner.style.display = S.settings.maintenance ? 'flex' : 'none';
+    toast(S.settings.maintenance ? '⚠️ Mode maintenance activé' : 'Mode maintenance désactivé', S.settings.maintenance ? 'err' : 'ok');
+  }
+  saveSt();
+}
+function saveSettings() {
+  ['maxPhotos','pubDuration','loginLimit','sessionHours'].forEach(k => {
+    const inp = document.getElementById('inp-'+k);
+    if (inp) S.settings[k] = parseInt(inp.value) || S.settings[k];
+  });
+  saveSt();
+  addLog('inf', 'Paramètres sauvegardés par admin');
+  toast('Paramètres sauvegardés ✓', 'ok');
+}
+function exportSettings() {
+  const data = {
+    settings: S.settings,
+    stats: { ads: S.ads.length, users: S.users.length, reports: S.reports.length },
+    exported: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'lebonplan-config.json';
+  a.click();
+  toast('Configuration exportée', 'ok');
+}
+function clearCache() {
+  if (!confirm('Vider le cache de la plateforme ?')) return;
+  // Clear image cache by revoking any object URLs
+  document.querySelectorAll('img').forEach(img => {
+    if (img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
+  });
+  addLog('inf', 'Cache vidé par admin');
+  toast('Cache vidé ✓', 'ok');
+}
+function clearLogs() {
+  if (!confirm('Effacer tous les journaux ?')) return;
+  S.logs = [];
+  saveSt(); renderLogs();
+  toast('Journaux effacés', 'ok');
+}
+
 // ═══════════════════════════════════════════════════════════
 // MODALS / DROPDOWNS
 // ═══════════════════════════════════════════════════════════
@@ -2320,6 +2427,8 @@ document.addEventListener('DOMContentLoaded', () => {
   buildCats();
   renderHome();
   if (!S.logs.length) addLog('inf', 'Plateforme lebonplan démarrée');
+  loadSettings();
+  window.addEventListener('scroll',()=>document.querySelector('header')?.classList.toggle('scrolled',window.scrollY>2),{passive:true});
 });
 </script>
 </body>
