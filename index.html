@@ -551,6 +551,7 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
 </div>
 
 <!-- Banners -->
+<div id="gcidBanner" class="gcid-banner" style="display:none">⚠ Connexion Google non configurée — <a onclick="openM('gsetup')">Configurer →</a></div>
 <div id="maintBanner" class="maint-banner-strip">⚠ MODE MAINTENANCE ACTIF — <a onclick="go('admin');setTimeout(()=>aPane('settings',document.querySelector('[onclick*=settings]')),100)">Désactiver →</a></div>
 
 <!-- ═══ HEADER ═══ -->
@@ -972,7 +973,7 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
             <div class="svc-item"><div><div class="svc-nm">Stockage S3</div></div><div class="sdot on">En ligne</div></div>
             <div class="svc-item"><div><div class="svc-nm">Emails SendGrid</div></div><div class="sdot on">En ligne</div></div>
             <div class="svc-item"><div><div class="svc-nm">CDN Cloudflare</div></div><div class="sdot on">En ligne</div></div>
-            <div class="svc-item"><div><div class="svc-nm">Google OAuth</div><div class="svc-host">712158515734-rbjtg8vcf74hs22i19920d8c4a3…</div></div><div class="sdot on" id="gAuthSt">Configuré</div></div>
+            <div class="svc-item"><div><div class="svc-nm">Google OAuth</div></div><div class="sdot" id="gAuthSt">Non configuré</div></div>
           </div>
           <div class="set-card"><h4>Ressources serveur</h4>
             <div class="svc-item"><div class="svc-nm">CPU</div><span id="cpuV" style="font-weight:700;font-size:14px">—</span></div>
@@ -1010,9 +1011,9 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
             <div class="set-row"><span>Session (heures)</span><input type="number" id="inp-sessionHours" value="24" min="1" max="168" style="width:60px;border:2px solid var(--ligne);padding:3px 8px;font-size:12px;outline:none;font-family:'Outfit',sans-serif"></div>
           </div>
           <div class="set-card"><h4>Google OAuth</h4>
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px"><span class="sdot on" style="font-size:11px;font-weight:700;letter-spacing:.04em">Actif</span></div>
-            <code id="gcidShow" style="font-size:10px;background:var(--off);padding:5px 10px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:12px;font-weight:600;color:var(--gris)">Chargement…</code>
-            <button class="btn bgo btn-sm" onclick="openM('gsetup')">Modifier le Client ID</button>
+            <p style="font-size:12px;color:var(--gris);margin-bottom:10px;line-height:1.7">Client ID actuel :</p>
+            <code id="gcidShow" style="font-size:11px;background:var(--off);padding:5px 10px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:12px;font-weight:700">Non configuré</code>
+            <button class="btn bgo btn-sm" onclick="openM('gsetup')">Modifier</button>
           </div>
           <div class="set-card"><h4>Statut du site</h4>
             <div class="set-row"><span>Services en ligne</span><button class="tog on" id="tog-siteStatus" onclick="toggleStatusOnline(this)"></button></div>
@@ -1228,7 +1229,7 @@ document.addEventListener('click', e => {
 // ═══════════════════════════════════════════════════════════
 // STATE — localStorage persistence
 // ═══════════════════════════════════════════════════════════
-const GCID = '712158515734-rbjtg8vcf74hs22i19920d8c4a3ep3kd.apps.googleusercontent.com';
+let GCID = localStorage.getItem('lbp_gcid') || '';
 
 // ═══ MIGRATION : remise à zéro (annonces + comptes non-admin) ═══
 const MIGRATION_VERSION = 2;
@@ -1345,75 +1346,28 @@ const AUTO_REPLIES = [
 // GOOGLE AUTH
 // ═══════════════════════════════════════════════════════════
 function initGoogle() {
-  // Check if we're returning from Google OAuth redirect
-  const hash = window.location.hash;
-  if (hash && hash.includes('id_token=')) {
-    const params = new URLSearchParams(hash.slice(1));
-    const idToken = params.get('id_token');
-    if (idToken) {
-      // Clean URL
-      history.replaceState(null, '', window.location.pathname);
-      try {
-        const p = parseJWT(idToken);
-        handleGoogleCredDirect(p);
-      } catch(e) { console.error('Token parse error:', e); toast('Erreur connexion Google', 'err'); }
-    }
-    return;
-  }
-  // Also check access_token flow
-  if (hash && hash.includes('access_token=')) {
-    const params = new URLSearchParams(hash.slice(1));
-    const accessToken = params.get('access_token');
-    if (accessToken) {
-      history.replaceState(null, '', window.location.pathname);
-      // Fetch user info with the access token
-      fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-        headers: { Authorization: 'Bearer ' + accessToken }
-      })
-      .then(r => r.json())
-      .then(p => handleGoogleCredDirect(p))
-      .catch(() => toast('Erreur connexion Google', 'err'));
-    }
-  }
-}
-
-function handleGoogleCredDirect(p) {
-  // p = { email, name, given_name, family_name, picture, sub }
-  let u = S.users.find(x => x.email === p.email);
-  if (!u) {
-    u = {{
-      id: 'u'+Date.now(),
-      name: p.name,
-      first: p.given_name || p.name.split(' ')[0],
-      last: p.family_name || '',
-      email: p.email,
-      password: '',
-      init: (p.given_name || p.name)[0].toUpperCase(),
-      picture: p.picture || '',
-      since: fmtMonth(new Date()),
-      phone: '', city: '', zip: '',
-      role: 'user', status: 'active', via: 'google'
-    }};
-    S.users.push(u);
-    addLog('inf', 'Inscription Google : ' + p.email);
-  } else {
-    if (u.status === 'banned') {{ toast('Compte suspendu.', 'err'); return; }}
-    addLog('inf', 'Connexion Google : ' + p.email);
-  }
-  S.user = {{ ...u }};
-  saveSt(); closeAllModals(); updateAuthUI();
-  toast('Bienvenue ' + (u.first || u.name) + ' ! 👋', 'ok');
-  addNotif('👋', 'Connecté', 'Bienvenue sur LeBonPlan !');
-  // If maintenance + admin, allow
-  if (S.settings.maintenance && u.role === 'admin') {{
-    hideMaintenanceScreen();
-    const mb = document.getElementById('maintBanner'); if(mb) mb.style.display='flex';
-  }}
+  if (!GCID) return;
+  if (typeof google === 'undefined') { setTimeout(initGoogle, 600); return; }
+  try {
+    google.accounts.id.initialize({ client_id: GCID, callback: handleGoogleCred, auto_select: false });
+    document.getElementById('gcidBanner').style.display = 'none';
+  } catch(e) { console.warn('Google init:', e); }
 }
 function handleGoogleCred(resp) {
   try {
     const p = parseJWT(resp.credential);
-    handleGoogleCredDirect(p);
+    let u = S.users.find(x => x.email === p.email);
+    if (!u) {
+      u = { id: 'u'+Date.now(), name: p.name, first: p.given_name||p.name.split(' ')[0], last: p.family_name||'', email: p.email, password: '', init: (p.given_name||p.name)[0].toUpperCase(), picture: p.picture||'', since: fmtMonth(new Date()), phone: '', city: '', zip: '', role: 'user', status: 'active', via: 'google' };
+      S.users.push(u);
+      addLog('inf', 'Inscription Google : ' + p.email);
+    } else {
+      addLog('inf', 'Connexion Google : ' + p.email);
+    }
+    S.user = { ...u };
+    saveSt(); closeAllModals(); updateAuthUI();
+    toast('Bienvenue ' + (u.first || u.name) + ' !', 'ok');
+    addNotif('👋', 'Connecté', 'Bienvenue sur LeBonPlan !');
   } catch(e) { toast('Erreur connexion Google', 'err'); console.error(e); }
 }
 function parseJWT(t) {
@@ -1422,17 +1376,9 @@ function parseJWT(t) {
   return JSON.parse(atob(p));
 }
 function signInWithGoogle() {
-  // OAuth2 redirect flow — opens Google's login page directly
-  const redirectUri = window.location.origin + window.location.pathname;
-  const params = new URLSearchParams({
-    client_id: GCID,
-    redirect_uri: redirectUri,
-    response_type: 'token id_token',
-    scope: 'openid email profile',
-    nonce: Math.random().toString(36).slice(2),
-    prompt: 'select_account'
-  });
-  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+  if (!GCID) { closeAllModals(); openM('gsetup'); return; }
+  if (typeof google === 'undefined') { toast('Bibliothèque Google non chargée', 'err'); return; }
+  try { google.accounts.id.prompt(n => { if (n.isNotDisplayed() || n.isSkippedMoment()) toast('Popup Google bloquée. Vérifiez votre navigateur.', 'err'); }); } catch(e) { toast('Erreur Google : ' + e.message, 'err'); }
 }
 function saveGcid() {
   const v = document.getElementById('gcidInput').value.trim();
@@ -2577,7 +2523,7 @@ function renderSystem() {
   const cpuEl = document.getElementById('cpuV'); if(cpuEl) cpuEl.textContent = cpu + '%';
   const ramEl = document.getElementById('ramV'); if(ramEl) ramEl.textContent = ram + ' GB / 8 GB';
   const gst = document.getElementById('gAuthSt');
-  if (gst) { gst.className = 'sdot on'; gst.textContent = 'Configuré'; }
+  if (gst) { gst.className = 'sdot ' + (GCID ? 'on' : 'w'); gst.textContent = GCID ? 'Configuré' : 'Non configuré'; }
   toast('Infrastructure actualisée', 'ok');
 }
 
@@ -3165,11 +3111,14 @@ function applyAnnouncements() {
 
 document.addEventListener('DOMContentLoaded', () => {
   // Google setup
-  // GCID is hardcoded — update display
-  const el = document.getElementById('gcidShow');
-  if (el) el.textContent = GCID.length > 28 ? GCID.substring(0,28)+'…' : GCID;
-  const inp = document.getElementById('gcidInput');
-  if (inp) inp.value = GCID;
+  if (!GCID) {
+    document.getElementById('gcidBanner').style.display = 'flex';
+  } else {
+    const el = document.getElementById('gcidShow');
+    if (el) el.textContent = GCID.length > 28 ? GCID.substring(0,28)+'…' : GCID;
+    const inp = document.getElementById('gcidInput');
+    if (inp) inp.value = GCID;
+  }
   initGoogle();
   // Ensure admin user always in DB
   if (!S.users.find(u => u.email === 'admin@lebonplan.fr')) {
@@ -3203,8 +3152,19 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
-// Google OAuth redirect handled in initGoogle() on DOMContentLoaded
-// Client ID: 712158515734-rbjtg8vcf74hs22i19920d8c4a3ep3kd.apps.googleusercontent.com
+window.addEventListener('load',function(){
+function waitGoogle(){
+  if(typeof google==="undefined" || !google.accounts){setTimeout(waitGoogle,500);return;}
+  let GCID = localStorage.getItem('lbp_gcid') || window.GCID || "";
+  if(!GCID){console.warn("Google Client ID manquant");return;}
+  try{
+    google.accounts.id.initialize({client_id: GCID,callback: handleGoogleCred,auto_select:false,cancel_on_tap_outside:true});
+    let btn=document.querySelector(".google-btn");
+    if(btn){btn.onclick=function(e){e.preventDefault();google.accounts.id.prompt();}}
+  }catch(e){console.warn("Google init error",e);}
+}
+waitGoogle();
+});
 </script>
 </body>
 </html>
