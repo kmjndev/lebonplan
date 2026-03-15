@@ -550,7 +550,7 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
 </div>
 
 <!-- Banners -->
-<div id="maintBanner" class="maint-banner-strip">⚠ MODE MAINTENANCE ACTIF — <a onclick="go('admin');setTimeout(()=>aPane('settings',document.querySelector('[onclick*=settings]')),100)">Désactiver →</a></div>
+<div id="maintBanner" class="maint-banner-strip" style="display:none!important">⚠ MODE MAINTENANCE ACTIF — <a onclick="go('admin');setTimeout(()=>aPane('settings',document.querySelector('[onclick*=settings]')),100)">Désactiver →</a></div>
 
 <!-- ═══ HEADER ═══ -->
 <header>
@@ -597,7 +597,6 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
           <div class="uddi" onclick="closeAllDD();go('profile')">👤 Mon profil</div>
           <div class="uddi" onclick="closeAllDD();requireAuth(()=>go('messages'))">✉ Messages</div>
           <div class="uddi" onclick="closeAllDD();requireAuth(()=>go('post-ad'))">＋ Déposer</div>
-          <div class="uddi" id="adminLink" style="display:none" onclick="closeAllDD();go('admin')">⚙ Administration</div>
           <div class="uddi red" onclick="logout()">Déconnexion</div>
         </div>
       </div>
@@ -942,179 +941,6 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
     </div>
     <div class="tabp on" id="spAdsT"><div id="spAdsG"></div><div class="pg-empty" id="spAdsE" style="display:none"><h3>Aucune annonce active</h3></div></div>
     <div class="tabp" id="spRevT"><div id="spRevG"></div><div class="pg-empty" id="spRevE" style="display:none"><h3>Aucun avis</h3><p>Cet utilisateur n'a pas encore reçu d'avis.</p></div></div>
-  </div>
-</div>
-
-<!-- ════ ADMIN ════ -->
-<div class="page" id="page-admin">
-  <div class="admin-shell">
-    <div class="adm-side">
-      <a class="adm-logo" onclick="go('home')" style="cursor:pointer;text-decoration:none;pointer-events:all">
-        <div class="adm-logo-box" style="width:8px;height:8px;background:var(--rouge);flex-shrink:0"></div>
-        <div>
-          <div class="adm-logo-txt">LeBonPlan</div>
-          <div class="adm-logo-sub">Administration</div>
-        </div>
-      </a>
-      <div class="adm-sep">Général</div>
-      <div class="adm-nav on" onclick="aPane('dashboard',this)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</div>
-      <div class="adm-sep">Contenu</div>
-      <div class="adm-nav" onclick="aPane('ads',this)"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>Annonces</div>
-      <div class="adm-nav" id="navReports" onclick="aPane('reports',this)"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Signalements<span class="nbdg" id="repBdg" style="display:none">0</span></div>
-      <div class="adm-nav" onclick="aPane('reviews',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Avis</div>
-      <div class="adm-sep">Utilisateurs</div>
-      <div class="adm-nav" onclick="aPane('users',this)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comptes</div>
-      <div class="adm-nav" onclick="aPane('messages',this)"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messagerie</div>
-      <div class="adm-nav" id="navContacts" onclick="aPane('contacts',this)"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Formulaires<span class="nbdg" id="contactBdg" style="display:none">0</span></div>
-      <div class="adm-nav" onclick="aPane('announcements',this)"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Annonces admin</div>
-      <div class="adm-sep">Système</div>
-      <div class="adm-nav" onclick="aPane('system',this)"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Infrastructure</div>
-      <div class="adm-nav" onclick="aPane('logs',this)"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Journaux</div>
-      <div class="adm-nav" onclick="aPane('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Paramètres</div>
-      <div class="adm-foot"><div class="adm-nav" style="border-left:none" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Retour au site</div></div>
-    </div>
-    <div class="adm-main">
-      <div class="adm-pane on" id="ap-dashboard">
-        <div class="adm-top"><div><div class="adm-h1">Dashboard</div><div class="adm-h1-sub">Vue d'ensemble en temps réel</div></div><button class="btn bgo btn-sm" onclick="renderDash()">↻ Actualiser</button></div>
-        <div class="kpi-row" id="kpiRow"></div>
-        <div class="c2">
-          <div class="chart-box"><div class="chart-lbl">Annonces par catégorie</div><div id="catChartW"></div></div>
-          <div class="chart-box"><div class="chart-lbl">Activité récente</div><div id="actFeed"></div></div>
-        </div>
-        <div class="chart-box"><div class="chart-lbl" style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">Signalements récents <button class="btn bro btn-sm" onclick="aPane('reports',document.querySelector('[onclick*=reports]'))">Voir tous →</button></div><div id="repPreview"></div></div>
-      </div>
-      <div class="adm-pane" id="ap-ads">
-        <div class="adm-top"><div><div class="adm-h1">Annonces</div><div class="adm-h1-sub">Toutes les annonces de la plateforme</div></div></div>
-        <div class="srch-row"><input type="text" id="adQ" placeholder="Titre, vendeur…" oninput="renderAdmAds()"><select id="adCF" onchange="renderAdmAds()"><option value="">Toutes catégories</option><option>Véhicules</option><option>Immobilier</option><option>Électronique</option><option>Mode</option><option>Maison</option><option>Loisirs</option><option>Animaux</option><option>Services</option><option>Sports</option></select><select id="adSF" onchange="renderAdmAds()"><option value="">Tous statuts</option><option value="active">Active</option><option value="removed">Retirée</option></select></div>
-        <div class="tbl-w sc"><table class="tbl" id="admAdsT"></table></div>
-      </div>
-      <div class="adm-pane" id="ap-reports">
-        <div class="adm-top"><div><div class="adm-h1">Signalements</div><div class="adm-h1-sub">Contenu signalé par les utilisateurs</div></div></div>
-        <div class="srch-row"><select id="repSF" onchange="renderAdmRep()"><option value="">Tous</option><option value="pending">En attente</option><option value="resolved">Résolus</option></select></div>
-        <div class="tbl-w sc"><table class="tbl" id="admRepT"></table></div>
-      </div>
-      <div class="adm-pane" id="ap-reviews">
-        <div class="adm-top"><div><div class="adm-h1">Avis</div><div class="adm-h1-sub">Tous les avis publiés</div></div></div>
-        <div class="tbl-w sc"><table class="tbl" id="admRevT"></table></div>
-      </div>
-      <div class="adm-pane" id="ap-users">
-        <div class="adm-top"><div><div class="adm-h1">Comptes</div><div class="adm-h1-sub">Gestion des utilisateurs</div></div></div>
-        <div class="srch-row"><input type="text" id="uQ" placeholder="Nom, email…" oninput="renderAdmUsers()"><select id="uRF" onchange="renderAdmUsers()"><option value="">Tous</option><option value="admin">Admins</option><option value="user">Utilisateurs</option><option value="banned">Bannis</option></select></div>
-        <div class="tbl-w sc"><table class="tbl" id="admUsersT"></table></div>
-      </div>
-      <div class="adm-pane" id="ap-messages">
-        <div class="adm-top"><div><div class="adm-h1">Messagerie</div><div class="adm-h1-sub">Toutes les conversations</div></div></div>
-        <div class="tbl-w sc"><table class="tbl" id="admMsgT"></table></div>
-      </div>
-      <!-- ANNOUNCEMENTS PANE -->
-      <div class="adm-pane" id="ap-announcements">
-        <div class="adm-top"><div><div class="adm-h1">Annonces admin</div><div class="adm-h1-sub">Bannières et popups affichés sur le site</div></div><button class="btn br btn-sm" onclick="openNewAnnouncement()">+ Nouvelle</button></div>
-        <div id="annList"></div>
-        <div id="annForm" style="display:none;border:2px solid var(--ligne);padding:24px;margin-top:16px">
-          <div style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--rouge);margin-bottom:18px" id="annFormTitle">Nouvelle annonce</div>
-          <input type="hidden" id="annEditId">
-          <div class="fg"><label>Type</label><select class="fc" id="annType"><option value="banner">Bannière (haut du site)</option><option value="popup">Popup (centre, au chargement)</option></select></div>
-          <div class="fg"><label>Titre *</label><input class="fc" type="text" id="annMsg" placeholder="Ex : Soldes d'été"></div>
-          <div class="fg"><label>Description (popup uniquement)</label><textarea class="fc" id="annDesc" rows="3" placeholder="Profitez de -30% sur toutes les annonces premium jusqu'au 31 janvier…" style="border:2px solid var(--ligne);padding:8px 10px;resize:vertical"></textarea></div>
-          <div class="fg"><label>Couleur</label><select class="fc" id="annColor"><option value="noir">Noir</option><option value="rouge">Rouge</option><option value="vert">Vert</option><option value="bleu">Bleu</option><option value="or">Doré</option></select></div>
-          <div class="fg"><label>Lien (optionnel)</label><input class="fc" type="text" id="annLink" placeholder="https://..."></div>
-          <div class="fg"><label>Texte du lien</label><input class="fc" type="text" id="annLinkTxt" placeholder="En savoir plus →"></div>
-          <div style="display:flex;gap:10px;margin-top:12px">
-            <button class="btn br" onclick="saveAnnouncement()">Enregistrer</button>
-            <button class="btn bgo" onclick="document.getElementById('annForm').style.display='none'">Annuler</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="adm-pane" id="ap-contacts">
-        <div class="adm-top"><div><div class="adm-h1">Formulaires de contact</div><div class="adm-h1-sub">Messages reçus via le formulaire</div></div><button class="btn bgo btn-sm" onclick="renderAdmContacts()">↻ Actualiser</button></div>
-        <div class="srch-row"><select id="contactSF" onchange="renderAdmContacts()"><option value="">Tous les sujets</option><option>Question générale</option><option>Signaler un contenu</option><option>Problème technique</option><option>Demande RGPD (accès/suppression de données)</option><option>Demande légale / judiciaire</option><option>Partenariat</option><option>Autre</option></select><select id="contactRF" onchange="renderAdmContacts()"><option value="">Tous statuts</option><option value="new">Non traités</option><option value="read">Traités</option></select></div>
-        <div class="tbl-w sc"><table class="tbl" id="admContactsT"></table></div>
-      </div>
-      <div class="adm-pane" id="ap-system">
-        <div class="adm-top"><div><div class="adm-h1">Infrastructure</div><div class="adm-h1-sub">État des services système</div></div><button class="btn bgo btn-sm" onclick="renderSystem()">↻ Actualiser</button></div>
-        <div class="kpi-row" id="sysKpi"></div>
-        <div class="c2">
-          <div class="set-card"><h4>Services</h4>
-            <div class="svc-item"><div><div class="svc-nm">API principale</div><div class="svc-host">api.lebonplan.fr</div></div><div class="sdot on">En ligne</div></div>
-            <div class="svc-item"><div><div class="svc-nm">Base de données</div><div class="svc-host">PostgreSQL 15</div></div><div class="sdot on">En ligne</div></div>
-            <div class="svc-item"><div><div class="svc-nm">Stockage S3</div></div><div class="sdot on">En ligne</div></div>
-            <div class="svc-item"><div><div class="svc-nm">Emails SendGrid</div></div><div class="sdot on">En ligne</div></div>
-            <div class="svc-item"><div><div class="svc-nm">CDN Cloudflare</div></div><div class="sdot on">En ligne</div></div>
-            <div class="svc-item"><div><div class="svc-nm">Google OAuth</div><div class="svc-host">712158515734-rbjtg8vcf74hs22i19920d8c4a3…</div></div><div class="sdot on" id="gAuthSt">Configuré</div></div>
-          </div>
-          <div class="set-card"><h4>Ressources serveur</h4>
-            <div class="svc-item"><div class="svc-nm">CPU</div><span id="cpuV" style="font-weight:700;font-size:14px">—</span></div>
-            <div class="svc-item"><div class="svc-nm">RAM</div><span id="ramV" style="font-weight:700;font-size:14px">—</span></div>
-            <div class="svc-item"><div class="svc-nm">Disque</div><span style="font-weight:700;font-size:14px">142 / 500 GB</span></div>
-            <div class="svc-item"><div class="svc-nm">Uptime</div><span style="font-weight:700;font-size:14px;color:var(--vert)">99.98%</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="adm-pane" id="ap-logs">
-        <div class="adm-top"><div><div class="adm-h1">Journaux</div><div class="adm-h1-sub">Logs d'activité</div></div>
-          <div style="display:flex;gap:7px"><select id="logF" onchange="renderLogs()" style="height:34px;border:2px solid var(--ligne);padding:0 10px;font-size:12px;outline:none;background:var(--blanc);font-family:'Outfit',sans-serif"><option value="">Tous</option><option value="inf">INFO</option><option value="wrn">WARN</option><option value="err">ERROR</option></select><button class="btn bd btn-sm" onclick="simLog()">＋ Simuler</button><button class="btn bro btn-sm" onclick="clearLogs()">🗑 Vider</button></div>
-        </div>
-        <div class="tbl-w" style="max-height:480px;overflow-y:auto"><div style="padding:0 14px" id="logList"></div></div>
-      </div>
-      <div class="adm-pane" id="ap-settings">
-        <div class="adm-top"><div><div class="adm-h1">Paramètres</div><div class="adm-h1-sub">Configuration de la plateforme</div></div></div>
-        <div class="set-grid">
-          <div class="set-card"><h4>Général</h4>
-            <div class="set-row"><span>Mode maintenance</span><button class="tog" id="tog-maintenance" onclick="toggleSetting('maintenance',this)"></button></div>
-            <div class="set-row"><span>Inscriptions ouvertes</span><button class="tog on" id="tog-registrations" onclick="toggleSetting('registrations',this)"></button></div>
-            <div class="set-row"><span>Modération automatique</span><button class="tog on" id="tog-autoModeration" onclick="toggleSetting('autoModeration',this)"></button></div>
-            <div class="set-row"><span>Annonces pro payantes</span><button class="tog" id="tog-proPaid" onclick="toggleSetting('proPaid',this)"></button></div>
-          </div>
-          <div class="set-card"><h4>Annonces</h4>
-            <div class="set-row"><span>Validation avant publication</span><button class="tog" id="tog-validateBeforePublish" onclick="toggleSetting('validateBeforePublish',this)"></button></div>
-            <div class="set-row"><span>Alerte prix suspects</span><button class="tog on" id="tog-suspiciousPrice" onclick="toggleSetting('suspiciousPrice',this)"></button></div>
-            <div class="set-row"><span>Max photos gratuites</span><input type="number" id="inp-maxPhotos" value="5" min="1" max="20" style="width:60px;border:2px solid var(--ligne);padding:3px 8px;font-size:12px;outline:none;font-family:'Outfit',sans-serif"></div>
-            <div class="set-row"><span>Durée publication (j)</span><input type="number" id="inp-pubDuration" value="60" min="1" max="365" style="width:60px;border:2px solid var(--ligne);padding:3px 8px;font-size:12px;outline:none;font-family:'Outfit',sans-serif"></div>
-          </div>
-          <div class="set-card"><h4>Sécurité</h4>
-            <div class="set-row"><span>2FA obligatoire admins</span><button class="tog on" id="tog-twoFA" onclick="toggleSetting('twoFA',this)"></button></div>
-            <div class="set-row"><span>Whitelist IP admin</span><button class="tog" id="tog-ipWhitelist" onclick="toggleSetting('ipWhitelist',this)"></button></div>
-            <div class="set-row"><span>Limite login</span><input type="number" id="inp-loginLimit" value="5" min="1" max="20" style="width:60px;border:2px solid var(--ligne);padding:3px 8px;font-size:12px;outline:none;font-family:'Outfit',sans-serif"></div>
-            <div class="set-row"><span>Session (heures)</span><input type="number" id="inp-sessionHours" value="24" min="1" max="168" style="width:60px;border:2px solid var(--ligne);padding:3px 8px;font-size:12px;outline:none;font-family:'Outfit',sans-serif"></div>
-          </div>
-          <div class="set-card"><h4>Google OAuth</h4>
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px"><span class="sdot on" style="font-size:11px;font-weight:700;letter-spacing:.04em">Actif</span></div>
-            <code id="gcidShow" style="font-size:10px;background:var(--off);padding:5px 10px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:12px;font-weight:600;color:var(--gris)">Chargement…</code>
-            <button class="btn bgo btn-sm" onclick="openM('gsetup')">Modifier le Client ID</button>
-          </div>
-          <div class="set-card"><h4>Statut du site</h4>
-            <div class="set-row"><span>Services en ligne</span><button class="tog on" id="tog-siteStatus" onclick="toggleStatusOnline(this)"></button></div>
-            <div class="set-row" style="flex-direction:column;align-items:flex-start;gap:8px">
-              <span>Message de statut</span>
-              <div style="display:flex;gap:6px;width:100%">
-                <input type="text" id="statusMsgInput" placeholder="Tous les services sont opérationnels" style="flex:1;border:2px solid var(--ligne);padding:4px 8px;font-size:12px;outline:none;font-family:'Outfit',sans-serif">
-                <button class="btn bd btn-sm" onclick="saveStatusMsg()">OK</button>
-              </div>
-            </div>
-          </div>
-          <div class="set-card"><h4>RGPD &amp; Légal</h4>
-            <div class="set-row"><span>CGU</span><button class="btn bgo btn-sm" onclick="go('cgu')">Voir →</button></div>
-            <div class="set-row"><span>Confidentialité</span><button class="btn bgo btn-sm" onclick="go('confidentialite')">Voir →</button></div>
-            <div class="set-row"><span>Cookies</span><button class="btn bgo btn-sm" onclick="go('cookies')">Voir →</button></div>
-            <div class="set-row"><span>Mentions légales</span><button class="btn bgo btn-sm" onclick="go('mentions')">Voir →</button></div>
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px">
-          <button class="btn bd" onclick="saveSettings()">💾 Sauvegarder</button>
-          <button class="btn bgo" onclick="exportSettings()">⬇ Exporter JSON</button>
-          <button class="btn bro btn-sm" style="height:40px" onclick="clearCache()">🗑 Vider le cache</button>
-        </div>
-        <div style="border:2px solid rgba(212,43,43,.3);padding:18px;background:rgba(212,43,43,.03)">
-          <div style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--rouge);margin-bottom:14px">⚠ Zone dangereuse</div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn bro" onclick="admPurgeAds()">🗑 Supprimer toutes les annonces</button>
-            <button class="btn bro" onclick="admPurgeUsers()">👤 Supprimer tous les comptes</button>
-            <button class="btn bro" onclick="admPurgeAll()">💥 Tout réinitialiser</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -1535,7 +1361,10 @@ function go(p) {
   closeAllDD();
   const guarded = ['post-ad','messages','profile','favorites'];
   if (guarded.includes(p) && !S.user) { openM('login'); return; }
-  if (p === 'admin' && (!S.user || S.user.role !== 'admin')) { toast('Accès réservé aux admins', 'err'); return; }
+  if (p === 'admin') {
+    if (!IS_ADMIN_DOMAIN) { toast('Accès non autorisé depuis cette URL', 'err'); return; }
+    if (!S.user || S.user.role !== 'admin') { toast('Accès réservé aux admins', 'err'); return; }
+  }
 
   // Contact requires login
   if (p === 'contact' && !S.user) { openM('login'); return; }
@@ -1552,6 +1381,10 @@ function go(p) {
   el.classList.add('on');
   window.scrollTo(0, 0);
   if (p === 'home') renderHome();
+  // Extra guard: clear admin page if on wrong domain
+  if (p !== 'admin' && !IS_ADMIN_DOMAIN) {
+    document.getElementById('page-admin')?.classList.remove('on');
+  }
   if (p === 'listings') renderList();
   if (p === 'messages') renderMessages();
   if (p === 'profile') renderProfile();
@@ -2169,7 +2002,7 @@ function updateAuthUI() {
     const nm = document.getElementById('uNm'); if (nm) nm.textContent = u.first || u.name;
     const uddNm = document.getElementById('uddNm'); if (uddNm) uddNm.textContent = u.name;
     const uddEm = document.getElementById('uddEm'); if (uddEm) uddEm.textContent = u.email;
-    const al = document.getElementById('adminLink'); if (al) al.style.display = u.role === 'admin' ? 'block' : 'none';
+    const al = document.getElementById('adminLink'); if (al) al.style.display = (u.role === 'admin' && IS_ADMIN_DOMAIN) ? 'block' : 'none';
   }
   renderNotifs(); updateMsgDot(); updateRepBadge(); updateContactBadge();
 }
@@ -2953,6 +2786,8 @@ function esc(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').repla
 // COOKIES CONSENT
 // ═══════════════════════════════════════════════════════════
 const COOKIE_VERSION = '2';
+const ADMIN_URL = 'https://kmjndev.github.io/adminlbp';
+const IS_ADMIN_DOMAIN = false; // public site — no admin
 function initCookies() {
   const consent = localStorage.getItem('lbp_cookies');
   const version = localStorage.getItem('lbp_cookies_v');
