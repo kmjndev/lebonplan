@@ -503,6 +503,120 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
   .kpi-row{grid-template-columns:1fr 1fr}.c2{grid-template-columns:1fr}.set-grid{grid-template-columns:1fr}
   .hbar{padding:0 16px;height:56px}.wrap{padding:24px 16px}.h-srch{max-width:220px}
 }
+/* ═══ SUGGESTIONS ═══ */
+.sugg-sec{border-bottom:2px solid var(--noir);background:var(--blanc);padding:28px 0}
+.sugg-sec .sugg-hd{max-width:1280px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:12px}
+.sugg-title{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:.06em;display:flex;align-items:center;gap:7px}
+.sugg-sub{font-size:11px;color:var(--gris);font-weight:500;margin-top:2px}
+.sugg-arrows{display:flex;gap:6px;flex-shrink:0}
+.sarr{width:32px;height:32px;border:2px solid var(--noir);background:var(--blanc);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .15s;font-family:'Outfit',sans-serif;font-weight:700}
+.sarr:hover{background:var(--noir);color:#fff}
+.sarr:disabled{opacity:.3;pointer-events:none}
+.caro-outer{max-width:1280px;margin:0 auto;padding:0 32px;overflow:hidden}
+.caro-track{display:flex;gap:12px;transition:transform .38s cubic-bezier(.25,.46,.45,.94)}
+.sc{flex:0 0 200px;background:#fff;border:2px solid var(--ligne);cursor:pointer;transition:all .18s;position:relative}
+.sc:hover{border-color:var(--noir);transform:translateY(-2px);box-shadow:3px 3px 0 var(--noir)}
+.sc-img{width:100%;height:130px;object-fit:cover;display:block}
+.sc-ph{width:100%;height:130px;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:36px}
+.sc-body{padding:9px 11px 11px}
+.sc-price{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.04em;color:var(--rouge);line-height:1;margin-bottom:2px}
+.sc-price.free{color:var(--vert)}
+.sc-title{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.sc-loc{font-size:10px;color:var(--gris2);font-weight:600}
+.sc-fav{position:absolute;top:6px;right:6px;background:rgba(255,255,255,.9);border:none;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer}
+.sc-bdg{position:absolute;top:6px;left:6px;background:var(--rouge);color:#fff;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px}
+.search-pill{display:inline-flex;align-items:center;gap:5px;background:#fff;border:2px solid var(--ligne);padding:6px 13px;font-size:12px;font-weight:700;letter-spacing:.03em;cursor:pointer;white-space:nowrap;transition:all .18s;color:var(--noir);font-family:'Outfit',sans-serif}
+.search-pill:hover{border-color:var(--rouge);color:var(--rouge)}
+.sugg-sec .sugg-hd{padding:0 32px}
+
+/* ═══ MOBILE ONLY — détection JS injecte classe .is-mobile sur <html> ═══ */
+/* Hamburger */
+#mob-menu-btn{display:none}
+#mob-drawer{display:none}
+.mob-overlay{display:none}
+
+@media(max-width:680px){
+  /* Header compact */
+  .hbar{padding:0 14px;height:52px}
+  .h-srch{display:none!important} /* caché sur mobile, remplacé par icone */
+  .hr .btn{display:none!important} /* Masquer "Déposer" header desktop */
+  #hGuest .btn:last-child{display:none!important} /* Masquer S'inscrire */
+  #hGuest .btn:first-child{padding:0 12px;height:30px;font-size:11px}
+  .subnav{display:none} /* barre catégories masquée sur mobile */
+
+  /* Hamburger visible */
+  #mob-menu-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;background:none;border:2px solid var(--noir);cursor:pointer;flex-shrink:0;order:-1}
+  #mob-menu-btn span{display:block;width:16px;height:2px;background:var(--noir);transition:all .22s;position:relative}
+  #mob-menu-btn span::before,#mob-menu-btn span::after{content:'';position:absolute;left:0;width:16px;height:2px;background:var(--noir);transition:all .22s}
+  #mob-menu-btn span::before{top:-5px}
+  #mob-menu-btn span::after{top:5px}
+  #mob-menu-btn.open span{background:transparent}
+  #mob-menu-btn.open span::before{top:0;transform:rotate(45deg)}
+  #mob-menu-btn.open span::after{top:0;transform:rotate(-45deg)}
+
+  /* Drawer menu gauche */
+  #mob-drawer{display:block;position:fixed;top:0;left:0;bottom:0;width:280px;background:var(--blanc);border-right:2px solid var(--noir);z-index:1200;transform:translateX(-100%);transition:transform .3s cubic-bezier(.25,.46,.45,.94);overflow-y:auto;padding:0 0 32px}
+  #mob-drawer.open{transform:translateX(0)}
+  .mob-overlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1100;opacity:0;pointer-events:none;transition:opacity .3s}
+  .mob-overlay.open{opacity:1;pointer-events:all}
+  .mob-drw-hd{padding:18px 20px;border-bottom:2px solid var(--noir);display:flex;align-items:center;justify-content:space-between}
+  .mob-drw-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.06em}
+  .mob-drw-logo em{color:var(--rouge);font-style:normal}
+  .mob-drw-close{background:none;border:none;font-size:20px;cursor:pointer;line-height:1;padding:2px}
+  .mob-drw-section{padding:10px 0 4px}
+  .mob-drw-label{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gris2);padding:6px 20px}
+  .mob-drw-item{display:flex;align-items:center;gap:10px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s;border-bottom:1px solid var(--off)}
+  .mob-drw-item:hover{background:var(--off)}
+  .mob-drw-item .mdi{font-size:18px;width:22px;text-align:center;flex-shrink:0}
+  .mob-drw-item.red{color:var(--rouge)}
+  .mob-srch{padding:14px 16px;border-bottom:2px solid var(--noir)}
+  .mob-srch-box{display:flex;border:2px solid var(--noir);height:42px;background:#fff}
+  .mob-srch-box input{flex:1;border:none;outline:none;padding:0 12px;font-size:14px;font-family:'Outfit',sans-serif}
+  .mob-srch-btn{width:42px;background:var(--rouge);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+  .mob-srch-btn svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5}
+  .mob-post-btn{margin:14px 16px 0;display:block}
+
+  /* Mobile search icon dans le header */
+  #mob-search-icon{display:flex}
+
+  /* Suggestions responsive */
+  .sugg-sec .sugg-hd,.caro-outer{padding:0 14px}
+  .sc{flex:0 0 155px}
+  .sc-img,.sc-ph{height:110px}
+
+  /* Hero */
+  .hero-inner{padding:36px 16px 32px}
+  .hero-title{font-size:clamp(42px,11vw,72px)}
+  .hero-search-box{box-shadow:2px 2px 0 var(--noir)}
+  .hero-badges{display:none} /* trop dense sur mobile */
+
+  /* Annonce cards plus petites */
+  .ag{grid-template-columns:repeat(2,1fr)!important;gap:8px}
+  .ac-price{font-size:16px}
+  .ac-title{font-size:12px}
+
+  /* Wrap padding */
+  .wrap{padding:16px 14px}
+
+  /* Cat grid */
+  .cat-grid{grid-template-columns:repeat(3,1fr)!important;gap:6px}
+
+  /* Footer */
+  .ft-grid{grid-template-columns:1fr!important;padding:20px 16px!important}
+  .f-bot{flex-direction:column;gap:8px;padding:12px 16px!important;font-size:10px}
+  .f-bot-links{flex-wrap:wrap;gap:10px}
+
+  /* Forms */
+  .frow{grid-template-columns:1fr!important}
+  .det-grid{grid-template-columns:1fr}
+
+  /* Profile */
+  .prof-hero{flex-direction:column;align-items:center;text-align:center}
+}
+
+.sugg-pills{max-width:1280px;margin:0 auto;padding:0 32px;display:flex;flex-wrap:wrap;gap:8px}
+.sugg-cat-row{max-width:1280px;margin:0 auto;padding:12px 32px 4px;display:flex;flex-wrap:wrap;gap:8px}
+@media(max-width:680px){.sugg-pills,.sugg-cat-row{padding:0 14px}}
 </style>
 </head>
 <body>
@@ -532,7 +646,7 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
       <button class="maint-login-btn" onclick="maintLogin()">Se connecter →</button>
     </div>
   </div>
-  <div class="maint-copyright">© 2025 LeBonPlan · Tous droits réservés</div>
+  <div class="maint-copyright">© 2026 LeBonPlan · Tous droits réservés</div>
 </div>
 
 <!-- ═══ COOKIE BANNER ═══ -->
@@ -553,8 +667,51 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
 <div id="maintBanner" class="maint-banner-strip" style="display:none!important">⚠ MODE MAINTENANCE ACTIF — <a onclick="go('admin');setTimeout(()=>aPane('settings',document.querySelector('[onclick*=settings]')),100)">Désactiver →</a></div>
 
 <!-- ═══ HEADER ═══ -->
+<!-- Mobile drawer overlay -->
+<div class="mob-overlay" id="mobOverlay" onclick="closeMobMenu()"></div>
+
+<!-- Mobile drawer -->
+<div id="mob-drawer">
+  <div class="mob-drw-hd">
+    <span class="mob-drw-logo">Le<em>Bon</em>Plan</span>
+    <button class="mob-drw-close" onclick="closeMobMenu()">✕</button>
+  </div>
+  <div class="mob-srch">
+    <div class="mob-srch-box">
+      <input type="text" id="mobSearchQ" placeholder="Rechercher…" onkeydown="if(event.key==='Enter'){closeMobMenu();S.query=this.value;S.filter='';document.getElementById('listTitle').textContent='"'+this.value+'"';if(this.value)trackSearch(this.value);go('listings');}">
+      <button class="mob-srch-btn" onclick="const q=document.getElementById('mobSearchQ').value.trim();closeMobMenu();S.query=q;S.filter='';document.getElementById('listTitle').textContent=q?'"'+q+'"':'Toutes les annonces';if(q)trackSearch(q);go('listings');"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+    </div>
+  </div>
+  <button class="btn br btn-full mob-post-btn" onclick="closeMobMenu();requireAuth(()=>go('post-ad'))">＋ Déposer une annonce</button>
+  <div class="mob-drw-section">
+    <div class="mob-drw-label">Catégories</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();setCat(null,'')">Toutes les annonces</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();setCat(null,'Véhicules')">Véhicules</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();setCat(null,'Immobilier')">Immobilier</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();setCat(null,'Électronique')">Électronique</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();setCat(null,'Mode')">Mode</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();setCat(null,'Maison')">Maison</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();setCat(null,'Loisirs')">Loisirs</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();setCat(null,'Sports')">Sports</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();setCat(null,'Animaux')">Animaux</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();setCat(null,'Services')">Services</div>
+  </div>
+  <div class="mob-drw-section" id="mobUserSection"></div>
+  <div class="mob-drw-section">
+    <div class="mob-drw-label">Légal</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();go('cgu')"><span class="mdi">📄</span>CGU</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();go('confidentialite')"><span class="mdi">🔒</span>Confidentialité</div>
+    <div class="mob-drw-item" onclick="closeMobMenu();go('contact')"><span class="mdi">✉</span>Contact</div>
+  </div>
+</div>
+
 <header>
   <div class="hbar">
+    <!-- Hamburger mobile -->
+    <button id="mob-menu-btn" onclick="toggleMobMenu()" aria-label="Menu">
+      <span></span>
+    </button>
+
     <a class="logo" onclick="go('home')">
       <div class="logo-dot"></div>
       <span class="logo-txt">Le<em>Bon</em>Plan</span>
@@ -649,6 +806,9 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
     </div>
     <div class="cat-grid" id="catGrid"></div>
   </div>
+
+  <!-- SUGGESTIONS -->
+  <div id="suggBlock"></div>
 
   <div class="wrap" id="homeAds"></div>
 </div>
@@ -945,15 +1105,15 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
 </div>
 
 <!-- ════ LEGAL PAGES ════ -->
-<div class="page" id="page-cgu"><div class="wrap" style="max-width:820px"><a onclick="history.back()" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-bottom:28px">← Retour</a><div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,56px);letter-spacing:.04em;margin-bottom:8px;color:var(--noir)">Conditions générales d'utilisation</div><p style="font-size:11px;color:var(--gris2);margin-bottom:44px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Dernière mise à jour : 1er janvier 2025</p><div class="legal-content"><h2>1. Objet</h2><p>Les présentes Conditions Générales d'Utilisation régissent l'accès et l'utilisation de la plateforme <strong>LeBonPlan</strong>, éditée par la société LeBonPlan SAS.</p><p>En accédant à la Plateforme, vous acceptez sans réserve les présentes CGU.</p><h2>2. Description du service</h2><p>LeBonPlan est une plateforme de petites annonces en ligne permettant aux utilisateurs de publier, consulter et répondre à des annonces de vente, d'achat ou d'échange de biens et services entre particuliers et professionnels en France.</p><h2>3. Inscription</h2><p>Pour publier une annonce ou contacter un vendeur, vous devez créer un compte. Vous devez être âgé d'au moins 18 ans. Vous êtes responsable de la confidentialité de vos identifiants.</p><h2>4. Publication d'annonces</h2><p>Les annonces doivent être exactes et légales. Il est interdit de publier des annonces portant sur :</p><ul><li>Des produits ou services illégaux</li><li>Des contrefaçons ou biens volés</li><li>Tout contenu haineux, discriminatoire ou à caractère pornographique</li><li>Des fausses annonces ou offres frauduleuses</li></ul><p>LeBonPlan se réserve le droit de supprimer toute annonce non conforme.</p><h2>5. Transactions</h2><p>LeBonPlan agit en tant qu'intermédiaire technique et n'est pas partie aux transactions. Recommandations : rencontrez le vendeur en lieu public, ne payez qu'après vérification du bien.</p><h2>6. Propriété intellectuelle</h2><p>L'ensemble du contenu est protégé par le droit de la propriété intellectuelle. Toute reproduction non autorisée est interdite.</p><h2>7. Responsabilité</h2><p>LeBonPlan ne saurait être tenu responsable des dommages résultant de l'utilisation de la Plateforme ou des transactions entre utilisateurs.</p><h2>8. Données personnelles</h2><p>Le traitement de vos données est régi par notre <a onclick="go('confidentialite')">Politique de confidentialité</a>.</p><h2>9. Droit applicable</h2><p>Les présentes CGU sont régies par le droit français. Tout litige sera soumis aux tribunaux de Paris.</p><h2>10. Contact</h2><p>legal@lebonplan.fr</p></div></div></div>
+<div class="page" id="page-cgu"><div class="wrap" style="max-width:820px"><a onclick="history.back()" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-bottom:28px">← Retour</a><div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,56px);letter-spacing:.04em;margin-bottom:8px;color:var(--noir)">Conditions générales d'utilisation</div><p style="font-size:11px;color:var(--gris2);margin-bottom:44px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Dernière mise à jour : 16 mars 2026</p><div class="legal-content"><h2>1. Objet</h2><p>Les présentes Conditions Générales d'Utilisation régissent l'accès et l'utilisation de la plateforme <strong>LeBonPlan</strong>, éditée par la société LeBonPlan SAS.</p><p>En accédant à la Plateforme, vous acceptez sans réserve les présentes CGU.</p><h2>2. Description du service</h2><p>LeBonPlan est une plateforme de petites annonces en ligne permettant aux utilisateurs de publier, consulter et répondre à des annonces de vente, d'achat ou d'échange de biens et services entre particuliers et professionnels en France.</p><h2>3. Inscription</h2><p>Pour publier une annonce ou contacter un vendeur, vous devez créer un compte. Vous devez être âgé d'au moins 18 ans. Vous êtes responsable de la confidentialité de vos identifiants.</p><h2>4. Publication d'annonces</h2><p>Les annonces doivent être exactes et légales. Il est interdit de publier des annonces portant sur :</p><ul><li>Des produits ou services illégaux</li><li>Des contrefaçons ou biens volés</li><li>Tout contenu haineux, discriminatoire ou à caractère pornographique</li><li>Des fausses annonces ou offres frauduleuses</li></ul><p>LeBonPlan se réserve le droit de supprimer toute annonce non conforme.</p><h2>5. Transactions</h2><p>LeBonPlan agit en tant qu'intermédiaire technique et n'est pas partie aux transactions. Recommandations : rencontrez le vendeur en lieu public, ne payez qu'après vérification du bien.</p><h2>6. Propriété intellectuelle</h2><p>L'ensemble du contenu est protégé par le droit de la propriété intellectuelle. Toute reproduction non autorisée est interdite.</p><h2>7. Responsabilité</h2><p>LeBonPlan ne saurait être tenu responsable des dommages résultant de l'utilisation de la Plateforme ou des transactions entre utilisateurs.</p><h2>8. Données personnelles</h2><p>Le traitement de vos données est régi par notre <a onclick="go('confidentialite')">Politique de confidentialité</a>.</p><h2>9. Droit applicable</h2><p>Les présentes CGU sont régies par le droit français. Tout litige sera soumis aux tribunaux de Paris.</p><h2>10. Contact</h2><p>contact@lebonplan.fr</p></div></div></div>
 
-<div class="page" id="page-confidentialite"><div class="wrap" style="max-width:820px"><a onclick="history.back()" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-bottom:28px">← Retour</a><div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,56px);letter-spacing:.04em;margin-bottom:8px;color:var(--noir)">Politique de confidentialité</div><p style="font-size:11px;color:var(--gris2);margin-bottom:44px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">RGPD (UE) 2016/679 · Mise à jour : 1er janvier 2025</p><div class="legal-content"><h2>1. Responsable du traitement</h2><p><strong>LeBonPlan SAS</strong> · 123 rue de la République, 75001 Paris · dpo@lebonplan.fr</p><h2>2. Données collectées</h2><ul><li>Identification : prénom, nom, email, téléphone</li><li>Localisation : ville, code postal</li><li>Utilisation : annonces, messages, favoris</li><li>Techniques : IP, navigateur, cookies</li></ul><h2>3. Finalités</h2><ul><li>Exécution du contrat (compte, annonces, messagerie)</li><li>Sécurité et lutte contre la fraude</li><li>Cookies analytiques (avec consentement)</li><li>Obligations légales</li></ul><h2>4. Conservation</h2><ul><li>Compte : durée relation + 3 ans</li><li>Annonces : durée publication + 1 an</li><li>Logs de connexion : 12 mois</li></ul><h2>5. Vos droits (RGPD)</h2><p>Accès, rectification, effacement, portabilité, opposition, limitation. Contact : dpo@lebonplan.fr · CNIL : www.cnil.fr</p><h2>6. Sécurité</h2><p>HTTPS, accès restreint, audits réguliers. Données hébergées en France (UE).</p></div></div></div>
+<div class="page" id="page-confidentialite"><div class="wrap" style="max-width:820px"><a onclick="history.back()" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-bottom:28px">← Retour</a><div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,56px);letter-spacing:.04em;margin-bottom:8px;color:var(--noir)">Politique de confidentialité</div><p style="font-size:11px;color:var(--gris2);margin-bottom:44px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">RGPD (UE) 2016/679 · Mise à jour : 16 mars 2026</p><div class="legal-content"><h2>1. Responsable du traitement</h2><p><strong>LeBonPlan SAS</strong> · 123 rue de la République, 75001 Paris · contact@lebonplan.fr</p><h2>2. Données collectées</h2><ul><li>Identification : prénom, nom, email, téléphone</li><li>Localisation : ville, code postal</li><li>Utilisation : annonces, messages, favoris</li><li>Techniques : IP, navigateur, cookies</li></ul><h2>3. Finalités</h2><ul><li>Exécution du contrat (compte, annonces, messagerie)</li><li>Sécurité et lutte contre la fraude</li><li>Cookies analytiques (avec consentement)</li><li>Obligations légales</li></ul><h2>4. Conservation</h2><ul><li>Compte : durée relation + 3 ans</li><li>Annonces : durée publication + 1 an</li><li>Logs de connexion : 12 mois</li></ul><h2>5. Vos droits (RGPD)</h2><p>Accès, rectification, effacement, portabilité, opposition, limitation. Contact : contact@lebonplan.fr · CNIL : www.cnil.fr</p><h2>6. Sécurité</h2><p>HTTPS, accès restreint, audits réguliers. Données hébergées en France (UE).</p></div></div></div>
 
-<div class="page" id="page-cookies"><div class="wrap" style="max-width:820px"><a onclick="history.back()" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-bottom:28px">← Retour</a><div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,56px);letter-spacing:.04em;margin-bottom:8px;color:var(--noir)">Politique de cookies</div><p style="font-size:11px;color:var(--gris2);margin-bottom:44px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Mise à jour : 1er janvier 2025</p><div class="legal-content"><h2>Cookies utilisés</h2><div style="border:2px solid var(--noir);margin:18px 0;overflow:hidden"><div style="display:grid;grid-template-columns:1fr 1fr 2fr;background:var(--off);border-bottom:2px solid var(--ligne)"><div style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gris2)">Nom</div><div style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gris2)">Type</div><div style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gris2)">Finalité</div></div><div style="display:grid;grid-template-columns:1fr 1fr 2fr;border-bottom:1px solid var(--ligne)"><div style="padding:10px 14px;font-size:12px;font-weight:700">lbp_st</div><div style="padding:10px 14px;font-size:11px;color:var(--vert);font-weight:700">Essentiel</div><div style="padding:10px 14px;font-size:12px;color:var(--gris)">État de l'application</div></div><div style="display:grid;grid-template-columns:1fr 1fr 2fr;border-bottom:1px solid var(--ligne)"><div style="padding:10px 14px;font-size:12px;font-weight:700">lbp_gcid</div><div style="padding:10px 14px;font-size:11px;color:var(--vert);font-weight:700">Essentiel</div><div style="padding:10px 14px;font-size:12px;color:var(--gris)">Configuration Google</div></div><div style="display:grid;grid-template-columns:1fr 1fr 2fr"><div style="padding:10px 14px;font-size:12px;font-weight:700">_ga, _gid</div><div style="padding:10px 14px;font-size:11px;color:var(--bleu);font-weight:700">Analytique</div><div style="padding:10px 14px;font-size:12px;color:var(--gris)">Google Analytics (consentement requis)</div></div></div><h2>Gérer vos préférences</h2><div style="display:flex;gap:10px;margin:16px 0;flex-wrap:wrap"><button class="btn bg" onclick="acceptCookies('all');toast('Cookies acceptés','ok')">✓ Tout accepter</button><button class="btn bgo" onclick="acceptCookies('essential');toast('Préférences enregistrées','ok')">Essentiels uniquement</button></div><h2>Contact</h2><p>dpo@lebonplan.fr</p></div></div></div>
+<div class="page" id="page-cookies"><div class="wrap" style="max-width:820px"><a onclick="history.back()" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-bottom:28px">← Retour</a><div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,56px);letter-spacing:.04em;margin-bottom:8px;color:var(--noir)">Politique de cookies</div><p style="font-size:11px;color:var(--gris2);margin-bottom:44px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Mise à jour : 16 mars 2026</p><div class="legal-content"><h2>Cookies utilisés</h2><div style="border:2px solid var(--noir);margin:18px 0;overflow:hidden"><div style="display:grid;grid-template-columns:1fr 1fr 2fr;background:var(--off);border-bottom:2px solid var(--ligne)"><div style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gris2)">Nom</div><div style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gris2)">Type</div><div style="padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gris2)">Finalité</div></div><div style="display:grid;grid-template-columns:1fr 1fr 2fr;border-bottom:1px solid var(--ligne)"><div style="padding:10px 14px;font-size:12px;font-weight:700">lbp_st</div><div style="padding:10px 14px;font-size:11px;color:var(--vert);font-weight:700">Essentiel</div><div style="padding:10px 14px;font-size:12px;color:var(--gris)">État de l'application</div></div><div style="display:grid;grid-template-columns:1fr 1fr 2fr;border-bottom:1px solid var(--ligne)"><div style="padding:10px 14px;font-size:12px;font-weight:700">lbp_gcid</div><div style="padding:10px 14px;font-size:11px;color:var(--vert);font-weight:700">Essentiel</div><div style="padding:10px 14px;font-size:12px;color:var(--gris)">Configuration Google</div></div><div style="display:grid;grid-template-columns:1fr 1fr 2fr"><div style="padding:10px 14px;font-size:12px;font-weight:700">_ga, _gid</div><div style="padding:10px 14px;font-size:11px;color:var(--bleu);font-weight:700">Analytique</div><div style="padding:10px 14px;font-size:12px;color:var(--gris)">Google Analytics (consentement requis)</div></div></div><h2>Gérer vos préférences</h2><div style="display:flex;gap:10px;margin:16px 0;flex-wrap:wrap"><button class="btn bg" onclick="acceptCookies('all');toast('Cookies acceptés','ok')">✓ Tout accepter</button><button class="btn bgo" onclick="acceptCookies('essential');toast('Préférences enregistrées','ok')">Essentiels uniquement</button></div><h2>Contact</h2><p>contact@lebonplan.fr</p></div></div></div>
 
 <div class="page" id="page-mentions"><div class="wrap" style="max-width:820px"><a onclick="history.back()" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-bottom:28px">← Retour</a><div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,56px);letter-spacing:.04em;margin-bottom:8px;color:var(--noir)">Mentions légales</div><p style="font-size:11px;color:var(--gris2);margin-bottom:44px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Loi n°2004-575 du 21 juin 2004</p><div class="legal-content"><h2>Éditeur</h2><p><strong>LeBonPlan SAS</strong> · Capital 10 000 € · 123 rue de la République, 75001 Paris · RCS Paris B 123 456 789 · N° TVA : FR 12 123456789 · contact@lebonplan.fr</p><h2>Hébergement</h2><p>GitHub Pages / Vercel · Données hébergées en France (UE)</p><h2>Propriété intellectuelle</h2><p>Tout le contenu est protégé. Reproduction interdite sans autorisation.</p><h2>Médiation</h2><p>MEDICYS — www.medicys.fr</p></div></div></div>
 
-<div class="page" id="page-contact"><div class="wrap" style="max-width:620px"><a onclick="history.back()" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-bottom:28px">← Retour</a><div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,56px);letter-spacing:.04em;margin-bottom:8px;color:var(--noir)">Contact</div><p style="font-size:14px;color:var(--gris);margin-bottom:36px;line-height:1.9">Une question, un signalement, une demande RGPD ? Notre équipe vous répondra sous 48h.</p><div class="fsec"><div class="fg"><label>Sujet <em>*</em></label><select class="fc" id="cSubject"><option value="">Sélectionner…</option><option>Question générale</option><option>Signaler un contenu</option><option>Problème technique</option><option>Demande RGPD (accès/suppression de données)</option><option>Demande légale / judiciaire</option><option>Partenariat</option><option>Autre</option></select></div><div class="frow"><div class="fg"><label>Prénom <em>*</em></label><input class="fc" type="text" id="cFirst" placeholder="Marie"></div><div class="fg"><label>Nom <em>*</em></label><input class="fc" type="text" id="cLast" placeholder="Dupont"></div></div><div class="fg"><label>Email <em>*</em></label><input class="fc" type="email" id="cEmail" placeholder="marie@email.fr"></div><div class="fg"><label>Message <em>*</em></label><textarea class="fc" id="cMsg" rows="5" placeholder="Décrivez votre demande…"></textarea></div><div class="fg"><label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-size:12px;font-weight:600;text-transform:none;letter-spacing:0"><input type="checkbox" id="cRgpd" style="margin-top:3px;flex-shrink:0"> J'accepte que mes données soient utilisées pour traiter ma demande (<a onclick="go('confidentialite')" style="color:var(--rouge);cursor:pointer">politique de confidentialité</a>).</label></div><button class="btn br btn-lg" onclick="submitContact()">Envoyer le message →</button></div><div style="margin-top:44px;padding-top:36px;border-top:2px solid var(--noir);display:grid;grid-template-columns:1fr 1fr;gap:16px"><div style="border:2px solid var(--ligne);padding:18px"><div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gris2);margin-bottom:8px">Email général</div><div style="font-size:14px;font-weight:700">contact@lebonplan.fr</div></div><div style="border:2px solid var(--ligne);padding:18px"><div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gris2);margin-bottom:8px">DPO / RGPD</div><div style="font-size:14px;font-weight:700">dpo@lebonplan.fr</div></div></div></div></div>
+<div class="page" id="page-contact"><div class="wrap" style="max-width:620px"><a onclick="history.back()" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-bottom:28px">← Retour</a><div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,56px);letter-spacing:.04em;margin-bottom:8px;color:var(--noir)">Contact</div><p style="font-size:14px;color:var(--gris);margin-bottom:36px;line-height:1.9">Une question, un signalement, une demande RGPD ? Notre équipe vous répondra sous 48h.</p><div class="fsec"><div class="fg"><label>Sujet <em>*</em></label><select class="fc" id="cSubject"><option value="">Sélectionner…</option><option>Question générale</option><option>Signaler un contenu</option><option>Problème technique</option><option>Demande RGPD (accès/suppression de données)</option><option>Demande légale / judiciaire</option><option>Partenariat</option><option>Autre</option></select></div><div class="frow"><div class="fg"><label>Prénom <em>*</em></label><input class="fc" type="text" id="cFirst" placeholder="Marie"></div><div class="fg"><label>Nom <em>*</em></label><input class="fc" type="text" id="cLast" placeholder="Dupont"></div></div><div class="fg"><label>Email <em>*</em></label><input class="fc" type="email" id="cEmail" placeholder="marie@email.fr"></div><div class="fg"><label>Message <em>*</em></label><textarea class="fc" id="cMsg" rows="5" placeholder="Décrivez votre demande…"></textarea></div><div class="fg"><label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-size:12px;font-weight:600;text-transform:none;letter-spacing:0"><input type="checkbox" id="cRgpd" style="margin-top:3px;flex-shrink:0"> J'accepte que mes données soient utilisées pour traiter ma demande (<a onclick="go('confidentialite')" style="color:var(--rouge);cursor:pointer">politique de confidentialité</a>).</label></div><button class="btn br btn-lg" onclick="submitContact()">Envoyer le message →</button></div><div style="margin-top:44px;padding-top:36px;border-top:2px solid var(--noir);display:grid;grid-template-columns:1fr 1fr;gap:16px"><div style="border:2px solid var(--ligne);padding:18px"><div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gris2);margin-bottom:8px">Email général</div><div style="font-size:14px;font-weight:700">contact@lebonplan.fr</div></div><div style="border:2px solid var(--ligne);padding:18px"><div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gris2);margin-bottom:8px">DPO / RGPD</div><div style="font-size:14px;font-weight:700">contact@lebonplan.fr</div></div></div></div></div>
 
 <!-- ════ MODALS ════ -->
 <div class="ov" id="loginModal">
@@ -1057,7 +1217,7 @@ footer{border-top:2px solid var(--noir);margin-top:80px;background:var(--noir);c
     </div>
     <div class="f-bot">
       <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.1em">LEBONPLAN</span>
-      <span>© 2025 LeBonPlan · Fait avec ❤️ en France 🇫🇷</span>
+      <span>© 2026 LeBonPlan · Fait avec ❤️ en France 🇫🇷</span>
       <div class="f-bot-links"><a onclick="go('cgu')">CGU</a><a onclick="go('confidentialite')">Confidentialité</a><a onclick="go('cookies')">Cookies</a><a onclick="go('mentions')">Mentions</a></div>
     </div>
   </div>
@@ -1183,8 +1343,10 @@ const ADMIN_USER = {
 };
 
 const saved = loadSt();
+// Séparation panel/site : un compte staff/admin ne se connecte pas au site public
+function isSiteUser(u){if(!u)return false;if(u.isStaff||u.staffRole)return false;if(u.email==='admin@lebonplan.fr')return false;return true;}
 const S = {
-  user: saved.user || null,
+  user: isSiteUser(saved.user) ? saved.user : null,
   ads: saved.ads || [],
   users: saved.users || [ADMIN_USER],
   convs: saved.convs || [],
@@ -1195,6 +1357,8 @@ const S = {
   contacts: saved.contacts || [],
   announcements: saved.announcements || [],
   logs: saved.logs || [],
+  recentSearches: saved.recentSearches || [],
+  searchIntent: saved.searchIntent || {},
   activeConv: saved.activeConv || null,
   filter: '',
   sort: 'r',
@@ -1428,8 +1592,18 @@ function setCat(el, cat) {
   document.querySelectorAll('.sn').forEach(n => n.classList.toggle('on', n.dataset.cat === cat));
   go('listings');
 }
-function doSearch() { const q = document.getElementById('hq').value.trim(); S.query = q; S.filter = ''; document.getElementById('listTitle').textContent = q ? `"${q}"` : 'Toutes les annonces'; go('listings'); }
-function doHeroSearch() { const q = document.getElementById('heroQ').value.trim(); S.query = q; S.filter = ''; document.getElementById('listTitle').textContent = q ? `"${q}"` : 'Toutes les annonces'; go('listings'); }
+function trackSearch(q){
+  if(!q||q.length<2)return;
+  S.recentSearches=(S.recentSearches||[]).filter(x=>x.q.toLowerCase()!==q.toLowerCase());
+  S.recentSearches.unshift({q,ts:Date.now()});
+  if(S.recentSearches.length>10)S.recentSearches=S.recentSearches.slice(0,10);
+  const qL=q.toLowerCase();
+  CATS.forEach(c=>{if(qL.includes(c.toLowerCase().slice(0,4)))S.searchIntent[c]=(S.searchIntent[c]||0)+1;});
+  S.ads.filter(a=>a.status!=='removed'&&(a.title.toLowerCase().includes(qL)||a.cat.toLowerCase().includes(qL))).slice(0,5).forEach(a=>{S.searchIntent[a.cat]=(S.searchIntent[a.cat]||0)+0.5;});
+  saveSt();
+}
+function doSearch(){const q=document.getElementById('hq').value.trim();S.query=q;S.filter='';document.getElementById('listTitle').textContent=q?`"${q}"`:'Toutes les annonces';if(q)trackSearch(q);go('listings');}
+function doHeroSearch(){const q=document.getElementById('heroQ')?document.getElementById('heroQ').value.trim():'';S.query=q;S.filter='';document.getElementById('listTitle').textContent=q?`"${q}"`:'Toutes les annonces';if(q)trackSearch(q);go('listings');}
 
 function liveSearch(q) {
   const dd = document.getElementById('hSrchDD');
@@ -1595,8 +1769,163 @@ function adGrid(ads) {
 // ═══════════════════════════════════════════════════════════
 // HOME
 // ═══════════════════════════════════════════════════════════
+// ═══ SUGGESTION SYSTEM ═══
+const _CS = {};
+
+function _buildCarousel(id, cardW, gap) {
+  const track = document.getElementById(id);
+  if (!track || !track.children.length) return;
+  const outer = track.parentElement;
+  let idx = 0;
+  const vis = () => Math.max(1, Math.floor((outer.offsetWidth + gap) / (cardW + gap)));
+  const maxI = () => Math.max(0, track.children.length - vis());
+  const slide = (i) => {
+    idx = Math.max(0, Math.min(i, maxI()));
+    track.style.transform = 'translateX(-' + (idx * (cardW + gap)) + 'px)';
+    const pBtn = document.querySelector('[data-prev="' + id + '"]');
+    const nBtn = document.querySelector('[data-next="' + id + '"]');
+    if (pBtn) pBtn.disabled = idx === 0;
+    if (nBtn) nBtn.disabled = idx >= maxI();
+  };
+  _CS[id] = { next: () => slide(idx + 1), prev: () => slide(idx - 1) };
+  let timer = setInterval(() => { slide(idx >= maxI() ? 0 : idx + 1); }, 4000);
+  outer.addEventListener('mouseenter', () => clearInterval(timer));
+  outer.addEventListener('mouseleave', () => { timer = setInterval(() => { slide(idx >= maxI() ? 0 : idx + 1); }, 4000); });
+  slide(0);
+}
+
+function _scHTML(ad) {
+  const isFav = (S.favs || []).includes(ad.id);
+  const img = (ad.images && ad.images[0])
+    ? '<img class="sc-img" src="' + ad.images[0] + '" alt="">'
+    : '<div class="sc-ph">' + (CAT_ICONS[ad.cat] || '📦') + '</div>';
+  const badge = ad.urgent ? '<span class="sc-bdg">Urgent</span>' : '';
+  const fav = '<button class="sc-fav" onclick="event.stopPropagation();toggleFav(' + ad.id + ')">' + (isFav ? '❤' : '♡') + '</button>';
+  const price = ad.price > 0 ? fmt(ad.price) + ' €' : 'Gratuit';
+  const priceClass = 'sc-price' + (ad.price === 0 ? ' free' : '');
+  return '<div class="sc" onclick="openAd(' + ad.id + ')">' + img + badge + fav +
+    '<div class="sc-body"><div class="' + priceClass + '">' + price + '</div>' +
+    '<div class="sc-title">' + esc(ad.title) + '</div>' +
+    '<div class="sc-loc">📍 ' + esc(ad.city) + '</div></div></div>';
+}
+
+function _mkCarousel(title, subtitle, ads, id) {
+  const cards = ads.map(_scHTML).join('');
+  return '<div class="sugg-sec">' +
+    '<div class="sugg-hd"><div>' +
+    '<div class="sugg-title">' + title + '</div>' +
+    (subtitle ? '<div class="sugg-sub">' + subtitle + '</div>' : '') +
+    '</div>' +
+    '<div class="sugg-arrows">' +
+    '<button class="sarr" data-prev="' + id + '" onclick="(_CS['' + id + '']||{}).prev?.()">←</button>' +
+    '<button class="sarr" data-next="' + id + '" onclick="(_CS['' + id + '']||{}).next?.()">→</button>' +
+    '</div></div>' +
+    '<div class="caro-outer"><div class="caro-track" id="' + id + '">' + cards + '</div></div>' +
+    '</div>';
+}
+
+function renderSuggBlock() {
+  const el = document.getElementById('suggBlock');
+  if (!el) return;
+
+  const active = S.ads.filter(a => a.status !== 'removed');
+  const sections = [];
+  const carouselIds = [];
+
+  // ── 1. Recherches récentes ──
+  const searches = (S.recentSearches || []).slice(0, 10);
+  if (searches.length) {
+    const pills = searches.map(s =>
+      '<button class="search-pill" onclick="launchSuggSearch('' + esc(s.q) + '')">' + esc(s.q) + '</button>'
+    ).join('');
+    sections.push(
+      '<div class="sugg-sec">' +
+      '<div class="sugg-hd"><div>' +
+      '<div class="sugg-title">🔍 Recherches récentes</div>' +
+      '<div class="sugg-sub">Vos dernières recherches — cliquez pour relancer</div>' +
+      '</div>' +
+      '<button class="btn bro btn-sm" style="font-size:10px" onclick="S.recentSearches=[];saveSt();renderSuggBlock()">✕ Effacer</button>' +
+      '</div>' +
+      '<div class="sugg-pills">' + pills + '</div>' +
+      '</div>'
+    );
+  }
+
+  // ── Si pas d'annonces : on s'arrête là ──
+  if (!active.length) {
+    el.innerHTML = sections.join('');
+    return;
+  }
+
+  // ── 2. Coups de cœur ──
+  const favAds = active.filter(a => (S.favs || []).includes(a.id)).slice(0, 12);
+  if (favAds.length) {
+    const id = 'caro-fav';
+    sections.push(_mkCarousel(
+      '❤️ Vos coups de cœur',
+      favAds.length + ' annonce' + (favAds.length > 1 ? 's' : '') + ' sauvegardée' + (favAds.length > 1 ? 's' : ''),
+      favAds, id
+    ));
+    carouselIds.push(id);
+  }
+
+  // ── 3. D'après vos envies ──
+  const intent = S.searchIntent || {};
+  const topCats = Object.entries(intent)
+    .sort((a, b) => b[1] - a[1])
+    .map(([c]) => c)
+    .filter(c => active.some(a => a.cat === c))
+    .slice(0, 4);
+
+  if (topCats.length) {
+    const seen = new Set(favAds.map(a => a.id));
+    const envieAds = [];
+    topCats.forEach(cat => {
+      active.filter(a => a.cat === cat && !seen.has(a.id))
+        .slice(0, 4).forEach(a => { seen.add(a.id); envieAds.push(a); });
+    });
+    if (envieAds.length) {
+      const id = 'caro-envie';
+      const catBtns = topCats.map(c =>
+        '<button class="btn bgo btn-sm" onclick="setCat(null,'' + c + '')" style="font-size:11px">' + c + '</button>'
+      ).join('');
+      sections.push(
+        _mkCarousel('✨ D'après vos envies', 'Basé sur vos catégories préférées', envieAds.slice(0, 12), id) +
+        // inject cat btns inside last sugg-sec — we'll do it via a marker
+        ''
+      );
+      // Add a cat-row div after the carousel inside the section
+      const lastSec = sections[sections.length - 1];
+      sections[sections.length - 1] = lastSec.replace('</div></div>', '</div></div><div class="sugg-cat-row">' + catBtns + '</div>');
+      // fix: close the sugg-sec properly
+      sections[sections.length - 1] = sections[sections.length - 1].replace(/<\/div>$/, '') + '</div>';
+      carouselIds.push(id);
+    }
+  }
+
+  // ── 4. Nouveautés (toujours affiché, 1er accès ou pas d'envies) ──
+  const id4 = 'caro-new';
+  const newAds = [...active].sort((a, b) => b.id - a.id).slice(0, 10);
+  sections.push(_mkCarousel('🆕 Récemment publiées', 'Les dernières annonces sur LeBonPlan', newAds, id4));
+  carouselIds.push(id4);
+
+  // ── Injecter dans le DOM ──
+  el.innerHTML = sections.join('');
+
+  // ── Initialiser les carrousels APRÈS injection ──
+  carouselIds.forEach(id => { setTimeout(() => _buildCarousel(id, 200, 12), 20); });
+}
+
+function launchSuggSearch(q) {
+  S.query = q; S.filter = '';
+  const lt = document.getElementById('listTitle');
+  if (lt) lt.textContent = '"' + q + '"';
+  go('listings');
+}
+
 function renderHome() {
   buildCats();
+  renderSuggBlock();
   const el = document.getElementById('homeAds');
   el.innerHTML = '';
   const active = S.ads.filter(a => a.status !== 'removed');
@@ -2004,7 +2333,7 @@ function updateAuthUI() {
     const uddEm = document.getElementById('uddEm'); if (uddEm) uddEm.textContent = u.email;
     const al = document.getElementById('adminLink'); if (al) al.style.display = (u.role === 'admin' && IS_ADMIN_DOMAIN) ? 'block' : 'none';
   }
-  renderNotifs(); updateMsgDot(); updateRepBadge(); updateContactBadge();
+  renderNotifs(); updateMsgDot(); updateRepBadge(); updateContactBadge(); updateMobUserSection();
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -3147,45 +3476,51 @@ function applyAnnouncements() {
   }
 }
 
+
+// ═══════════════════════════════════════════
+// MOBILE MENU
+// ═══════════════════════════════════════════
+function toggleMobMenu(){
+  const btn=document.getElementById('mob-menu-btn');
+  const drw=document.getElementById('mob-drawer');
+  const ov=document.getElementById('mobOverlay');
+  const isOpen=drw.classList.contains('open');
+  if(isOpen){closeMobMenu();}else{btn.classList.add('open');drw.classList.add('open');ov.classList.add('open');document.body.style.overflow='hidden';}
+}
+function closeMobMenu(){
+  document.getElementById('mob-menu-btn')?.classList.remove('open');
+  document.getElementById('mob-drawer')?.classList.remove('open');
+  document.getElementById('mobOverlay')?.classList.remove('open');
+  document.body.style.overflow='';
+}
+function updateMobUserSection(){
+  const sec=document.getElementById('mobUserSection'); if(!sec)return;
+  const u=S.user;
+  if(u){
+    sec.innerHTML=`<div class="mob-drw-label">Mon compte</div>
+      <div class="mob-drw-item" onclick="closeMobMenu();go('profile')"><span class="mdi">👤</span>${esc(u.first||u.name)}</div>
+      <div class="mob-drw-item" onclick="closeMobMenu();go('messages')"><span class="mdi">✉</span>Messages</div>
+      <div class="mob-drw-item" onclick="closeMobMenu();requireAuth(()=>go('post-ad'))"><span class="mdi">＋</span>Déposer une annonce</div>
+      <div class="mob-drw-item red" onclick="closeMobMenu();logout()"><span class="mdi">🚪</span>Déconnexion</div>`;
+  }else{
+    sec.innerHTML=`<div class="mob-drw-label">Compte</div>
+      <div class="mob-drw-item" onclick="closeMobMenu();openM('login')"><span class="mdi">🔑</span>Se connecter</div>
+      <div class="mob-drw-item" onclick="closeMobMenu();openM('register')"><span class="mdi">✨</span>Créer un compte</div>`;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Google setup
-  // GCID hardcoded — update admin display
   const gcidEl = document.getElementById('gcidShow');
   if (gcidEl) gcidEl.textContent = GCID.substring(0, 40) + '…';
   const gcidInp = document.getElementById('gcidInput');
   if (gcidInp) gcidInp.value = GCID;
   initGoogle();
-  // Ensure admin user always in DB
-  if (!S.users.find(u => u.email === 'admin@lebonplan.fr')) {
-    S.users.unshift(ADMIN_USER);
-    saveSt();
-  }
-  updateAuthUI();
-  buildCats();
-  renderHome();
+  if (!S.users.find(u => u.email === 'admin@lebonplan.fr')) { S.users.unshift(ADMIN_USER); saveSt(); }
+  updateAuthUI(); buildCats(); renderHome();
   if (!S.logs.length) addLog('inf', 'Plateforme LeBonPlan démarrée');
-  loadSettings();
-
-  // Check maintenance on page load
-  if (S.settings.maintenance) {
-    const isAdmin = S.user && S.user.role === 'admin';
-    if (!isAdmin) {
-      showMaintenanceScreen();
-    } else {
-      const mb = document.getElementById('maintBanner');
-      if (mb) mb.style.display = 'flex';
-    }
-  }
-
-  // Cookie consent
-  initCookies();
-  // Apply admin announcements
-  applyAnnouncements();
-
+  loadSettings(); applyAnnouncements();
   window.addEventListener('scroll',()=>document.querySelector('header')?.classList.toggle('scrolled',window.scrollY>2),{passive:true});
 });
 </script>
-
-
 </body>
 </html>
